@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+/**
+ * STRICT TWO-COLOUR PALETTE — mirrors COLORS in src/lib/site-config.ts.
+ * Change both together.
+ *
+ * Only two hues exist on this site: red #e31837 and blue #006491. Everything
+ * below is a shade or tint of one of them, including the "neutrals" — ink,
+ * ink-muted, line and surface-alt are all desaturated blues, so no third hue
+ * ever reaches the page.
+ *
+ * Tailwind v4 reads @theme, so these become utilities like `bg-brand`,
+ * `text-ink`, `border-line` etc.
+ */
+@theme {
+  /* Hue 1: red */
+  --color-brand: #e31837;
+  --color-brand-dark: #b31229;
+  --color-brand-soft: #fce9ec;
+
+  /* Hue 2: blue */
+  --color-navy: #006491;
+  --color-navy-dark: #004e71;
+  --color-navy-soft: #e4f0f5;
+
+  /* Neutrals, all derived from hue 2 */
+  --color-ink: #062f42;
+  --color-ink-muted: #446b7d;
+  --color-line: #d6e4eb;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f2f7f9;
+
+  /* Body copy inside articles — one step lighter than ink, same hue */
+  --color-prose: #123a4c;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+
+  --radius-card: 0.875rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible focus ring for keyboard users — required for the accessibility promise. */
+:focus-visible {
+  outline: 3px solid var(--color-navy);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-navy);
+  color: #fff;
+  font-weight: 600;
+}
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/**
+ * `.prose-guide` styles the editor-written HTML stored in data/posts.json and
+ * the fullContent fields in menu-items.json. Kept hand-rolled so we don't pull
+ * in a plugin for eight tags.
+ */
+.prose-guide {
+  color: var(--color-ink);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+.prose-guide > * + * {
+  margin-top: 1.15rem;
+}
+.prose-guide h2 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--color-navy-dark);
+  margin-top: 2.5rem;
+  scroll-margin-top: 6rem;
+}
+.prose-guide h3 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-top: 1.9rem;
+  scroll-margin-top: 6rem;
+}
+.prose-guide p {
+  color: var(--color-prose);
+}
+.prose-guide a {
+  color: var(--color-navy);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+.prose-guide a:hover {
+  color: var(--color-brand);
+}
+.prose-guide ul,
+.prose-guide ol {
+  padding-left: 1.35rem;
+  color: var(--color-prose);
+}
+.prose-guide ul {
+  list-style: disc;
+}
+.prose-guide ol {
+  list-style: decimal;
+}
+.prose-guide li + li {
+  margin-top: 0.5rem;
+}
+.prose-guide strong {
+  color: var(--color-ink);
+  font-weight: 650;
+}
+.prose-guide blockquote {
+  border-left: 4px solid var(--color-brand);
+  background: var(--color-brand-soft);
+  padding: 0.9rem 1.1rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: normal;
+}
+.prose-guide blockquote p {
+  margin: 0;
+}
+.prose-guide table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.prose-guide th,
+.prose-guide td {
+  border: 1px solid var(--color-line);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+}
+.prose-guide th {
+  background: var(--color-navy-soft);
+  font-weight: 650;
+  color: var(--color-navy-dark);
+}
+.prose-guide figure {
+  margin: 1.75rem 0;
+}
+.prose-guide figcaption {
+  font-size: 0.85rem;
+  color: var(--color-ink-muted);
+  margin-top: 0.5rem;
+}
+
+/* Horizontal scroll container for wide tables inside articles. */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

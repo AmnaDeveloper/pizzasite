@@ -1,0 +1,1354 @@
+[
+  {
+    "id": "mi-01",
+    "slug": "classic-cheese-pizza",
+    "category": "Specialty Pizza",
+    "title": "Classic Cheese Pizza",
+    "description": "The baseline against which every other pizza on the menu is priced. Sauce, mozzarella, crust — nothing to hide behind.",
+    "fullContent": "<p>A plain cheese pizza is the most useful thing on any chain menu, and not because it is the best-tasting. It is the reference price. Every topping charge, every specialty pizza premium and every deal saving is measured against what a cheese pizza costs at your store, so knowing that number turns the rest of the menu from guesswork into arithmetic.</p><h2>What you are actually getting</h2><p>A layer of tomato sauce, a full covering of shredded mozzarella, and whichever crust you pick. Because there is nothing else on it, crust choice matters more here than on any other pizza: a hand-tossed cheese pizza and a thin-crust cheese pizza are noticeably different products, not the same pizza on a different base.</p><h2>Where it fits on value</h2><p>On its own, at full menu price, a large cheese pizza is rarely the best value on the board — the carryout and bundle offers almost always beat it. Where it earns its place is inside a deal. If a bundle lets you pick any two items at a flat rate, a cheese pizza is one of the cheapest things you can put in that slot, which is fine if you are feeding someone who does not want toppings anyway.</p><h2>Ordering notes</h2><p>Ask for a light bake if you like a softer centre and an extra minute or two if you want the cheese properly browned; both are free and both are honoured more often than people expect. Extra cheese is a paid modification and, at most stores, adds a meaningful amount to the price of an otherwise cheap pizza — check the total before you commit.</p>",
+    "price": 8.99,
+    "currency": "USD",
+    "calories": 200,
+    "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
+    "rating": 4.2,
+    "reviewCount": 318,
+    "image": "/images/menu/classic-cheese-pizza.png",
+    "imageAlt": "Abstract illustration representing a classic cheese pizza",
+    "ingredients": [
+      "Pizza dough",
+      "Tomato pizza sauce",
+      "Shredded mozzarella",
+      "Herb seasoning"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk"
+    ],
+    "sizes": [
+      {
+        "name": "Small",
+        "detail": "10 inch, hand tossed",
+        "price": 8.99,
+        "slices": 6
+      },
+      {
+        "name": "Medium",
+        "detail": "12 inch, hand tossed",
+        "price": 11.99,
+        "slices": 8
+      },
+      {
+        "name": "Large",
+        "detail": "14 inch, hand tossed",
+        "price": 14.99,
+        "slices": 8
+      },
+      {
+        "name": "Extra Large",
+        "detail": "16 inch, hand tossed",
+        "price": 17.49,
+        "slices": 10
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is a cheese pizza cheaper than building my own with no toppings?",
+        "answer": "They are usually the same product at the same price — a build-your-own with zero toppings is a cheese pizza. If your store shows a different price for each, order whichever line item is cheaper; the pizza that arrives will be identical."
+      },
+      {
+        "question": "How many people does a large cheese pizza feed?",
+        "answer": "Two to three adults as a meal, or four if there are sides on the table. A large cut into eight slices gives each of three people two to three slices, which is where most people stop."
+      },
+      {
+        "question": "Does extra cheese cost much?",
+        "answer": "It is a paid modification and typically adds a couple of dollars, which is a large percentage increase on an item this cheap. If you want more cheese for less money, a bundle that includes a specialty pizza is often better value than upgrading a plain one."
+      },
+      {
+        "question": "Can I get a cheese pizza on any crust?",
+        "answer": "Yes, on every crust the store offers, though thicker crusts sometimes carry a small upcharge on larger sizes. The crust choice changes the pizza more than any other single decision when there are no toppings involved."
+      }
+    ],
+    "related": [
+      "pepperoni-pizza",
+      "hand-tossed-build-your-own",
+      "thin-crust-build-your-own"
+    ],
+    "popular": true
+  },
+  {
+    "id": "mi-02",
+    "slug": "pepperoni-pizza",
+    "category": "Specialty Pizza",
+    "title": "Pepperoni Pizza",
+    "description": "The most-ordered pizza in the country, and the item most deals are built around. One topping, endlessly reliable.",
+    "fullContent": "<p>Pepperoni outsells every other topping in America by a wide margin, and chain menus are built around that fact. When a deal says \"one-topping pizza\", it is expecting you to pick pepperoni. When a bundle sets a flat price, pepperoni is the item that price was modelled on. Knowing that helps: the single-topping pepperoni pizza is the most heavily discounted item on most menus precisely because it is the most predictable.</p><h2>What you are actually getting</h2><p>Sauce, mozzarella and a full covering of sliced pepperoni. The quantity varies more between stores than people realise — a light-handed store and a generous one produce visibly different pizzas from the same recipe. If yours consistently runs light, asking for extra pepperoni is a paid modification but a small one relative to the pizza price.</p><h2>Where it fits on value</h2><p>This is the item to put in a deal slot. At full menu price a large pepperoni sits a couple of dollars above a cheese pizza; inside a carryout offer or a mix-and-match bundle, that topping premium usually vanishes entirely, which makes it the highest-value single choice on the board.</p><h2>Ordering notes</h2><p>Pepperoni releases oil as it cooks, so a well-done bake produces crisper edges and a slightly less greasy surface. If you dislike the pooling, ask for well done and place the order for collection rather than delivery — the extra time in a box is what turns that oil into a soggy centre.</p>",
+    "price": 10.49,
+    "currency": "USD",
+    "calories": 230,
+    "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
+    "rating": 4.5,
+    "reviewCount": 612,
+    "image": "/images/menu/pepperoni-pizza.webp",
+    "imageAlt": "Photo of a baked pepperoni pizza with melted mozzarella",
+    "ingredients": [
+      "Pizza dough",
+      "Tomato pizza sauce",
+      "Shredded mozzarella",
+      "Sliced pepperoni"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk"
+    ],
+    "sizes": [
+      {
+        "name": "Small",
+        "detail": "10 inch, hand tossed",
+        "price": 10.49,
+        "slices": 6
+      },
+      {
+        "name": "Medium",
+        "detail": "12 inch, hand tossed",
+        "price": 13.49,
+        "slices": 8
+      },
+      {
+        "name": "Large",
+        "detail": "14 inch, hand tossed",
+        "price": 16.49,
+        "slices": 8
+      },
+      {
+        "name": "Extra Large",
+        "detail": "16 inch, hand tossed",
+        "price": 18.99,
+        "slices": 10
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Why does the amount of pepperoni vary between stores?",
+        "answer": "Portioning is done by hand against a target count. Two stores following the same spec can still land in different places depending on who is on the make line, which is why the same order can look different in two towns."
+      },
+      {
+        "question": "Is pepperoni a free topping in deals?",
+        "answer": "In one-topping and two-topping deals, yes — it counts as one of your included toppings with no surcharge. Extra pepperoni beyond that is a paid modification."
+      },
+      {
+        "question": "How do I stop the pizza being greasy?",
+        "answer": "Order it well done, and collect it rather than having it delivered if you can. Most of the greasiness people complain about is oil that has had twenty minutes to soak into the base inside a closed box."
+      },
+      {
+        "question": "Does it reheat well?",
+        "answer": "Better than most. A few minutes in a hot dry pan on the hob restores the base far better than a microwave, which turns the crust to leather and the cheese to liquid."
+      }
+    ],
+    "related": [
+      "classic-cheese-pizza",
+      "meat-lovers-pizza",
+      "loaded-supreme-pizza"
+    ],
+    "popular": true
+  },
+  {
+    "id": "mi-03",
+    "slug": "loaded-supreme-pizza",
+    "category": "Specialty Pizza",
+    "title": "Loaded Supreme Pizza",
+    "description": "Meat and vegetables together on one pizza. The default order for a group that cannot agree on anything.",
+    "fullContent": "<p>The supreme exists to end arguments. Pepperoni, sausage, peppers, onions and mushrooms means nobody at the table gets exactly what they wanted and nobody objects strongly enough to say so. As a group-ordering strategy it works, and it is worth understanding why it is priced the way it is.</p><h2>What you are actually getting</h2><p>Five or six toppings for a fixed specialty price. Ordered individually as modifications on a build-your-own, that same combination would usually cost more, which is the entire commercial logic of the specialty section: it is a pre-bundled topping discount.</p><h2>Where it fits on value</h2><p>Good value at full menu price, worse value inside a bundle. Many mix-and-match offers restrict you to a limited number of toppings and add a surcharge for specialty pizzas, so the supreme that looked like a bargain on the main menu can quietly become the most expensive item in your basket. Price it both ways before you commit.</p><h2>Ordering notes</h2><p>This is a wet pizza. Peppers, onions and mushrooms all release water as they cook, and on a thin crust the centre can struggle to hold up. If you want a supreme on thin crust, ask for it well done. On hand-tossed it is less of a concern.</p><p>If two people at the table object to one specific topping, remember that removing a topping from a specialty pizza is free at most stores while adding one is not. Subtracting is the cheaper way to customise.</p>",
+    "price": 13.99,
+    "currency": "USD",
+    "calories": 260,
+    "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
+    "rating": 4.4,
+    "reviewCount": 274,
+    "image": "/images/menu/loaded-supreme-pizza.webp",
+    "imageAlt": "Photo of a loaded pizza with pepperoni, sausage, mushroom, olives, onion and green pepper",
+    "ingredients": [
+      "Pizza dough",
+      "Tomato pizza sauce",
+      "Shredded mozzarella",
+      "Pepperoni",
+      "Italian sausage",
+      "Green peppers",
+      "Red onion",
+      "Mushrooms"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk"
+    ],
+    "sizes": [
+      {
+        "name": "Small",
+        "detail": "10 inch, hand tossed",
+        "price": 13.99,
+        "slices": 6
+      },
+      {
+        "name": "Medium",
+        "detail": "12 inch, hand tossed",
+        "price": 16.99,
+        "slices": 8
+      },
+      {
+        "name": "Large",
+        "detail": "14 inch, hand tossed",
+        "price": 19.49,
+        "slices": 8
+      },
+      {
+        "name": "Extra Large",
+        "detail": "16 inch, hand tossed",
+        "price": 21.99,
+        "slices": 10
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is a supreme cheaper than adding the same toppings myself?",
+        "answer": "Almost always, on the standard menu. Specialty pizzas are priced as a package and undercut the sum of individual topping charges. That advantage can reverse inside a bundle that surcharges specialty pizzas."
+      },
+      {
+        "question": "Can I remove toppings I do not like?",
+        "answer": "Yes, and removal is free at most stores. You will not get a discount for it, but you will not pay extra either — which makes subtracting a much better way to customise than adding."
+      },
+      {
+        "question": "Why does the middle go soft?",
+        "answer": "Vegetables release water during the bake. On a thin crust in particular, the centre can end up soft. Asking for a well-done bake drives off more of that moisture and largely fixes it."
+      },
+      {
+        "question": "Does it work for a mixed group with a vegetarian?",
+        "answer": "Not really — the meat and vegetables are on the same pizza. For a genuinely mixed group, two half-and-half pizzas or a bundle with one vegetarian pizza is a better structure than one supreme."
+      }
+    ],
+    "related": [
+      "meat-lovers-pizza",
+      "veggie-garden-pizza",
+      "pepperoni-pizza"
+    ]
+  },
+  {
+    "id": "mi-04",
+    "slug": "meat-lovers-pizza",
+    "category": "Specialty Pizza",
+    "title": "Meat Lover's Pizza",
+    "description": "Four or five meats on one base. The heaviest item on the pizza menu and priced accordingly.",
+    "fullContent": "<p>This is the top of the specialty price ladder at most stores, and it is the pizza where the gap between menu price and deal price is widest. If you want it, waiting for the right offer genuinely saves more money here than on any other pizza.</p><h2>What you are actually getting</h2><p>Typically pepperoni, Italian sausage, ham and bacon, sometimes with beef as well. The meats are pre-cooked and portioned, so the variable is coverage rather than quality — some stores build it heavier than others.</p><h2>Where it fits on value</h2><p>At full menu price it is the most expensive standard pizza on the board. Inside a two-for deal it becomes reasonable, and inside a carryout flat-price offer it is often outstanding value, because you are paying the same fixed price for the most heavily topped pizza available. If a store runs a flat-rate any-topping carryout offer, this is the item to order under it.</p><h2>Ordering notes</h2><p>It is a heavy pizza and it cooks slower than a plain one. A well-done bake helps the base cope with the weight of topping on it. It also reheats poorly compared with a simpler pizza — the fat renders out on the second heating and the texture suffers — so order the size you will actually finish rather than assuming leftovers.</p><p>Calorie-wise this sits at the top of the pizza menu. If that matters to you, a thin crust version cuts a meaningful amount per slice without changing the toppings.</p>",
+    "price": 14.99,
+    "currency": "USD",
+    "calories": 310,
+    "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
+    "rating": 4.6,
+    "reviewCount": 401,
+    "image": "/images/menu/meat-lovers-pizza.png",
+    "imageAlt": "Abstract illustration representing a meat lover's pizza",
+    "ingredients": [
+      "Pizza dough",
+      "Tomato pizza sauce",
+      "Shredded mozzarella",
+      "Pepperoni",
+      "Italian sausage",
+      "Smoked ham",
+      "Bacon"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk"
+    ],
+    "sizes": [
+      {
+        "name": "Small",
+        "detail": "10 inch, hand tossed",
+        "price": 14.99,
+        "slices": 6
+      },
+      {
+        "name": "Medium",
+        "detail": "12 inch, hand tossed",
+        "price": 17.99,
+        "slices": 8
+      },
+      {
+        "name": "Large",
+        "detail": "14 inch, hand tossed",
+        "price": 20.49,
+        "slices": 8
+      },
+      {
+        "name": "Extra Large",
+        "detail": "16 inch, hand tossed",
+        "price": 22.99,
+        "slices": 10
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Which deal gives the biggest saving on this pizza?",
+        "answer": "A flat-price carryout offer that allows any toppings. Because you pay one fixed price regardless of what is on the pizza, ordering the most heavily topped item on the menu maximises what that fixed price buys you."
+      },
+      {
+        "question": "Is the meat pre-cooked?",
+        "answer": "Yes. All the meats arrive at the store cooked and are portioned onto the pizza cold, then heated through during the bake. That is standard across chain pizza and is why bake time does not change much between toppings."
+      },
+      {
+        "question": "How can I make it less heavy?",
+        "answer": "Order it on a thin crust. You keep the same toppings while cutting a substantial number of calories per slice, and the crisper base handles the fat better than a soft hand-tossed one."
+      },
+      {
+        "question": "Does it freeze well?",
+        "answer": "Poorly, compared with a simpler pizza. The rendered fat separates on reheating and the texture goes greasy. Order the size you will finish rather than planning for leftovers."
+      }
+    ],
+    "related": [
+      "loaded-supreme-pizza",
+      "pepperoni-pizza",
+      "bbq-chicken-pizza"
+    ],
+    "popular": true
+  },
+  {
+    "id": "mi-05",
+    "slug": "veggie-garden-pizza",
+    "category": "Specialty Pizza",
+    "title": "Veggie Garden Pizza",
+    "description": "Peppers, onions, mushrooms, olives and tomato. The default vegetarian option, with one thing worth checking first.",
+    "fullContent": "<p>Every chain menu has a version of this pizza and it is usually the only vegetarian item that does not require modification. It is a decent pizza that suffers from one recurring problem: moisture.</p><h2>What you are actually getting</h2><p>Five vegetables on the standard sauce and cheese base. Whether it is genuinely vegetarian depends on the store's cheese and dough specification rather than on the toppings — this varies between chains and occasionally between regions, so if strict vegetarianism matters to you it is worth confirming directly rather than assuming.</p><h2>Where it fits on value</h2><p>Priced in the middle of the specialty range, below the meat pizzas. Inside a mix-and-match bundle it is one of the better-value picks, because vegetable toppings are cheap for the store to apply and the bundle price does not distinguish.</p><h2>Ordering notes</h2><p>Order it well done. Every vegetable on this pizza releases water into the base during the bake, and a standard bake on a hand-tossed crust regularly produces a soft centre. The extra minute or two in the oven costs nothing and materially improves the result.</p><p>If you want it vegan, removing the cheese is free but leaves you with a fairly bare pizza; a few stores stock a plant-based cheese, most do not. Check before you build the order, not at checkout.</p>",
+    "price": 13.49,
+    "currency": "USD",
+    "calories": 200,
+    "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
+    "rating": 4.1,
+    "reviewCount": 189,
+    "image": "/images/menu/veggie-garden-pizza.png",
+    "imageAlt": "Abstract illustration representing a vegetable garden pizza",
+    "ingredients": [
+      "Pizza dough",
+      "Tomato pizza sauce",
+      "Shredded mozzarella",
+      "Green peppers",
+      "Red onion",
+      "Mushrooms",
+      "Black olives",
+      "Diced tomato"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk"
+    ],
+    "sizes": [
+      {
+        "name": "Small",
+        "detail": "10 inch, hand tossed",
+        "price": 13.49,
+        "slices": 6
+      },
+      {
+        "name": "Medium",
+        "detail": "12 inch, hand tossed",
+        "price": 16.49,
+        "slices": 8
+      },
+      {
+        "name": "Large",
+        "detail": "14 inch, hand tossed",
+        "price": 18.99,
+        "slices": 8
+      },
+      {
+        "name": "Extra Large",
+        "detail": "16 inch, hand tossed",
+        "price": 21.49,
+        "slices": 10
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this pizza suitable for vegetarians?",
+        "answer": "The toppings are, but the answer depends on the cheese and dough specification at your chain and region. If it matters to you, ask the store for their current ingredient information rather than relying on the topping list."
+      },
+      {
+        "question": "Can I make it vegan?",
+        "answer": "Removing the cheese is free and usually possible. A plant-based cheese alternative is stocked by some stores and not others, so check availability before you build the order."
+      },
+      {
+        "question": "Why is the middle always soggy?",
+        "answer": "Five vegetables release a lot of water into the base. Asking for a well-done bake is the single most effective fix and costs nothing."
+      },
+      {
+        "question": "Is it lower in calories than a meat pizza?",
+        "answer": "Noticeably, yes — usually around a hundred calories less per slice than a meat-heavy pizza of the same size and crust. The cheese still accounts for a large share of what remains."
+      }
+    ],
+    "related": [
+      "loaded-supreme-pizza",
+      "thin-crust-build-your-own",
+      "classic-cheese-pizza"
+    ]
+  },
+  {
+    "id": "mi-06",
+    "slug": "bbq-chicken-pizza",
+    "category": "Specialty Pizza",
+    "title": "BBQ Chicken Pizza",
+    "description": "Barbecue sauce instead of tomato, with grilled chicken and red onion. The menu's biggest departure from a standard pizza.",
+    "fullContent": "<p>Swapping the tomato base for barbecue sauce changes the pizza more than any topping does. It is sweeter, it browns differently in the oven, and it divides opinion sharply — people who like it order it repeatedly, people who do not never order it twice.</p><h2>What you are actually getting</h2><p>A barbecue sauce base, mozzarella, grilled chicken pieces and red onion, sometimes with a drizzle of additional sauce after the bake. The chicken is pre-cooked and diced, so it heats through rather than cooking on the pizza.</p><h2>Where it fits on value</h2><p>Sits alongside the other chicken specialties in the upper-middle of the price range. Because barbecue sauce is a base substitution rather than a topping, some stores treat it as a free swap on a build-your-own — which, if yours does, is a cheaper route to the same pizza than ordering the specialty.</p><h2>Ordering notes</h2><p>Barbecue sauce contains sugar and sugar burns. Do not order this one well done; a standard or light bake protects the sauce from catching at the edges. This is the one pizza on the menu where our usual well-done advice is wrong.</p><p>It also travels badly. The sauce continues to soak into the base in the box, and a thirty-minute delivery produces a noticeably softer pizza than collecting it yourself. If you have the option, this is a good candidate for carryout.</p>",
+    "price": 14.49,
+    "currency": "USD",
+    "calories": 250,
+    "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
+    "rating": 4.3,
+    "reviewCount": 226,
+    "image": "/images/menu/bbq-chicken-pizza.png",
+    "imageAlt": "Abstract illustration representing a barbecue chicken pizza",
+    "ingredients": [
+      "Pizza dough",
+      "Barbecue sauce",
+      "Shredded mozzarella",
+      "Grilled chicken breast",
+      "Red onion"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk",
+      "Soy"
+    ],
+    "sizes": [
+      {
+        "name": "Small",
+        "detail": "10 inch, hand tossed",
+        "price": 14.49,
+        "slices": 6
+      },
+      {
+        "name": "Medium",
+        "detail": "12 inch, hand tossed",
+        "price": 17.49,
+        "slices": 8
+      },
+      {
+        "name": "Large",
+        "detail": "14 inch, hand tossed",
+        "price": 19.99,
+        "slices": 8
+      },
+      {
+        "name": "Extra Large",
+        "detail": "16 inch, hand tossed",
+        "price": 22.49,
+        "slices": 10
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Can I get barbecue sauce on any pizza?",
+        "answer": "At most stores yes, as a base substitution on a build-your-own. Whether it is free or carries a small charge varies, but it is often cheaper than ordering the specialty version outright."
+      },
+      {
+        "question": "Should I order it well done?",
+        "answer": "No. Barbecue sauce contains sugar, which catches and burns at the edges on a long bake. This is the one pizza where a standard or light bake gives the better result."
+      },
+      {
+        "question": "Is the chicken cooked on the pizza?",
+        "answer": "No. It arrives at the store pre-cooked and diced, and simply heats through during the bake. That is standard for chicken on chain pizza and is a food-safety measure as much as a speed one."
+      },
+      {
+        "question": "Why is it softer when delivered?",
+        "answer": "Barbecue sauce is wetter and sweeter than tomato sauce and keeps soaking into the base inside a closed box. Collecting it yourself makes a bigger difference to this pizza than to most others."
+      }
+    ],
+    "related": [
+      "buffalo-chicken-pizza",
+      "boneless-chicken-bites",
+      "meat-lovers-pizza"
+    ]
+  },
+  {
+    "id": "mi-07",
+    "slug": "buffalo-chicken-pizza",
+    "category": "Specialty Pizza",
+    "title": "Buffalo Chicken Pizza",
+    "description": "Hot sauce base, grilled chicken and a ranch or blue cheese drizzle. Spicy without being a novelty item.",
+    "fullContent": "<p>The buffalo chicken pizza is the spicier sibling of the barbecue version and follows the same logic: replace the tomato base with something more assertive and build around it. It has a smaller but more committed audience.</p><h2>What you are actually getting</h2><p>A buffalo-style hot sauce base, mozzarella, diced grilled chicken and usually a cooling drizzle applied after the bake. Heat level is moderate at most chains — noticeably present, but built for a mainstream audience rather than for chilli enthusiasts.</p><h2>Where it fits on value</h2><p>Priced with the other chicken specialties. It rarely features in the headline deals, which means it is one of the items where you are most often paying close to full menu price. If your budget is the priority, this is not the pizza to order.</p><h2>Ordering notes</h2><p>Ask for the drizzle on the side if you are having it delivered. Applied in the store it soaks in during transit and the contrast that makes the pizza work disappears; in a separate pot it survives the journey intact.</p><p>If the heat is too much, ordering half buffalo and half plain cheese is a common workaround for a mixed table and costs no more than a standard half-and-half. If the heat is not enough, most stores will add jalapeños as a paid topping.</p>",
+    "price": 14.49,
+    "currency": "USD",
+    "calories": 245,
+    "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
+    "rating": 4.2,
+    "reviewCount": 167,
+    "image": "/images/menu/buffalo-chicken-pizza.png",
+    "imageAlt": "Abstract illustration representing a buffalo chicken pizza",
+    "ingredients": [
+      "Pizza dough",
+      "Buffalo-style hot sauce",
+      "Shredded mozzarella",
+      "Grilled chicken breast",
+      "Ranch drizzle"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk",
+      "Egg",
+      "Soy"
+    ],
+    "sizes": [
+      {
+        "name": "Small",
+        "detail": "10 inch, hand tossed",
+        "price": 14.49,
+        "slices": 6
+      },
+      {
+        "name": "Medium",
+        "detail": "12 inch, hand tossed",
+        "price": 17.49,
+        "slices": 8
+      },
+      {
+        "name": "Large",
+        "detail": "14 inch, hand tossed",
+        "price": 19.99,
+        "slices": 8
+      },
+      {
+        "name": "Extra Large",
+        "detail": "16 inch, hand tossed",
+        "price": 22.49,
+        "slices": 10
+      }
+    ],
+    "faqs": [
+      {
+        "question": "How spicy is it really?",
+        "answer": "Moderate. It is built for a mainstream audience, so the heat is clearly present but not aggressive. If you regularly eat hot food you will likely find it mild."
+      },
+      {
+        "question": "Can I order half buffalo and half something else?",
+        "answer": "Yes. Half-and-half is standard on chain menus and usually costs the price of the more expensive half rather than carrying an additional fee. It is the simplest fix for a table with mixed heat tolerance."
+      },
+      {
+        "question": "Should I get the drizzle on the side?",
+        "answer": "For delivery, yes. Applied in-store it soaks into the pizza during transit. In a separate pot it keeps the contrast that makes the pizza work."
+      },
+      {
+        "question": "Is it ever included in deals?",
+        "answer": "Less often than the mainstream pizzas. Chicken specialties are frequently excluded from the cheapest bundles or carry a surcharge inside them, so check the deal terms before assuming it qualifies."
+      }
+    ],
+    "related": [
+      "bbq-chicken-pizza",
+      "chicken-wings",
+      "boneless-chicken-bites"
+    ]
+  },
+  {
+    "id": "mi-08",
+    "slug": "hand-tossed-build-your-own",
+    "category": "Build Your Own",
+    "title": "Hand-Tossed Build Your Own",
+    "description": "The default crust and the most flexible item on the menu. Start from cheese, add what you want, watch the price move.",
+    "fullContent": "<p>Hand tossed is the crust most people mean when they say pizza: a medium-thickness base with a raised outer edge, soft in the centre, chewy at the rim. It is the default on almost every chain menu and the crust every deal assumes unless it says otherwise.</p><h2>How the pricing works</h2><p>You start at the cheese pizza price and each topping adds a fixed amount, which scales with the size of the pizza. Toppings on an extra-large cost more than the same toppings on a small, because there is more of them. This is where build-your-own gets expensive: three toppings on a large routinely pushes past the price of a specialty pizza that has five.</p><h2>Where it fits on value</h2><p>Excellent inside a deal, poor outside one. A two-topping build-your-own is the standard qualifying item for mix-and-match bundles and flat-price carryout offers, and at that fixed price it is the best value on the menu. At full menu price with four toppings, it is the worst.</p><h2>Ordering notes</h2><p>Count your toppings before you check out. The single most common way people overspend on chain pizza is adding a fourth and fifth topping to a build-your-own without noticing that a specialty pizza with those same toppings would have cost less.</p><p>Free modifications worth knowing: light or extra sauce, light cheese, well-done bake, and cutting into squares rather than wedges. None of these cost anything and all of them change the pizza.</p>",
+    "price": 8.99,
+    "currency": "USD",
+    "calories": 200,
+    "caloriesNote": "Approximate for a plain base, per slice of a large cut into eight. Each topping adds roughly 10–40 calories per slice.",
+    "rating": 4.4,
+    "reviewCount": 355,
+    "image": "/images/menu/hand-tossed-build-your-own.png",
+    "imageAlt": "Abstract illustration representing a hand-tossed build-your-own pizza",
+    "ingredients": [
+      "Hand-tossed pizza dough",
+      "Tomato pizza sauce",
+      "Shredded mozzarella",
+      "Your choice of toppings"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk"
+    ],
+    "sizes": [
+      {
+        "name": "Small",
+        "detail": "10 inch base, before toppings",
+        "price": 8.99,
+        "slices": 6
+      },
+      {
+        "name": "Medium",
+        "detail": "12 inch base, before toppings",
+        "price": 11.99,
+        "slices": 8
+      },
+      {
+        "name": "Large",
+        "detail": "14 inch base, before toppings",
+        "price": 14.99,
+        "slices": 8
+      },
+      {
+        "name": "Extra Large",
+        "detail": "16 inch base, before toppings",
+        "price": 17.49,
+        "slices": 10
+      }
+    ],
+    "faqs": [
+      {
+        "question": "At how many toppings does a specialty pizza become cheaper?",
+        "answer": "Usually at three or four on a large, depending on your store's per-topping rate. Once you are past three toppings it is always worth checking the specialty section before you check out."
+      },
+      {
+        "question": "Do toppings cost the same on every size?",
+        "answer": "No. Per-topping charges scale with pizza size, so the same topping list costs meaningfully more on an extra-large than on a medium. That is easy to miss because the menu shows the base price by size but the topping charge separately."
+      },
+      {
+        "question": "Which modifications are free?",
+        "answer": "Light or extra sauce, light cheese, a well-done or light bake, and square-cut instead of wedge-cut are free at most stores. Extra cheese and extra meat are paid."
+      },
+      {
+        "question": "Is hand tossed the crust used in deals?",
+        "answer": "Yes, it is the default. Other crusts may carry an upcharge inside a deal or be excluded entirely, which the offer terms will state."
+      }
+    ],
+    "related": [
+      "thin-crust-build-your-own",
+      "pan-pizza-build-your-own",
+      "classic-cheese-pizza"
+    ],
+    "popular": true
+  },
+  {
+    "id": "mi-09",
+    "slug": "thin-crust-build-your-own",
+    "category": "Build Your Own",
+    "title": "Thin Crust Build Your Own",
+    "description": "A cracker-thin base, cut into squares at most stores. Fewer calories per slice and a completely different eating experience.",
+    "fullContent": "<p>Thin crust is not a smaller version of hand tossed — it is a different product. The base is rolled rather than tossed, there is no raised rim, and it comes out of the oven crisp rather than chewy. Most stores cut it into squares, which changes how a group eats it.</p><h2>How the pricing works</h2><p>Priced the same as hand tossed at most chains, with the same per-topping charges. Crust is usually a free choice, which makes this the cheapest way to cut calories on a chain pizza: you keep the toppings and the price and lose a meaningful amount of dough.</p><h2>Where it fits on value</h2><p>Identical on price, better on calories, worse on volume. A large thin crust does not feed as many people as a large hand tossed, because there is simply less food on the same diameter. If you are ordering for a group, size up or add a side.</p><h2>Ordering notes</h2><p>Thin crust does not cope with heavy toppings. Load it with five wet items and the middle will not hold. Two or three toppings is the practical ceiling, and vegetables in particular should be ordered with a well-done bake.</p><p>It also goes stale faster than a thicker base. Thin crust is the worst pizza on the menu for leftovers and the best for eating immediately, so order it when you plan to finish it.</p>",
+    "price": 8.99,
+    "currency": "USD",
+    "calories": 140,
+    "caloriesNote": "Approximate for a plain base, per slice of a large cut into eight equivalent portions.",
+    "rating": 4.3,
+    "reviewCount": 241,
+    "image": "/images/menu/thin-crust-build-your-own.png",
+    "imageAlt": "Abstract illustration representing a thin crust build-your-own pizza",
+    "ingredients": [
+      "Thin crust base",
+      "Tomato pizza sauce",
+      "Shredded mozzarella",
+      "Your choice of toppings"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk"
+    ],
+    "sizes": [
+      {
+        "name": "Small",
+        "detail": "10 inch, square cut",
+        "price": 8.99
+      },
+      {
+        "name": "Medium",
+        "detail": "12 inch, square cut",
+        "price": 11.99
+      },
+      {
+        "name": "Large",
+        "detail": "14 inch, square cut",
+        "price": 14.99
+      },
+      {
+        "name": "Extra Large",
+        "detail": "16 inch, square cut",
+        "price": 17.49
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Does thin crust cost less than hand tossed?",
+        "answer": "Usually the same price. Crust choice is normally free, which is why thin crust is the cheapest available way to reduce the calorie count of a pizza without changing the toppings."
+      },
+      {
+        "question": "How many calories does it actually save?",
+        "answer": "Roughly a third off the base, depending on size — the toppings and cheese are unchanged. Over a whole large pizza that is a substantial difference for a decision that costs nothing."
+      },
+      {
+        "question": "Why is it cut into squares?",
+        "answer": "A crisp base without a raised rim holds its shape better in squares than in wedges, and square-cut portions are easier to share. Most stores will cut it into wedges instead if you ask."
+      },
+      {
+        "question": "Can I load it with toppings?",
+        "answer": "Not heavily. Two or three is the practical limit before the centre struggles to support the weight. If you want five toppings, order them on hand tossed or pan."
+      }
+    ],
+    "related": [
+      "hand-tossed-build-your-own",
+      "veggie-garden-pizza",
+      "pan-pizza-build-your-own"
+    ]
+  },
+  {
+    "id": "mi-10",
+    "slug": "pan-pizza-build-your-own",
+    "category": "Build Your Own",
+    "title": "Pan Pizza Build Your Own",
+    "description": "Thick, buttery and baked in a pan for a fried bottom edge. The heaviest crust and often the one that carries an upcharge.",
+    "fullContent": "<p>Pan pizza is baked in an oiled pan rather than directly on the oven surface, which fries the underside as it bakes and produces the crisp, golden bottom edge that people either love or find far too rich. It is the thickest crust on most menus.</p><h2>How the pricing works</h2><p>Unlike thin crust, pan frequently carries an upcharge — a dollar or two above the hand-tossed price, and sometimes it is unavailable in the largest size because pans come in fixed dimensions. Both facts are easy to miss and both affect whether a deal applies to it.</p><h2>Where it fits on value</h2><p>Poor value inside a deal, because the upcharge is applied on top of the deal price at most stores and eats into the saving. Reasonable value at full menu price if pan is specifically what you want, since the extra dough genuinely is more food.</p><h2>Ordering notes</h2><p>It is the best crust on the menu for leftovers. The oil in the base protects it overnight in a way that thin crust cannot manage, and a reheated pan slice in a hot oven is genuinely good rather than merely acceptable.</p><p>It is also the highest-calorie crust by a clear margin. If you are watching that, the same toppings on hand tossed cost you nothing extra and save a noticeable amount per slice.</p>",
+    "price": 10.49,
+    "currency": "USD",
+    "calories": 280,
+    "caloriesNote": "Approximate for a plain base, per slice of a large cut into eight.",
+    "rating": 4.5,
+    "reviewCount": 298,
+    "image": "/images/menu/pan-pizza-build-your-own.png",
+    "imageAlt": "Abstract illustration representing a pan pizza build-your-own",
+    "ingredients": [
+      "Pan pizza dough",
+      "Tomato pizza sauce",
+      "Shredded mozzarella",
+      "Your choice of toppings"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk",
+      "Soy"
+    ],
+    "sizes": [
+      {
+        "name": "Small",
+        "detail": "10 inch pan",
+        "price": 10.49,
+        "slices": 4
+      },
+      {
+        "name": "Medium",
+        "detail": "12 inch pan",
+        "price": 13.49,
+        "slices": 8
+      },
+      {
+        "name": "Large",
+        "detail": "14 inch pan",
+        "price": 16.49,
+        "slices": 8
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Why does pan crust cost more?",
+        "answer": "There is more dough, it uses a dedicated pan, and it occupies oven space differently. Most stores apply a small upcharge that also applies on top of deal pricing, which is worth checking before you assume an offer covers it."
+      },
+      {
+        "question": "Why is there no extra-large pan pizza?",
+        "answer": "Pans are physical objects in fixed sizes, so the largest pan pizza is limited by the largest pan the store stocks. Most stop at large."
+      },
+      {
+        "question": "Is pan the best crust for leftovers?",
+        "answer": "Yes, by some distance. The oil in the base keeps it from drying out overnight, and it reheats well in a hot oven. Thin crust is the worst for the same reason."
+      },
+      {
+        "question": "How much heavier is it than hand tossed?",
+        "answer": "Meaningfully — usually in the region of eighty extra calories per slice on a large, before toppings. If that matters, hand tossed with identical toppings is a free swap."
+      }
+    ],
+    "related": [
+      "hand-tossed-build-your-own",
+      "thin-crust-build-your-own",
+      "cheesy-bread"
+    ]
+  },
+  {
+    "id": "mi-11",
+    "slug": "garlic-parmesan-breadsticks",
+    "category": "Sides",
+    "title": "Garlic Parmesan Breadsticks",
+    "description": "Pizza dough, garlic butter and parmesan, baked and cut into sticks. The cheapest way to make an order feel bigger.",
+    "fullContent": "<p>Breadsticks are the highest-margin item on a pizza menu and the most reliably good deal filler. They are made from the same dough as the pizza, brushed with garlic butter and dusted with parmesan, then baked and cut.</p><h2>Where it fits on value</h2><p>As a standalone purchase they are unremarkable value. As the second item in a two-for bundle, they are one of the strongest picks available: you are paying the same flat rate as you would for a pizza, and while the food cost to the store is far lower, what you get is a substantial amount of bread for a small share of your total.</p><h2>Ordering notes</h2><p>Ask for a dipping sauce. Most stores include one free with breadsticks and charge for additional pots — but only if you request it, and delivery orders frequently arrive without one because nobody ticked the box.</p><p>They go hard as they cool, faster than pizza does. If you are ordering for later, this is the wrong side; wings or a dessert hold up better. Reheating in an oven for a few minutes restores them adequately; a microwave does not.</p><h2>A note on portion size</h2><p>The stick count varies between stores for the same order, because the dough is cut by hand. If you are ordering for a specific number of people, assume the lower end of whatever range the menu implies.</p>",
+    "price": 6.49,
+    "currency": "USD",
+    "calories": 140,
+    "caloriesNote": "Approximate, per stick, before dipping sauce.",
+    "rating": 4.4,
+    "reviewCount": 384,
+    "image": "/images/menu/garlic-parmesan-breadsticks.png",
+    "imageAlt": "Abstract illustration representing garlic parmesan breadsticks",
+    "ingredients": [
+      "Pizza dough",
+      "Garlic butter",
+      "Parmesan cheese",
+      "Italian herb seasoning"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk"
+    ],
+    "sizes": [
+      {
+        "name": "Regular",
+        "detail": "8 sticks",
+        "price": 6.49
+      },
+      {
+        "name": "Large",
+        "detail": "16 sticks",
+        "price": 9.99
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is a dipping sauce included?",
+        "answer": "Usually one is included free, but it has to be selected. Delivery orders arrive without sauce more often than people expect, simply because the box was never ticked at checkout."
+      },
+      {
+        "question": "Are breadsticks a good bundle pick?",
+        "answer": "Very. In a flat-rate two-item bundle they give you a large amount of food for a small share of the total, which is why they are one of the most-ordered second items in any deal."
+      },
+      {
+        "question": "How do I reheat them?",
+        "answer": "A few minutes in a hot oven. A microwave makes them chewy and unpleasant, because the steam has nowhere to go."
+      },
+      {
+        "question": "Why do I sometimes get fewer sticks?",
+        "answer": "The dough is cut by hand at the store, so counts vary a little around the target. If you are portioning for a group, plan on the lower end."
+      }
+    ],
+    "related": [
+      "cheesy-bread",
+      "chicken-wings",
+      "cinnamon-twists"
+    ],
+    "popular": true
+  },
+  {
+    "id": "mi-12",
+    "slug": "cheesy-bread",
+    "category": "Sides",
+    "title": "Cheesy Bread",
+    "description": "Breadsticks with mozzarella baked into the top. More expensive than plain sticks and worth it more often than not.",
+    "fullContent": "<p>Cheesy bread is what happens when the kitchen puts pizza cheese on the breadstick dough. It is pulled apart rather than dipped, and it is one of the few sides on a chain menu that people order for its own sake rather than as a filler.</p><h2>Where it fits on value</h2><p>Two to three dollars more than plain breadsticks at most stores, which is a large percentage increase but a small absolute one. Inside a flat-rate bundle it costs the same as plain breadsticks, which makes it the obvious pick — if the deal charges one price for either, always take the cheese.</p><h2>Ordering notes</h2><p>It is the side most damaged by a long delivery. Melted cheese on bread sets as it cools and the texture changes completely; twenty minutes in a box is enough to notice. On a carryout order it is excellent, on a forty-minute delivery it is merely fine.</p><p>Ask for marinara rather than the default garlic sauce if you want to cut through the richness — most stores will swap the included dip at no charge, and it makes a genuinely better pairing with a cheese-heavy side.</p><h2>Calorie note</h2><p>Per piece this is one of the heavier items on the menu, comparable to a slice of pizza. It is easy to treat as a light side and it is not one.</p>",
+    "price": 8.49,
+    "currency": "USD",
+    "calories": 175,
+    "caloriesNote": "Approximate, per piece, before dipping sauce.",
+    "rating": 4.6,
+    "reviewCount": 452,
+    "image": "/images/menu/cheesy-bread.webp",
+    "imageAlt": "Photo of stuffed cheesy bread pulled apart showing melted cheese",
+    "ingredients": [
+      "Pizza dough",
+      "Shredded mozzarella",
+      "Garlic butter",
+      "Italian herb seasoning"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk"
+    ],
+    "sizes": [
+      {
+        "name": "Regular",
+        "detail": "8 pieces",
+        "price": 8.49
+      },
+      {
+        "name": "Large",
+        "detail": "16 pieces",
+        "price": 12.99
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is cheesy bread worth the upgrade over plain breadsticks?",
+        "answer": "At full menu price it is a judgement call. Inside a bundle where both cost the same flat rate, it is straightforwardly the better pick."
+      },
+      {
+        "question": "Does it survive delivery?",
+        "answer": "Less well than most sides. Melted cheese firms up as it cools and the texture changes noticeably within about twenty minutes. It is at its best on a carryout order."
+      },
+      {
+        "question": "Can I change the dipping sauce?",
+        "answer": "Most stores will swap the included dip for marinara at no charge. Marinara cuts the richness better than garlic sauce does on a cheese-heavy side."
+      },
+      {
+        "question": "How does it compare to a slice of pizza on calories?",
+        "answer": "Closely. Per piece it is in the same territory as a slice of hand-tossed pizza, which surprises people who order it as a light extra alongside a full pizza."
+      }
+    ],
+    "related": [
+      "garlic-parmesan-breadsticks",
+      "pan-pizza-build-your-own",
+      "chicken-wings"
+    ],
+    "popular": true
+  },
+  {
+    "id": "mi-13",
+    "slug": "boneless-chicken-bites",
+    "category": "Chicken",
+    "title": "Boneless Chicken Bites",
+    "description": "Breaded chicken pieces tossed in a sauce of your choice. The most delivery-proof item on the menu.",
+    "fullContent": "<p>Boneless bites are breaded chicken breast pieces, fried, then tossed in whichever sauce you pick. They are not wings and are not sold as such, and they are the single best-travelling item on a chain menu.</p><h2>Where it fits on value</h2><p>Priced close to wings for a similar weight of food, but with a higher proportion of actual meat because there is no bone. On a pure food-per-dollar basis they beat wings comfortably; on flavour, opinions divide.</p><h2>Ordering notes</h2><p>Get the sauce on the side if the order is being delivered. Tossed in sauce at the store, the breading softens during transit and you lose the texture the item is built around. In a separate pot it arrives intact and you toss it yourself in ten seconds.</p><p>Sauce choice is free at most stores and the difference between them is large. If you are ordering for a group, two smaller portions with different sauces usually goes down better than one large portion of one sauce, and often costs the same.</p><h2>What to pair them with</h2><p>They work well as the second item in a two-for bundle alongside a pizza, and they are a common pick for people who want protein without ordering a second pizza. Alongside a heavily topped pizza they are more food than most tables finish.</p>",
+    "price": 8.99,
+    "currency": "USD",
+    "calories": 60,
+    "caloriesNote": "Approximate, per piece, before sauce.",
+    "rating": 4.3,
+    "reviewCount": 267,
+    "image": "/images/menu/boneless-chicken-bites.webp",
+    "imageAlt": "Photo of boneless chicken bites with dipping sauces",
+    "ingredients": [
+      "Breaded chicken breast",
+      "Choice of sauce",
+      "Seasoning"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk",
+      "Soy"
+    ],
+    "sizes": [
+      {
+        "name": "Regular",
+        "detail": "8 pieces",
+        "price": 8.99
+      },
+      {
+        "name": "Large",
+        "detail": "16 pieces",
+        "price": 15.49
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Should I get the sauce on the side?",
+        "answer": "For delivery, yes. Sauce applied in-store softens the breading during the journey. In a separate pot the texture survives and you can toss it yourself when it arrives."
+      },
+      {
+        "question": "Are they better value than wings?",
+        "answer": "On meat per dollar, clearly — there is no bone weight. Whether they are better eating is a matter of preference, and plenty of people would still take the wings."
+      },
+      {
+        "question": "Is sauce choice free?",
+        "answer": "At most stores yes, and the range is wide. Ordering two smaller portions with different sauces is a common move for a group and usually costs no more than one large portion."
+      },
+      {
+        "question": "Do they reheat well?",
+        "answer": "Better than almost anything else on the menu, especially in an air fryer or hot oven. This is the item to over-order if you want leftovers that are still good the next day."
+      }
+    ],
+    "related": [
+      "chicken-wings",
+      "buffalo-chicken-pizza",
+      "garlic-parmesan-breadsticks"
+    ]
+  },
+  {
+    "id": "mi-14",
+    "slug": "chicken-wings",
+    "category": "Chicken",
+    "title": "Chicken Wings",
+    "description": "Bone-in wings, baked rather than fried at most chain stores, with a choice of sauces.",
+    "fullContent": "<p>Wings are the item where expectations most often diverge from reality. At most pizza chains they are baked in the same conveyor oven as the pizza rather than deep fried, which produces a different result to a dedicated wing shop — less crisp, less greasy, and cooked to a consistent standard.</p><h2>Where it fits on value</h2><p>Mid-range on price and poor on food per dollar, because a substantial share of the weight is bone. They are rarely the best value item in a bundle and are frequently excluded from the cheapest offers or surcharged inside them.</p><h2>Ordering notes</h2><p>Order sauce on the side for delivery, as with the boneless bites — the same softening problem applies to the skin.</p><p>If you want them crisper, ask for well done. Because they are oven-baked, extra time in the oven genuinely improves the skin rather than drying them out the way it would with fried wings.</p><h2>Realistic portioning</h2><p>Eight wings is a side for two people, not a meal for one. If wings are the main event of your order rather than an accompaniment, count on ten to twelve per person and price accordingly — at which point a second pizza is usually the cheaper way to feed the same table.</p>",
+    "price": 9.49,
+    "currency": "USD",
+    "calories": 90,
+    "caloriesNote": "Approximate, per wing, before sauce.",
+    "rating": 4,
+    "reviewCount": 213,
+    "image": "/images/menu/chicken-wings.png",
+    "imageAlt": "Abstract illustration representing chicken wings",
+    "ingredients": [
+      "Bone-in chicken wings",
+      "Choice of sauce",
+      "Seasoning"
+    ],
+    "allergens": [
+      "Milk",
+      "Soy"
+    ],
+    "sizes": [
+      {
+        "name": "Regular",
+        "detail": "8 wings",
+        "price": 9.49
+      },
+      {
+        "name": "Large",
+        "detail": "16 wings",
+        "price": 16.99
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Are chain pizza wings fried?",
+        "answer": "Usually not. Most pizza chains bake them in the same conveyor oven as the pizzas, which gives a consistent result but a softer skin than a deep-fried wing from a dedicated wing shop."
+      },
+      {
+        "question": "How many wings per person?",
+        "answer": "As a side alongside pizza, four to five. As the main item, ten to twelve. At that point a second pizza usually feeds the same people for less money."
+      },
+      {
+        "question": "Can I get them crispier?",
+        "answer": "Ask for well done. Because they are oven-baked rather than fried, additional oven time improves the skin instead of drying the meat out."
+      },
+      {
+        "question": "Are wings included in the main deals?",
+        "answer": "Often only in the more expensive bundles, and sometimes with a surcharge. Check the qualifying item list before assuming wings count toward a two-for offer."
+      }
+    ],
+    "related": [
+      "boneless-chicken-bites",
+      "buffalo-chicken-pizza",
+      "cheesy-bread"
+    ]
+  },
+  {
+    "id": "mi-15",
+    "slug": "chicken-alfredo-pasta",
+    "category": "Pasta & Sandwiches",
+    "title": "Chicken Alfredo Pasta",
+    "description": "Penne in a cream sauce with grilled chicken, baked in a dish. Underrated as a deal item, overrated as a main course.",
+    "fullContent": "<p>Baked pasta is a strange thing to find on a pizza menu and it exists for a specific reason: it is a qualifying item in mix-and-match bundles, and it gives a table someone who does not want pizza an option that does not blow up the order total.</p><h2>Where it fits on value</h2><p>This is its whole case. At full menu price a single-serving baked pasta is unremarkable. At a flat bundle rate alongside a pizza, it is one of the better ways to add variety to an order without adding cost.</p><h2>What you are actually getting</h2><p>Penne, a cream-based alfredo sauce, diced grilled chicken and a cheese topping, baked in a foil dish until the top browns. Portion size is one adult serving and it is genuinely one serving, not the generous restaurant kind.</p><h2>Ordering notes</h2><p>Cream sauces separate when they sit. This item is at its best within about fifteen minutes of leaving the oven and declines noticeably after that, which makes it a better carryout choice than a long-delivery one.</p><p>It is also one of the heaviest items per portion on the menu — comparable to several slices of pizza. People order it as the lighter option and it usually is not.</p>",
+    "price": 8.99,
+    "currency": "USD",
+    "calories": 620,
+    "caloriesNote": "Approximate, for the full single-serving dish.",
+    "rating": 4.1,
+    "reviewCount": 154,
+    "image": "/images/menu/chicken-alfredo-pasta.png",
+    "imageAlt": "Abstract illustration representing chicken alfredo pasta",
+    "ingredients": [
+      "Penne pasta",
+      "Alfredo cream sauce",
+      "Grilled chicken breast",
+      "Shredded cheese blend"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk",
+      "Egg"
+    ],
+    "sizes": [
+      {
+        "name": "Single serving",
+        "detail": "Baked in a foil dish",
+        "price": 8.99
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is the pasta a full meal?",
+        "answer": "One adult serving, but a modest one by restaurant standards. Most people eating it as their only item are still hungry afterwards, which is why it works better as part of a bundle than on its own."
+      },
+      {
+        "question": "Does it count toward mix-and-match deals?",
+        "answer": "At most chains yes, and that is where its value lies. Paying the flat bundle rate for a pasta is considerably better than paying menu price for it."
+      },
+      {
+        "question": "Why does the sauce separate?",
+        "answer": "Cream-based sauces split as they cool and sit. It is at its best soon after baking, which makes it a better carryout item than one to order on a long delivery."
+      },
+      {
+        "question": "Is it lighter than pizza?",
+        "answer": "No. A single dish is comparable to several slices of pizza in calories. It reads as the lighter option on a menu and is not one."
+      }
+    ],
+    "related": [
+      "italian-sub-sandwich",
+      "garlic-parmesan-breadsticks",
+      "classic-cheese-pizza"
+    ]
+  },
+  {
+    "id": "mi-16",
+    "slug": "italian-sub-sandwich",
+    "category": "Pasta & Sandwiches",
+    "title": "Italian Sub Sandwich",
+    "description": "Cured meats, cheese and vegetables in an oven-baked roll. Built on the same dough line as the pizza.",
+    "fullContent": "<p>The sandwich section of a pizza menu uses the same ingredients as the pizza section in a different arrangement — same meats, same cheese, same oven. That is not a criticism; it is why the sandwiches are consistent and why they are cheap for the store to produce.</p><h2>Where it fits on value</h2><p>Like the pasta, this is a bundle item. At the flat rate inside a two-for offer it is good value; at full menu price it is competing with every sandwich shop in your neighbourhood and generally loses.</p><h2>What you are actually getting</h2><p>A baked roll with salami, ham, pepperoni or similar, provolone or mozzarella, onions, peppers and a dressing, heated through in the pizza oven so the cheese melts and the bread crisps.</p><h2>Ordering notes</h2><p>Ask for the dressing on the side if it is being delivered. Dressed sandwiches go soft in the middle within twenty minutes of leaving the oven, and this is the most common complaint about the item.</p><p>Removing vegetables is free; adding extra meat is not. As with the pizzas, subtracting is the cheap way to customise.</p><p>The portion is one substantial adult serving. Unlike the pasta, most people find it genuinely filling on its own.</p>",
+    "price": 8.49,
+    "currency": "USD",
+    "calories": 700,
+    "caloriesNote": "Approximate, for the full sandwich as served.",
+    "rating": 4.2,
+    "reviewCount": 132,
+    "image": "/images/menu/italian-sub-sandwich.png",
+    "imageAlt": "Abstract illustration representing an Italian sub sandwich",
+    "ingredients": [
+      "Oven-baked roll",
+      "Salami",
+      "Smoked ham",
+      "Pepperoni",
+      "Provolone cheese",
+      "Onion",
+      "Green pepper",
+      "Italian dressing"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk",
+      "Soy"
+    ],
+    "sizes": [
+      {
+        "name": "Regular",
+        "detail": "Oven-baked, one serving",
+        "price": 8.49
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is the sandwich a good bundle item?",
+        "answer": "Yes. At the flat rate inside a two-for offer it is one of the better-value qualifying items, particularly for someone at the table who does not want pizza."
+      },
+      {
+        "question": "Why does it go soggy?",
+        "answer": "The dressing soaks into a warm roll during transit. Asking for it on the side solves the problem entirely and takes five seconds to fix when it arrives."
+      },
+      {
+        "question": "Can I customise the fillings?",
+        "answer": "Removing items is free at most stores; adding extra meat or cheese is charged. That is the same pricing logic as the pizzas."
+      },
+      {
+        "question": "Is one sandwich enough for a meal?",
+        "answer": "For most people, yes. It is more filling than the pasta and is a reasonable standalone order in a way the pasta is not."
+      }
+    ],
+    "related": [
+      "chicken-alfredo-pasta",
+      "garlic-parmesan-breadsticks",
+      "boneless-chicken-bites"
+    ]
+  },
+  {
+    "id": "mi-17",
+    "slug": "chocolate-lava-cake",
+    "category": "Desserts",
+    "title": "Chocolate Lava Cake",
+    "description": "Individual baked chocolate cake with a molten centre. The most reliably good dessert on a pizza menu.",
+    "fullContent": "<p>Lava cakes arrive at the store part-baked and are finished in the oven when you order, which is why they come out with a liquid centre rather than a uniformly cooked one. That process is also why they are consistent between stores in a way that few dessert items are.</p><h2>Where it fits on value</h2><p>Priced as an add-on rather than a bundle item at most chains, typically discounted a dollar or two if there is already a pizza in the basket. That add-on rate is where it makes sense; at full standalone price it is expensive for what it is.</p><h2>Ordering notes</h2><p>Eat it soon. The molten centre sets as it cools and a lava cake that has spent forty minutes in a delivery bag is just a small chocolate cake. Of everything on the menu, this is the item most improved by carryout.</p><p>Two cakes come in a standard order at most stores. If you are ordering for one person, that is a portion and a half, not one.</p><h2>Nutrition note</h2><p>Around four hundred calories per cake. It is a genuinely rich item and is best understood as a shared dessert rather than an individual one, whatever the packaging suggests.</p>",
+    "price": 5.99,
+    "currency": "USD",
+    "calories": 400,
+    "caloriesNote": "Approximate, per individual cake.",
+    "rating": 4.7,
+    "reviewCount": 508,
+    "image": "/images/menu/chocolate-lava-cake.png",
+    "imageAlt": "Abstract illustration representing a chocolate lava cake",
+    "ingredients": [
+      "Chocolate cake batter",
+      "Molten chocolate centre",
+      "Cocoa",
+      "Butter",
+      "Egg"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk",
+      "Egg",
+      "Soy"
+    ],
+    "sizes": [
+      {
+        "name": "Two cakes",
+        "detail": "Standard order, baked to order",
+        "price": 5.99
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Why is the centre sometimes solid?",
+        "answer": "Because it has cooled. The molten centre sets as the temperature drops, so a long delivery leaves you with a normal chocolate cake. Carryout, or eating it promptly, is the whole trick."
+      },
+      {
+        "question": "How many come in an order?",
+        "answer": "Two at most stores. That is a comfortable dessert for two people or a generous one for a single person."
+      },
+      {
+        "question": "Is it cheaper with a pizza?",
+        "answer": "Usually. Desserts are commonly discounted as add-ons once a qualifying main item is already in the basket, so adding it last rather than ordering it separately is the cheaper route."
+      },
+      {
+        "question": "Can it be reheated?",
+        "answer": "Twenty seconds in a microwave will re-melt the centre reasonably well. It is one of the few items on the menu where the microwave is the right tool."
+      }
+    ],
+    "related": [
+      "cinnamon-twists",
+      "two-liter-soda",
+      "cheesy-bread"
+    ],
+    "popular": true
+  },
+  {
+    "id": "mi-18",
+    "slug": "cinnamon-twists",
+    "category": "Desserts",
+    "title": "Cinnamon Twists",
+    "description": "Pizza dough twisted, baked, and coated in cinnamon sugar with an icing dip. Cheap, sweet and shareable.",
+    "fullContent": "<p>Cinnamon twists are breadsticks that turned right instead of left: the same dough, sugar and cinnamon instead of garlic and parmesan, and a sweet icing dip instead of marinara. That shared origin is why they are the cheapest dessert on most menus.</p><h2>Where it fits on value</h2><p>The best value dessert by a clear margin on a per-person basis. A standard order feeds three or four people as an after-pizza sweet, where two lava cakes feed two. If you are ordering for a group and dessert is an afterthought, this is the pick.</p><h2>Ordering notes</h2><p>They hold up better in transit than the lava cake — there is no molten centre to lose — but they harden as they cool in the same way breadsticks do. Within half an hour they are good; after an hour they are chewy.</p><p>The icing dip is included but, as with breadstick dips, sometimes needs to be selected explicitly at checkout. Check your basket before paying.</p><h2>Nutrition note</h2><p>Lighter per piece than the lava cake, but a full order is not a light dessert. The sugar coating carries most of it.</p>",
+    "price": 5.49,
+    "currency": "USD",
+    "calories": 130,
+    "caloriesNote": "Approximate, per twist, before icing dip.",
+    "rating": 4.4,
+    "reviewCount": 291,
+    "image": "/images/menu/cinnamon-twists.png",
+    "imageAlt": "Abstract illustration representing cinnamon sugar twists",
+    "ingredients": [
+      "Pizza dough",
+      "Cinnamon sugar",
+      "Butter",
+      "Sweet icing dip"
+    ],
+    "allergens": [
+      "Wheat",
+      "Milk"
+    ],
+    "sizes": [
+      {
+        "name": "Regular",
+        "detail": "8 twists with icing dip",
+        "price": 5.49
+      }
+    ],
+    "faqs": [
+      {
+        "question": "How many people does one order feed?",
+        "answer": "Three or four as an after-pizza dessert. That makes it better value per head than the lava cakes, which comfortably serve two."
+      },
+      {
+        "question": "Do they survive delivery?",
+        "answer": "Better than the lava cake, since there is no molten centre to set. They do harden as they cool, so they are best within about half an hour."
+      },
+      {
+        "question": "Is the icing dip included?",
+        "answer": "Yes, but like breadstick dips it occasionally needs to be selected at checkout. Look for it in your basket before paying."
+      },
+      {
+        "question": "Are they the same dough as the breadsticks?",
+        "answer": "Yes — the same base dough with a sweet coating instead of a savoury one. That is why they are the cheapest dessert on the menu."
+      }
+    ],
+    "related": [
+      "chocolate-lava-cake",
+      "garlic-parmesan-breadsticks",
+      "two-liter-soda"
+    ]
+  },
+  {
+    "id": "mi-19",
+    "slug": "two-liter-soda",
+    "category": "Drinks",
+    "title": "Two-Litre Soda Bottle",
+    "description": "The standard group drink and one of the most marked-up items on any pizza menu.",
+    "fullContent": "<p>A two-litre bottle of soda from a pizza store costs roughly twice what the same bottle costs in a supermarket. That is not a scandal — it is a convenience charge, and it is the single easiest line item to remove from a pizza order if you are trying to cut the total.</p><h2>Where it fits on value</h2><p>Poor, as a standalone purchase. Considerably better inside a bundle that includes a drink at no extra cost, which several family offers do. If the bundle includes it, take it; if it costs extra, consider whether you have a shop on your street.</p><h2>Ordering notes</h2><p>It arrives at whatever temperature the store's stock is kept at, which is often room temperature rather than chilled. If cold drinks matter, ask when ordering — some stores keep chilled stock and some genuinely do not.</p><p>One two-litre bottle serves roughly six to eight glasses. For a group of four it is the right amount; for two people it is more than you will finish.</p><h2>A cheaper approach</h2><p>Ordering food for delivery and drinks from a shop is the standard way regular orderers cut ten to fifteen percent off a family order without giving anything up. It is the least painful saving available on a pizza order.</p>",
+    "price": 3.49,
+    "currency": "USD",
+    "calories": 100,
+    "caloriesNote": "Approximate, per 8 fl oz serving of a regular (non-diet) soda.",
+    "rating": 3.9,
+    "reviewCount": 96,
+    "image": "/images/menu/two-liter-soda.png",
+    "imageAlt": "Abstract illustration representing a two-litre soda bottle",
+    "ingredients": [
+      "Carbonated soft drink, 2 litre bottle"
+    ],
+    "allergens": [],
+    "sizes": [
+      {
+        "name": "2 litre",
+        "detail": "Bottle, serves 6–8 glasses",
+        "price": 3.49
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is the soda chilled?",
+        "answer": "Not always. Many stores keep bottled stock at room temperature. If you need it cold, ask when you order rather than assuming."
+      },
+      {
+        "question": "Is it cheaper to buy drinks separately?",
+        "answer": "Usually by roughly half. Buying drinks from a shop and food from the pizza store is the simplest way to cut ten to fifteen percent off a family order."
+      },
+      {
+        "question": "How many people does one bottle serve?",
+        "answer": "Six to eight glasses, so about right for four people. For two, it is more than you will get through."
+      },
+      {
+        "question": "Do bundles include a drink?",
+        "answer": "Some family and party bundles do at no additional cost, and where they do it is worth taking. Where the drink is a paid add-on, the maths is much less favourable."
+      }
+    ],
+    "related": [
+      "bottled-water-and-juice",
+      "cinnamon-twists",
+      "classic-cheese-pizza"
+    ]
+  },
+  {
+    "id": "mi-20",
+    "slug": "bottled-water-and-juice",
+    "category": "Drinks",
+    "title": "Bottled Water & Juice",
+    "description": "Individual bottled drinks, including water, juice and diet options. Convenient, and priced like it.",
+    "fullContent": "<p>The individual-bottle section exists for single orders and for people who do not want two litres of soda in the fridge afterwards. It is the most marked-up part of the menu measured per millilitre, and also the part that matters least to your total.</p><h2>Where it fits on value</h2><p>An individual bottle typically costs about half what a two-litre bottle does while containing about a quarter of the liquid. For one person that is a reasonable trade; for a group it is not close.</p><h2>What is usually stocked</h2><p>Bottled water, orange juice, and diet or zero-sugar versions of the main soda range. Availability varies more than any other menu section because it depends on what the individual store has in the cooler that week.</p><h2>Ordering notes</h2><p>If you want a zero-sugar option, check what your store actually lists rather than assuming the full range is available. Substitutions get made at store level without notice more often here than anywhere else on the menu.</p><p>Water is the one item on the menu we would suggest simply not ordering. It is the highest-margin line on the board and the one alternative that is genuinely free at home.</p>",
+    "price": 2.29,
+    "currency": "USD",
+    "calories": 0,
+    "caloriesNote": "Bottled water contains no calories. Juice and regular sodas vary — check the label.",
+    "rating": 3.8,
+    "reviewCount": 74,
+    "image": "/images/menu/bottled-water-and-juice.png",
+    "imageAlt": "Abstract illustration representing bottled water and juice",
+    "ingredients": [
+      "Bottled water",
+      "Bottled juice",
+      "Bottled soft drinks"
+    ],
+    "allergens": [],
+    "sizes": [
+      {
+        "name": "Bottled water",
+        "detail": "16.9 fl oz",
+        "price": 2.29
+      },
+      {
+        "name": "Bottled juice",
+        "detail": "Chilled, single serve",
+        "price": 2.79
+      },
+      {
+        "name": "Bottled soda",
+        "detail": "20 fl oz, incl. zero-sugar",
+        "price": 2.79
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Are zero-sugar options always available?",
+        "answer": "Not reliably. The individual-bottle range depends on what each store has in the cooler, and substitutions happen at store level. Check the listing for your store rather than the general menu."
+      },
+      {
+        "question": "Is a bottle better value than a two-litre?",
+        "answer": "Only for one person. A bottle costs roughly half the price of a two-litre for roughly a quarter of the liquid, so for any group the larger bottle wins comfortably."
+      },
+      {
+        "question": "Do drinks count toward deal minimums?",
+        "answer": "Usually toward the order minimum for delivery, but not as a qualifying item in mix-and-match bundles. Read the offer terms — this catches people out regularly."
+      },
+      {
+        "question": "Is bottled water worth ordering?",
+        "answer": "Honestly, no. It carries the highest markup on the menu and is the one item with a genuinely free alternative sitting in your kitchen."
+      }
+    ],
+    "related": [
+      "two-liter-soda",
+      "chocolate-lava-cake",
+      "classic-cheese-pizza"
+    ]
+  }
+]
