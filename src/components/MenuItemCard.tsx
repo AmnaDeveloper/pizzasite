@@ -33,13 +33,13 @@ export default function MenuItemCard({
         <p className="text-[11px] font-bold uppercase tracking-wide text-navy">
           {item.category}
         </p>
-        {/* Single-line clamps — see the note in PostCard. */}
-        <h3 className="mt-1.5 line-clamp-1 text-[17px] font-extrabold leading-snug text-ink">
+        {/* Two-line clamps — see the note in PostCard. */}
+        <h3 className="mt-1.5 line-clamp-2 min-h-[2.75em] text-[17px] font-extrabold leading-snug text-ink">
           <Link href={`/menus-prices/${item.slug}`} className="hover:text-brand">
             {item.title}
           </Link>
         </h3>
-        <p className="mt-2 line-clamp-1 flex-1 text-[14px] leading-relaxed text-ink-muted">
+        <p className="mt-2 line-clamp-2 flex-1 text-[14px] leading-relaxed text-ink-muted">
           {item.description}
         </p>
 

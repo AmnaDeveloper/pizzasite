@@ -14,10 +14,11 @@
  */
 
 /**
- * TODO(owner): replace with the domain you buy. Used for canonical URLs,
- * sitemap.xml, OpenGraph tags and structured data. No trailing slash.
+ * The live domain. Used for canonical URLs, sitemap.xml, robots.txt, OpenGraph
+ * tags and structured data, so it MUST match the domain verified in Search
+ * Console exactly — www and https included. No trailing slash.
  */
-export const SITE_URL = 'https://www.sliceandsave.com';
+export const SITE_URL = 'https://www.dominos-menus.com';
 
 export const SITE_NAME = 'Slice & Save';
 

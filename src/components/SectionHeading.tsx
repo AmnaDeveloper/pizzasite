@@ -30,7 +30,7 @@ export default function SectionHeading({
         </p>
         <h2
           id={id}
-          className="mt-2.5 text-[1.75rem] font-extrabold leading-tight tracking-tight text-navy-dark sm:text-[2rem]"
+          className="mt-2.5 scroll-mt-32 text-[1.75rem] font-extrabold leading-tight tracking-tight text-navy-dark sm:text-[2rem]"
         >
           {title}
         </h2>

@@ -71,6 +71,16 @@ Left unused (no confident match, flagged rather than guessed): `extravaganzza-pi
 
 ---
 
+## 2c. Homepage redesign & content pass (2026-09-23)
+
+- **False claims removed:** the hero stat and meta description still promised "16 city delivery guides" (feature removed earlier), and the guides intro still credited "a former delivery driver and a registered dietitian". Both fixed; hero stats are now counted from the data (items, deal types, guides) so they can't drift again.
+- **Answer-first hero:** a "Quick answer" card shows cheese-pizza prices by size plus the carryout-deal price in the first screen — the head query answered where Google can lift it as a snippet.
+- **New original content:** a price-per-square-inch analysis (computed from `menu-items.json`, matches the large-vs-medium guide), a price-range summary by menu section, a 5-step "how to pay less" section linking to five guides, and a methodology + team block for E-E-A-T. New FAQ: "Which pizza size is the best value?"
+- **Design:** on-page jump links, two tinted sections for rhythm, card titles clamp at two lines instead of one (deal and guide titles were being truncated), mobile-safe value table.
+- **Real menu photos:** 14 menu items were still showing abstract placeholder art although matching photos had been added in `public/images/`. Checked all 14 (no brand logos), moved them to `/images/menu/{slug}.jpg` and rewrote alt text to describe each photo. Still on placeholders: `thin-crust-build-your-own`, `two-liter-soda` (no photo supplied).
+
+---
+
 ## 3. Already working in your favor
 
 Worth knowing before you start changing things — most sites applying for AdSense are missing all of this.

@@ -66,6 +66,14 @@ const nextConfig: NextConfig = {
    */
   async redirects() {
     return [
+      // One canonical host. Without this the bare domain serves a full
+      // duplicate of every page alongside www.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'dominos-menus.com' }],
+        destination: 'https://www.dominos-menus.com/:path*',
+        permanent: true,
+      },
       { source: '/menu', destination: '/menus-prices', statusCode: 301 },
       { source: '/menu-prices', destination: '/menus-prices', statusCode: 301 },
       { source: '/prices', destination: '/menus-prices', statusCode: 301 },
@@ -79,8 +87,12 @@ const nextConfig: NextConfig = {
       { source: '/opening-hours', destination: '/hours', statusCode: 301 },
       { source: '/store-hours', destination: '/hours', statusCode: 301 },
       { source: '/locator', destination: '/store-locator', statusCode: 301 },
-      { source: '/cities', destination: '/locations', statusCode: 301 },
-      { source: '/city/:slug', destination: '/locations/:slug', statusCode: 301 },
+      // The city pages were removed — send old city URLs to the delivery guide
+      // rather than to a /locations route that no longer exists.
+      { source: '/cities', destination: '/delivery-near-me', statusCode: 301 },
+      { source: '/city/:slug', destination: '/delivery-near-me', statusCode: 301 },
+      { source: '/locations', destination: '/delivery-near-me', statusCode: 301 },
+      { source: '/locations/:slug', destination: '/delivery-near-me', statusCode: 301 },
       { source: '/privacy', destination: '/privacy-policy', statusCode: 301 },
       { source: '/terms-of-service', destination: '/terms', statusCode: 301 },
       { source: '/cookie-policy', destination: '/cookies', statusCode: 301 },

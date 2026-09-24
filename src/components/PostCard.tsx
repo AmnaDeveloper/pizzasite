@@ -28,15 +28,15 @@ export default function PostCard({
         <p className="text-[11px] font-bold uppercase tracking-wide text-navy">
           {post.category}
         </p>
-        {/* Title and excerpt are each clamped to a single line so every card in
-            a row is exactly the same height. Switch to line-clamp-2 if titles
-            are being cut too aggressively at your breakpoint. */}
-        <h3 className="mt-1.5 line-clamp-1 text-[17px] font-extrabold leading-snug text-ink">
+        {/* Title and excerpt are each clamped to two lines so every card in
+            a row is exactly the same height. Switch to line-clamp-1 for a denser
+            grid if titles are short. */}
+        <h3 className="mt-1.5 line-clamp-2 min-h-[2.75em] text-[17px] font-extrabold leading-snug text-ink">
           <Link href={`/posts/${post.slug}`} className="hover:text-brand">
             {post.title}
           </Link>
         </h3>
-        <p className="mt-2 line-clamp-1 flex-1 text-[14px] leading-relaxed text-ink-muted">
+        <p className="mt-2 line-clamp-2 flex-1 text-[14px] leading-relaxed text-ink-muted">
           {post.excerpt}
         </p>
 
