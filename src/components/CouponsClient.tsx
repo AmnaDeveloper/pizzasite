@@ -54,6 +54,9 @@ export default function CouponsClient({
             }`}
           >
             {type}
+            <span className={`ml-1.5 text-[12px] ${activeType === type ? 'text-white/80' : 'text-ink-muted'}`}>
+              {type === 'All' ? coupons.length : coupons.filter((c) => c.type === type).length}
+            </span>
           </button>
         ))}
       </div>
@@ -62,53 +65,67 @@ export default function CouponsClient({
         Showing {visible.length} of {coupons.length} deal types.
       </p>
 
-      <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((coupon) => {
           const worked = savings[coupon.id];
           return (
             <li key={coupon.id}>
               <article
                 id={coupon.id}
-                className="flex h-full scroll-mt-32 flex-col overflow-hidden rounded-card border border-line bg-surface"
+                className="group flex h-full scroll-mt-32 flex-col overflow-hidden rounded-card border border-line bg-surface shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-navy/10"
               >
-                <div className="flex items-start justify-between gap-3 bg-navy-soft px-4 py-3">
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-wide text-navy">
+                {/* Ticket stub */}
+                <div className="relative bg-navy px-5 pb-5 pt-4 text-white">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="rounded-full bg-white/15 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide">
                       {coupon.type}
-                    </p>
-                    <p className="text-2xl font-extrabold leading-tight text-brand">
-                      {coupon.discount}
-                    </p>
+                    </span>
+                    {coupon.featured ? (
+                      <span className="rounded-full bg-brand px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide">
+                        Featured
+                      </span>
+                    ) : (
+                      <Tag className="h-5 w-5 text-white/50" aria-hidden="true" />
+                    )}
                   </div>
-                  <Tag className="h-5 w-5 shrink-0 text-navy" aria-hidden="true" />
+                  <p className="mt-3 text-[2rem] font-black leading-none tracking-tight">
+                    {coupon.discount}
+                  </p>
                 </div>
 
-                <div className="flex flex-1 flex-col p-4">
-                  <h3 className="text-base font-extrabold leading-snug text-ink">
+                {/* Perforation: dashed rule with a notch cut from each side. */}
+                <div aria-hidden="true" className="relative h-0">
+                  <span className="absolute -left-3 -top-3 h-6 w-6 rounded-full border border-line bg-surface" />
+                  <span className="absolute -right-3 -top-3 h-6 w-6 rounded-full border border-line bg-surface" />
+                  <span className="absolute inset-x-5 top-0 border-t-2 border-dashed border-line" />
+                </div>
+
+                <div className="flex flex-1 flex-col px-5 pb-5 pt-6">
+                  <h3 className="text-[17px] font-extrabold leading-snug text-ink">
                     {coupon.title}
                   </h3>
-                  <p className="mt-2 inline-flex items-center gap-1.5 text-[13px] font-semibold text-navy">
-                    <Users className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <p className="mt-2 inline-flex items-center gap-1.5 self-start rounded-full bg-navy-soft px-2.5 py-1 text-[12px] font-bold text-navy-dark">
+                    <Users className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                     Best for: {coupon.bestFor}
                   </p>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-muted">
                     {coupon.desc}
                   </p>
 
-                  <p className="mt-3 rounded-md bg-surface-alt px-3 py-2 text-[13px] leading-snug text-ink-muted">
+                  <p className="mt-4 border-l-[3px] border-brand pl-3 text-[13px] leading-snug text-ink-muted">
                     <strong className="text-ink">How to use it: </strong>
                     {coupon.howTo}
                   </p>
 
-                  <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-3 text-[12px] leading-snug text-ink-muted">
+                  <div className="mt-5 flex items-center justify-between gap-3 border-t border-line pt-3 text-[12px] leading-snug text-ink-muted">
                     {worked ? (
                       <a
                         href="#deal-math"
-                        className="inline-flex items-center gap-1 font-bold text-brand-dark hover:underline"
+                        className="inline-flex items-center gap-1.5 rounded-md bg-brand-soft px-2 py-1 font-bold text-brand-dark hover:underline"
                       >
                         <TrendingDown className="h-4 w-4" aria-hidden="true" />
                         Saves {CURRENCY_SYMBOL}
-                        {worked.saving.toFixed(2)} ({worked.savingPct}%) in our example
+                        {worked.saving.toFixed(2)} ({worked.savingPct}%)
                       </a>
                     ) : (
                       <span>{coupon.expiry}</span>
