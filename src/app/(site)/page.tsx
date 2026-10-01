@@ -355,7 +355,7 @@ export default function HomePage() {
             {BRAND.name} pizza prices by size
           </h3>
           <p className="mt-2.5 max-w-3xl text-[15px] leading-relaxed text-ink-muted">
-            Sizes are 10&Prime; small, 12&Prime; medium, 14&Prime; large and 16&Prime;
+            Sizes are 10″ small, 12″ medium, 14″ large and 16″
             extra large. Calories are per slice of a large. Pan crust stops at large
             because the pans come in fixed sizes.
           </p>
@@ -374,7 +374,7 @@ export default function HomePage() {
           </h3>
           <p className="mt-2.5 max-w-3xl text-[15px] leading-relaxed text-ink-muted">
             Calories are per piece or per serving — the exact basis is listed on each
-            item&rsquo;s own page.
+            item’s own page.
           </p>
           <div className="mt-5">
             <MenuPriceTable
@@ -410,7 +410,7 @@ export default function HomePage() {
                     +{MEDIUM_TO_LARGE_MORE_FOOD}%
                   </p>
                   <p className="mt-2 text-[14px] leading-relaxed text-ink-muted">
-                    more pizza in a 14&Prime; large than a 12&Prime; medium, for{' '}
+                    more pizza in a 14″ large than a 12″ medium, for{' '}
                     {mediumRow && largeRow ? money(largeRow.price - mediumRow.price) : 'a few dollars'}{' '}
                     more at menu price.
                   </p>
@@ -419,7 +419,7 @@ export default function HomePage() {
                   <h3 className="text-[15px] font-extrabold text-ink">The rule that follows</h3>
                   <p className="mt-2 text-[14px] leading-relaxed text-ink-muted">
                     Need more pizza? Size up first, and add a second pizza only once
-                    you&rsquo;ve run out of sizes — unless a deal prices two mediums close
+                    you’ve run out of sizes — unless a deal prices two mediums close
                     to one large, which flips the maths.
                   </p>
                 </div>
@@ -571,15 +571,15 @@ export default function HomePage() {
                   <span>
                     <strong className="font-bold text-ink">A rolling store sample.</strong>{' '}
                     We price the menu across a sample of stores and publish example figures,
-                    never a single &ldquo;national&rdquo; price that doesn&rsquo;t exist.
+                    never a single “national” price that doesn’t exist.
                   </span>
                 </li>
                 <li className="flex gap-3">
                   <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-navy" aria-hidden="true" />
                   <span>
                     <strong className="font-bold text-ink">Working shown.</strong> If a figure
-                    can&rsquo;t be shown with its arithmetic — like the price-per-inch table
-                    above — it doesn&rsquo;t get published as fact.
+                    can’t be shown with its arithmetic — like the price-per-inch table
+                    above — it doesn’t get published as fact.
                   </span>
                 </li>
                 <li className="flex gap-3">
@@ -598,7 +598,7 @@ export default function HomePage() {
                   <span>
                     <strong className="font-bold text-ink">No commission.</strong> The site is
                     ad-supported. We earn nothing from what you order, so bigger baskets
-                    don&rsquo;t pay us more.
+                    don’t pay us more.
                   </span>
                 </li>
               </ul>
@@ -669,10 +669,9 @@ export default function HomePage() {
           {/* Full width, so the bars read as one continuous stack. */}
           <FaqAccordion
             faqs={HOME_FAQS}
-            heading={`${BRAND.name} prices and deals: FAQ`}
             headingId="home-faq"
             className="mt-8"
-            hideHeading
+            labelledBy="faq-title"
           />
 
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-card border border-line bg-surface-alt px-5 py-4">

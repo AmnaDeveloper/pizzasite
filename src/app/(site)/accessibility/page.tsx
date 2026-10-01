@@ -62,7 +62,7 @@ export default function AccessibilityPage() {
               focusable element, so you can always see where you are.
             </li>
             <li>
-              <strong>Skip link.</strong> A &ldquo;skip to main content&rdquo; link is the
+              <strong>Skip link.</strong> A “skip to main content” link is the
               first thing in the tab order on every page, so you do not have to tab through
               the navigation every time.
             </li>

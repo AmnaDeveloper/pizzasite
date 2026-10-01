@@ -106,8 +106,8 @@ export interface Coupon {
   discount: string;
   title: string;
   desc: string;
-  /** Illustrative code — clearly labelled as an example in the UI. */
-  code: string;
+  /** Who the offer suits, in a few words — shown as the card's "Best for" line. */
+  bestFor: string;
   /** ISO date or a phrase like "Ongoing". */
   expiry: string;
   tags: string[];

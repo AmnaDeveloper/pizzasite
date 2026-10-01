@@ -172,7 +172,7 @@ export default function HoursPage() {
           </div>
           <p className="mt-3 text-[13px] text-ink-muted">
             Times shown in 24-hour format. These are market-level examples for reference —
-            confirm your own store&apos;s hours before ordering.
+            confirm your own store’s hours before ordering.
           </p>
         </div>
       </section>
@@ -192,7 +192,7 @@ export default function HoursPage() {
             <li>
               <strong>Staffing is at its lowest.</strong> The closing crew is smaller than
               the dinner-rush crew, so a burst of late orders takes longer to clear than the
-              same volume at seven o&apos;clock.
+              same volume at seven o’clock.
             </li>
             <li>
               <strong>Clean-down has started.</strong> Prep areas and equipment are broken

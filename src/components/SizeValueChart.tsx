@@ -76,7 +76,7 @@ export default function SizeValueChart({ item }: { item: MenuItem }) {
                 <th scope="row" className="whitespace-nowrap px-4 py-3.5 text-left font-semibold text-ink">
                   {r.size}
                   <span className="ml-1.5 text-[13px] font-medium text-ink-muted">
-                    {r.diameter}&Prime;
+                    {r.diameter}″
                   </span>
                 </th>
                 <td className="hidden whitespace-nowrap px-3 py-3.5 text-right tabular-nums text-ink-muted sm:table-cell">

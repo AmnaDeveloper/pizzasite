@@ -150,7 +150,7 @@ export default function CookiePolicyPage() {
           <h2>Advertising cookies specifically</h2>
           <p>
             Google, as a third-party vendor, uses cookies to serve adverts on this site.
-            Google&apos;s use of advertising cookies enables it and its partners to serve
+            Google’s use of advertising cookies enables it and its partners to serve
             adverts based on your visits to this site and other sites on the internet. Other
             third-party vendors and ad networks may also serve adverts here and may set
             their own cookies.
@@ -205,7 +205,7 @@ export default function CookiePolicyPage() {
               rel="noopener noreferrer nofollow"
               target="_blank"
             >
-              Google&apos;s opt-out browser add-on
+              Google’s opt-out browser add-on
             </a>
             .
           </p>

@@ -119,7 +119,7 @@ export default function PrivacyPolicyPage() {
               Google, as a third-party vendor, uses cookies to serve adverts on this site.
             </li>
             <li>
-              Google&apos;s use of advertising cookies enables it and its partners to serve
+              Google’s use of advertising cookies enables it and its partners to serve
               adverts to you based on your visits to this site and other sites on the
               internet.
             </li>
@@ -182,14 +182,14 @@ export default function PrivacyPolicyPage() {
               rel="noopener noreferrer nofollow"
               target="_blank"
             >
-              Google&apos;s opt-out browser add-on
+              Google’s opt-out browser add-on
             </a>
             .
           </p>
 
           <h2>Who we share information with</h2>
           <p>
-            We do not sell personal information and we do not share it for anyone else&apos;s
+            We do not sell personal information and we do not share it for anyone else’s
             independent marketing. Information is shared only with:
           </p>
           <ul>
@@ -208,7 +208,7 @@ export default function PrivacyPolicyPage() {
           <p>
             Contact-form messages are kept for as long as they are useful for handling your
             enquiry and any follow-up, and are then deleted. Analytics data is retained
-            according to the provider&apos;s standard retention settings. Advertising cookie
+            according to the provider’s standard retention settings. Advertising cookie
             lifetimes are set by the vendor and are listed in our{' '}
             <Link href="/cookies">Cookie Policy</Link>.
           </p>

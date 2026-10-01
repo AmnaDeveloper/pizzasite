@@ -119,7 +119,7 @@ export default function TeamPage() {
               corporate FAQ.
             </p>
             <p>
-              Nutrition and allergen content is checked against each chain&apos;s own
+              Nutrition and allergen content is checked against each chain’s own
               published data before it goes live. Where a chain does not publish a figure,
               we say so rather than estimating and presenting the estimate as fact.
             </p>

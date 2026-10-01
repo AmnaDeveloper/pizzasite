@@ -44,7 +44,7 @@ export default function TermsPage() {
         <div className="prose-guide mt-8">
           <p>
             These terms govern your use of {SITE_URL}, published by{' '}
-            {ORGANIZATION.legalName} ({SITE_NAME}, &ldquo;we&rdquo;, &ldquo;us&rdquo;). By
+            {ORGANIZATION.legalName} ({SITE_NAME}, “we”, “us”). By
             using the site you accept them. If you do not accept them, please do not use the
             site.
           </p>
@@ -141,8 +141,8 @@ export default function TermsPage() {
 
           <h2>7. No warranty</h2>
           <p>
-            The site and its content are provided &ldquo;as is&rdquo; and &ldquo;as
-            available&rdquo;, without warranties of any kind, express or implied, including
+            The site and its content are provided “as is” and “as
+            available”, without warranties of any kind, express or implied, including
             any implied warranty of accuracy, merchantability, fitness for a particular
             purpose or non-infringement.
           </p>

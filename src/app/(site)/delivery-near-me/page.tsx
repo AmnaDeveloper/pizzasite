@@ -210,7 +210,7 @@ export default function DeliveryNearMePage() {
                 factor, and the one the tracker never shows.
               </li>
               <li>
-                <strong>How many stops are on the driver&apos;s run.</strong> Drivers carry
+                <strong>How many stops are on the driver’s run.</strong> Drivers carry
                 several orders per trip. If yours is third, it has been in the car through
                 two other deliveries.
               </li>

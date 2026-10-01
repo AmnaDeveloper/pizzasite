@@ -23,7 +23,7 @@ export default function FaqAccordion({
   heading = 'Frequently asked questions',
   headingId = 'faq',
   className = 'mt-12',
-  hideHeading = false,
+  labelledBy,
 }: {
   faqs: Faq[];
   heading?: string;
@@ -31,29 +31,25 @@ export default function FaqAccordion({
   /** Override the default top margin when the parent already provides spacing. */
   className?: string;
   /**
-   * Visually hide the heading when the surrounding layout already shows one.
-   * It stays in the DOM so aria-labelledby still resolves for screen readers.
+   * Id of a heading the page already renders for this FAQ. When set, the
+   * accordion adds no heading of its own — a second, hidden h2 with the same
+   * text would duplicate the outline for search engines and screen readers.
    */
-  hideHeading?: boolean;
+  labelledBy?: string;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   if (!faqs?.length) return null;
 
   return (
-    <section aria-labelledby={headingId} className={className}>
-      <h2
-        id={headingId}
-        className={
-          hideHeading
-            ? 'sr-only'
-            : 'text-2xl font-extrabold tracking-tight text-navy-dark'
-        }
-      >
-        {heading}
-      </h2>
+    <section aria-labelledby={labelledBy ?? headingId} className={className}>
+      {labelledBy ? null : (
+        <h2 id={headingId} className="text-2xl font-extrabold tracking-tight text-navy-dark">
+          {heading}
+        </h2>
+      )}
 
-      <div className={`${hideHeading ? '' : 'mt-5'} space-y-3`}>
+      <div className={`${labelledBy ? '' : 'mt-5'} space-y-3`}>
         {faqs.map((faq, i) => {
           const open = openIndex === i;
           return (

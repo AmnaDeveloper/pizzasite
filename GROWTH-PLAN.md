@@ -81,6 +81,17 @@ Left unused (no confident match, flagged rather than guessed): `extravaganzza-pi
 
 ---
 
+## 2d. /coupons rebuild (2026-10-02)
+
+- **Fake codes removed.** Cards showed placeholder codes (`EXAMPLE-MIX2`…) with a Copy button — a searcher for "dominos coupons" copies one, it fails, they bounce. The `code` field is gone from the data; cards now show "Best for" and the worked saving.
+- **Original data:** "What each deal really saves" builds the same basket at menu price and on the deal (`src/lib/deal-values.ts`, computed from `menu-items.json`), with per-person cost and a percentage-vs-bundle break-even.
+- **Intent coverage:** situation → deal table (snippet target), "how to find codes that actually work" steps, FAQ expanded from 5 to 10 around real queries ("$7.99 deal", "Mix & Match", "code not working").
+- **On-page SEO:** H1 now carries "Domino's coupons & deals"; title cut to 54 chars incl. suffix; byline + Article schema with real publish/update dates.
+- **Site-wide bug fixed:** JSX text containing an HTML entity (`&rsquo;`, `&amp;`) lost its leading space in the compiled HTML ("Slice & Saveis", "Live codes:only"). Replaced entities with literal characters in 14 files; a scan of all routes now finds zero glued words. Rule going forward: write ’ “ ” & directly in JSX text, never entities.
+- **Duplicate FAQ h2 removed** on / and /coupons (`FaqAccordion` now takes `labelledBy`).
+
+---
+
 ## 3. Already working in your favor
 
 Worth knowing before you start changing things — most sites applying for AdSense are missing all of this.

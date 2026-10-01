@@ -128,7 +128,7 @@ export default function StoreLocatorPage() {
           </p>
           <p>
             The result is zones that look odd on a map and make perfect sense from a
-            driver&apos;s seat. A store two miles away across a freeway may not serve you
+            driver’s seat. A store two miles away across a freeway may not serve you
             while one three miles away on your side does.
           </p>
           <h3>Why this affects your price, not just your wait</h3>

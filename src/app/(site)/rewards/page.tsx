@@ -496,7 +496,7 @@ export default function RewardsPage() {
               href="/menus-prices"
               className="inline-flex items-center gap-2 rounded-md border border-navy px-5 py-3 text-sm font-bold text-navy transition-colors hover:bg-navy hover:text-white"
             >
-              Menu &amp; example prices
+              Menu & example prices
             </Link>
           </div>
         </div>

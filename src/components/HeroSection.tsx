@@ -77,7 +77,7 @@ export default function HeroSection() {
             <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/85">
               Every item on the {BRAND.name} menu with example prices by size, the deal
               structures that actually lower your total, and the arithmetic on when
-              carryout beats delivery. {SITE_NAME} is independent — we don&rsquo;t
+              carryout beats delivery. {SITE_NAME} is independent — we don’t
               sell pizza, so we have no reason to push you toward a bigger basket.
             </p>
 
