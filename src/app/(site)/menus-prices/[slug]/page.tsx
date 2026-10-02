@@ -28,6 +28,13 @@ import {
   generatedFaqs,
   isPizza,
   isPlural,
+  displayName,
+  isBuildYourOwn,
+  toppingLadder,
+  specialtyVersusBuild,
+  crustComparison,
+  buildYourOwnFaqs,
+  impliedToppingPrices,
   money,
   pizzaRanking,
   quickAnswer,
@@ -65,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const item = getMenuItem(slug);
   if (!item) return { title: 'Item not found' };
 
-  const name = item.title.toLowerCase();
+  const name = displayName(item).toLowerCase();
   return generatePageSEO({
     title: seoTitle(item, currentMonthYear()),
     description: seoDescription(item),
@@ -81,6 +88,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `how much is a ${name} at dominos`,
       `dominos ${name} calories`,
       `dominos ${name} sizes`,
+      ...(isBuildYourOwn(item) ? ['dominos build your own pizza price', 'dominos topping prices'] : []),
     ],
   });
 }
@@ -94,7 +102,16 @@ export default async function MenuItemPage({ params }: Props) {
 
   const url = absoluteUrl(`/menus-prices/${item.slug}`);
   const pizza = isPizza(item);
-  const name = item.title.toLowerCase();
+  const name = displayName(item).toLowerCase();
+  const byo = isBuildYourOwn(item);
+  const ladder = toppingLadder(item);
+  const versus = specialtyVersusBuild(item);
+  const crusts = byo ? crustComparison() : [];
+  const toppingPrices = impliedToppingPrices();
+  const flatTopping =
+    toppingPrices.length > 0 && toppingPrices.every((t) => t.price === toppingPrices[0].price)
+      ? toppingPrices[0].price
+      : null;
   const plural = isPlural(item);
   // "a pepperoni pizza", "the chicken alfredo pasta", "chicken wings".
   const theItem = plural ? name : `${pizza ? 'a' : 'the'} ${name}`;
@@ -126,6 +143,7 @@ export default async function MenuItemPage({ params }: Props) {
   // Generated head-query FAQs first, then the item's own editorial FAQs.
   const faqs = [
     ...generatedFaqs(item),
+    ...buildYourOwnFaqs(item),
     ...item.faqs.filter((f) => !/how many people/i.test(f.question) || !pizza),
   ];
 
@@ -135,9 +153,11 @@ export default async function MenuItemPage({ params }: Props) {
     { name: item.title, path: `/menus-prices/${item.slug}` },
   ];
 
-  const h1 = pizza
-    ? `${BRAND.name} ${item.title}: Price, Sizes & Calories`
-    : `${BRAND.name} ${item.title}: Price & Calories`;
+  const h1 = byo
+    ? `${BRAND.name} ${displayName(item)}: Build-Your-Own Prices & Toppings`
+    : pizza
+      ? `${BRAND.name} ${displayName(item)}: Price, Sizes & Calories`
+      : `${BRAND.name} ${displayName(item)}: Price & Calories`;
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -165,6 +185,9 @@ export default async function MenuItemPage({ params }: Props) {
     { href: '#prices', label: 'Prices by size' },
     ...(pizza ? [{ href: '#best-size', label: 'Best-value size' }] : []),
     ...(route ? [{ href: '#cheapest', label: 'Cheapest way to buy' }] : []),
+    ...(ladder.length ? [{ href: '#toppings', label: 'What toppings cost' }] : []),
+    ...(versus.length ? [{ href: '#build-or-specialty', label: 'Build vs specialty' }] : []),
+    ...(crusts.length > 1 ? [{ href: '#crusts', label: 'Crusts compared' }] : []),
     ...(plan.length ? [{ href: '#how-many', label: 'How many to order' }] : []),
     { href: '#nutrition', label: 'Calories & allergens' },
     { href: '#faq', label: 'FAQ' },
@@ -416,6 +439,193 @@ export default async function MenuItemPage({ params }: Props) {
                 </p>
               </div>
             </div>
+          </section>
+        ) : null}
+
+        {/* ── What toppings cost (build your own) ──────────────────────── */}
+        {ladder.length ? (
+          <section aria-labelledby="toppings" className="mt-14">
+            <h2 id="toppings" className={H2}>
+              What toppings cost on a {BRAND.name} {name}
+            </h2>
+            <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
+              {flatTopping
+                ? `In our store sample a pepperoni pizza costs ${money(flatTopping)} more than a cheese pizza at every size, so ${money(flatTopping)} is what one topping adds. Here is the ${name} with up to five toppings.`
+                : `Each topping adds the gap between a cheese and a pepperoni pizza of the same size. Here is the ${name} with up to five toppings.`}
+            </p>
+            <p className="mt-5 text-[12px] font-semibold text-ink-muted md:hidden">
+              Swipe the table sideways to see up to five toppings →
+            </p>
+            <div className="table-scroll mt-2 overflow-hidden rounded-card border border-line md:mt-5">
+              <table className="w-full min-w-[36rem] text-[15px]">
+                <caption className="sr-only">
+                  Example price of a {BRAND.name} {name} by size and number of toppings
+                </caption>
+                <thead>
+                  <tr className="bg-navy text-left text-[11px] uppercase tracking-wide text-white">
+                    <th scope="col" className="px-4 py-3 font-bold">Size</th>
+                    {[0, 1, 2, 3, 4, 5].map((n) => (
+                      <th key={n} scope="col" className="px-3 py-3 text-right font-bold">
+                        {n === 0 ? 'Cheese only' : `${n} topping${n > 1 ? 's' : ''}`}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-line">
+                  {ladder.map((row) => (
+                    <tr key={row.size} className="odd:bg-surface even:bg-surface-alt">
+                      <th scope="row" className="whitespace-nowrap px-4 py-3 text-left font-bold text-ink">
+                        {row.size}
+                        <span className="ml-1.5 text-[13px] font-medium text-ink-muted">
+                          {DIAMETER[row.size]}″
+                        </span>
+                      </th>
+                      {row.prices.map((p, i) => (
+                        <td
+                          key={i}
+                          className={`px-3 py-3 text-right tabular-nums ${
+                            i === 0 ? 'font-extrabold text-brand' : 'text-ink'
+                          }`}
+                        >
+                          {money(p)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-[14px] leading-relaxed text-ink-muted">
+              Assumes every topping costs the same as pepperoni. Premium toppings such as
+              chicken, steak or extra cheese can cost more, and some stores charge more per
+              topping on larger sizes — check the running total as you build. Free changes
+              worth knowing: light or extra sauce, light cheese, well-done bake and square
+              cut.
+            </p>
+          </section>
+        ) : null}
+
+        {/* ── Build your own vs specialty ──────────────────────────────── */}
+        {versus.length ? (
+          <section aria-labelledby="build-or-specialty" className="mt-14">
+            <h2 id="build-or-specialty" className={H2}>
+              Build your own or order a specialty pizza?
+            </h2>
+            <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
+              We priced each specialty pizza’s toppings on a large build-your-own and put it
+              next to the specialty’s own price. The label on each row shows which is the
+              cheaper way to get the same pizza.
+            </p>
+            <ul className="mt-5 grid gap-3">
+              {versus.map((v) => {
+                const specialtyWins = v.difference > 0;
+                return (
+                  <li
+                    key={v.slug}
+                    className="grid grid-cols-2 gap-3 rounded-card border border-line bg-surface p-4 sm:grid-cols-[1.4fr_1fr_1fr_1.1fr] sm:items-center sm:gap-4"
+                  >
+                    <div className="col-span-2 sm:col-span-1">
+                      <Link
+                        href={`/menus-prices/${v.slug}`}
+                        className="text-[16px] font-extrabold text-ink hover:text-navy hover:underline"
+                      >
+                        {v.title}
+                      </Link>
+                      <p className="mt-0.5 text-[13px] leading-snug text-ink-muted">
+                        {v.toppings.length} toppings: {v.toppings.join(', ').toLowerCase()}
+                      </p>
+                    </div>
+                    <p className="text-[14px] text-ink-muted">
+                      <span className="block text-[11px] font-bold uppercase tracking-wide">Specialty</span>
+                      <span className="text-[16px] font-bold tabular-nums text-ink">{money(v.specialty)}</span>
+                    </p>
+                    <p className="text-[14px] text-ink-muted">
+                      <span className="block text-[11px] font-bold uppercase tracking-wide">Built yourself</span>
+                      <span className="text-[16px] font-bold tabular-nums text-ink">{money(v.built)}</span>
+                    </p>
+                    <p
+                      className={`col-span-2 rounded-md px-3 py-2 text-[13px] font-bold sm:col-span-1 ${
+                        specialtyWins ? 'bg-brand-soft text-brand-dark' : 'bg-navy-soft text-navy-dark'
+                      }`}
+                    >
+                      {specialtyWins
+                        ? `Specialty saves ${money(v.difference)}`
+                        : v.difference === 0
+                          ? 'Same price either way'
+                          : `Building saves ${money(-v.difference)}`}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="mt-3 text-[14px] leading-relaxed text-ink-muted">
+              The rule that falls out of it: with four or more toppings, check the specialty
+              section first; with two or three, build your own. Chicken is often a premium
+              topping, so the chicken pizzas’ “building saves” figure can shrink at your
+              store.
+            </p>
+          </section>
+        ) : null}
+
+        {/* ── Crusts compared ──────────────────────────────────────────── */}
+        {crusts.length > 1 ? (
+          <section aria-labelledby="crusts" className="mt-14">
+            <h2 id="crusts" className={H2}>
+              Hand tossed vs thin crust vs pan: price and calories
+            </h2>
+            <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
+              The same build-your-own pizza on each crust, from our store sample.
+            </p>
+            <ul className="mt-5 grid gap-4 md:grid-cols-3">
+              {crusts.map((c) => {
+                const current = c.slug === item.slug;
+                return (
+                  <li key={c.slug}>
+                    <Link
+                      href={`/menus-prices/${c.slug}`}
+                      aria-current={current ? 'page' : undefined}
+                      className={`flex h-full flex-col rounded-card border p-5 transition-colors ${
+                        current
+                          ? 'border-brand bg-brand-soft/60'
+                          : 'border-line bg-surface hover:border-navy'
+                      }`}
+                    >
+                      <span className="flex items-center justify-between gap-2">
+                        <span className="text-[17px] font-extrabold text-ink">{c.name}</span>
+                        {current ? (
+                          <span className="rounded-full bg-brand px-2 py-0.5 text-[11px] font-bold uppercase text-white">
+                            This page
+                          </span>
+                        ) : null}
+                      </span>
+                      <span className="mt-3 grid grid-cols-2 gap-2 text-[13px] text-ink-muted">
+                        <span>
+                          <span className="block text-[11px] font-bold uppercase tracking-wide">Large</span>
+                          <span className="text-[18px] font-extrabold tabular-nums text-brand">{money(c.large)}</span>
+                        </span>
+                        <span>
+                          <span className="block text-[11px] font-bold uppercase tracking-wide">Cal / slice</span>
+                          <span className="text-[18px] font-extrabold tabular-nums text-ink">{c.calories}</span>
+                        </span>
+                      </span>
+                      <span className="mt-3 text-[13px] leading-snug text-ink-muted">
+                        Sizes: {c.sizes.join(', ').toLowerCase()} · from {money(c.smallest)}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="mt-3 text-[14px] leading-relaxed text-ink-muted">
+              Calories are per slice of a large with no toppings.{' '}
+              <Link
+                href="/posts/hand-tossed-vs-thin-crust-vs-pan"
+                className="font-semibold text-navy underline underline-offset-2"
+              >
+                Which crust to order, compared in full
+              </Link>
+              .
+            </p>
           </section>
         ) : null}
 

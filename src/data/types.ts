@@ -77,6 +77,12 @@ export interface MenuItem {
   slug: string;
   category: MenuCategory;
   title: string;
+  /**
+   * The name people actually search for, when it differs from the menu title
+   * ("Hand Tossed Pizza" for "Hand-Tossed Build Your Own"). Used in the page
+   * title, H1 and running text; the menu title stays in cards and breadcrumbs.
+   */
+  seoName?: string;
   description: string;
   /** Long-form HTML for the item detail page. */
   fullContent: string;

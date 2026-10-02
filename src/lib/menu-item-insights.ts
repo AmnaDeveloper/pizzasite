@@ -26,6 +26,11 @@ export function isPizza(item: MenuItem): boolean {
   );
 }
 
+/** Search-friendly name for headings and prose; falls back to the menu title. */
+export function displayName(item: MenuItem): string {
+  return item.seoName ?? item.title;
+}
+
 export function sizeOf(item: MenuItem, name: string) {
   return item.sizes.find((s) => s.name === name);
 }
@@ -62,7 +67,7 @@ export function quickAnswer(item: MenuItem): string {
     const biggest = item.sizes[item.sizes.length - 1];
     const route = cheapestRoute(item);
     return (
-      `A large ${item.title.toLowerCase()} (${DIAMETER.Large} inch, ${large.slices} slices) is about ` +
+      `A large ${displayName(item).toLowerCase()} (${DIAMETER.Large} inch, ${large.slices} slices) is about ` +
       `${money(large.price)} at ${BRAND.name} in our store sample. Sizes run from ` +
       `${money(smallest.price)} for a ${DIAMETER[smallest.name]}-inch ${smallest.name.toLowerCase()} to ` +
       `${money(biggest.price)} for a ${DIAMETER[biggest.name]}-inch ${biggest.name.toLowerCase()}.` +
@@ -161,13 +166,13 @@ export function pizzaRanking(item: MenuItem) {
   if (!isPizza(item)) return [];
   return menuItems
     .filter(isPizza)
-    .map((p) => ({ slug: p.slug, title: p.title, large: sizeOf(p, 'Large')!.price, current: p.slug === item.slug }))
+    .map((p) => ({ slug: p.slug, title: displayName(p), large: sizeOf(p, 'Large')!.price, current: p.slug === item.slug }))
     .sort((a, b) => a.large - b.large || a.title.localeCompare(b.title));
 }
 
 /** Question-shaped FAQs for the head queries, generated from the item's numbers. */
 export function generatedFaqs(item: MenuItem): Faq[] {
-  const name = item.title.toLowerCase();
+  const name = displayName(item).toLowerCase();
   const faqs: Faq[] = [];
   const route = cheapestRoute(item);
 
@@ -192,9 +197,9 @@ export function generatedFaqs(item: MenuItem): Faq[] {
     });
     faqs.push({
       question: `How many calories are in a ${BRAND.name} ${name}?`,
-      answer: `About ${item.calories} calories — ${lowerFirst(item.caloriesNote).replace(/\.$/, '')}${
-        whole ? `, or roughly ${whole.toLocaleString('en-US')} for the whole large` : ''
-      }. Crust choice changes the number more than anything else — thin crust is lighter, pan crust heavier. Treat these as estimates and check the official nutrition calculator.`,
+      answer: `About ${item.calories} calories per slice${
+        whole ? `, or roughly ${whole.toLocaleString('en-US')} for a whole large` : ''
+      }. ${item.caloriesNote} Crust choice changes the number more than anything else — thin crust is lighter, pan crust heavier. Treat these as estimates and check the official nutrition calculator.`,
     });
   } else {
     const plural = isPlural(item);
@@ -215,7 +220,7 @@ export function generatedFaqs(item: MenuItem): Faq[] {
 
 /** <title> without the site suffix: brand + item + "Price" + month, kept short. */
 export function seoTitle(item: MenuItem, monthYear: string): string {
-  const base = `${BRAND.name} ${item.title} Price`;
+  const base = `${BRAND.name} ${displayName(item)} Price`;
   const [month, year] = monthYear.split(' ');
   const full = `${base} (${monthYear})`;
   const short = `${base} (${month.slice(0, 3)} ${year})`;
@@ -226,12 +231,24 @@ export function seoTitle(item: MenuItem, monthYear: string): string {
 /** Meta description: the answer first, under 155 characters. */
 export function seoDescription(item: MenuItem): string {
   const fit = (s: string) => (s.length <= 155 ? s : `${s.slice(0, 152).replace(/[\s,;—-]+\S*$/, '')}…`);
+  if (isBuildYourOwn(item)) {
+    const large = sizeOf(item, 'Large')!;
+    const tops = impliedToppingPrices();
+    const perTopping = tops.find((t) => t.size === 'Large')?.price;
+    return fit(
+      `${BRAND.name} ${displayName(item).toLowerCase()}: a large is ${money(large.price)}` +
+        (perTopping ? ` plus about ${money(perTopping)} per topping` : '') +
+        (specialtyVersusBuild(item).length
+          ? `. Prices by size, build-your-own vs specialty, crusts compared and calories.`
+          : `. Prices by size, topping costs, crusts compared and calories.`),
+    );
+  }
   if (isPizza(item)) {
     const large = sizeOf(item, 'Large')!;
     const smallest = item.sizes[0];
     const biggest = item.sizes[item.sizes.length - 1];
     return fit(
-      `${BRAND.name} ${item.title.toLowerCase()} costs ${money(smallest.price)}–${money(biggest.price)}; ` +
+      `${BRAND.name} ${displayName(item).toLowerCase()} costs ${money(smallest.price)}–${money(biggest.price)}; ` +
         `a large is ${money(large.price)}. Prices by size, slices, calories, allergens and the cheapest way to order.`,
     );
   }
@@ -239,8 +256,126 @@ export function seoDescription(item: MenuItem): string {
   const high = Math.max(...item.sizes.map((s) => s.price));
   const range = low === high ? money(low) : `${money(low)}–${money(high)}`;
   return fit(
-    `${BRAND.name} ${item.title.toLowerCase()} costs about ${range}. Sizes, calories, ingredients, allergens and the cheapest way to order it.`,
+    `${BRAND.name} ${displayName(item).toLowerCase()} costs about ${range}. Sizes, calories, ingredients, allergens and the cheapest way to order it.`,
   );
+}
+
+/* ------------------------------------------------------- build your own */
+
+const byId = (slug: string) => menuItems.find((m) => m.slug === slug);
+
+/**
+ * The implied price of one topping, per size: pepperoni minus cheese. Both are
+ * the same pizza apart from one topping, so the gap is what a topping costs in
+ * our sample. Returns null for a size if either price is missing.
+ */
+export function impliedToppingPrices(): { size: string; price: number }[] {
+  const cheese = byId('classic-cheese-pizza');
+  const pepperoni = byId('pepperoni-pizza');
+  if (!cheese || !pepperoni) return [];
+  return PIZZA_SIZES.flatMap((size) => {
+    const c = sizeOf(cheese, size);
+    const p = sizeOf(pepperoni, size);
+    return c && p ? [{ size, price: Math.round((p.price - c.price) * 100) / 100 }] : [];
+  });
+}
+
+export function isBuildYourOwn(item: MenuItem): boolean {
+  return item.category === 'Build Your Own' && isPizza(item);
+}
+
+/** Price of this base with 0–5 toppings, per size, at the implied topping price. */
+export function toppingLadder(item: MenuItem) {
+  if (!isBuildYourOwn(item)) return [];
+  const topping = new Map(impliedToppingPrices().map((t) => [t.size, t.price]));
+  return item.sizes
+    .filter((s) => topping.has(s.name))
+    .map((s) => ({
+      size: s.name,
+      prices: [0, 1, 2, 3, 4, 5].map((n) => Math.round((s.price + n * topping.get(s.name)!) * 100) / 100),
+    }));
+}
+
+/**
+ * Each specialty pizza against building the same toppings yourself on this
+ * base, large size. Only meaningful when this base costs the same as the
+ * hand-tossed cheese pizza the specialties are built on.
+ */
+export function specialtyVersusBuild(item: MenuItem) {
+  if (!isBuildYourOwn(item)) return [];
+  const cheese = byId('classic-cheese-pizza');
+  const base = sizeOf(item, 'Large');
+  const toppingLarge = impliedToppingPrices().find((t) => t.size === 'Large')?.price;
+  if (!cheese || !base || !toppingLarge || base.price !== sizeOf(cheese, 'Large')?.price) return [];
+
+  return menuItems
+    .filter((m) => m.category === 'Specialty Pizza' && !['classic-cheese-pizza', 'pepperoni-pizza'].includes(m.slug))
+    .flatMap((m) => {
+      const large = sizeOf(m, 'Large');
+      if (!large) return [];
+      // Ingredients are listed dough, sauce, cheese, then toppings.
+      const toppings = m.ingredients.slice(3);
+      const built = Math.round((base.price + toppings.length * toppingLarge) * 100) / 100;
+      return [
+        {
+          slug: m.slug,
+          title: m.title,
+          toppings,
+          specialty: large.price,
+          built,
+          difference: Math.round((built - large.price) * 100) / 100,
+        },
+      ];
+    })
+    .sort((a, b) => b.difference - a.difference);
+}
+
+/** Hand tossed vs thin vs pan, side by side. */
+export function crustComparison() {
+  return menuItems.filter(isBuildYourOwn).map((m) => ({
+    slug: m.slug,
+    name: displayName(m),
+    large: sizeOf(m, 'Large')!.price,
+    smallest: m.sizes[0].price,
+    calories: m.calories,
+    sizes: m.sizes.map((s) => s.name),
+    slicesLarge: sizeOf(m, 'Large')?.slices,
+  }));
+}
+
+/** Extra FAQs for build-your-own pages, from the numbers above. */
+export function buildYourOwnFaqs(item: MenuItem): Faq[] {
+  if (!isBuildYourOwn(item)) return [];
+  const tops = impliedToppingPrices();
+  const flat = tops.length > 0 && tops.every((t) => t.price === tops[0].price);
+  const ladder = toppingLadder(item).find((l) => l.size === 'Large');
+  const versus = specialtyVersusBuild(item);
+  const cheaperSpecialties = versus.filter((v) => v.difference > 0);
+  const faqs: Faq[] = [];
+
+  if (tops.length) {
+    faqs.push({
+      question: `How much does a topping cost at ${BRAND.name}?`,
+      answer: flat
+        ? `About ${money(tops[0].price)} per topping in our sample, at every size — that is the gap between a cheese and a pepperoni pizza of the same size. Premium toppings such as chicken or extra cheese can cost more, and some stores charge more per topping on bigger pizzas, so watch the total as you add them.`
+        : `In our sample: ${tops.map((t) => `${t.size.toLowerCase()} ${money(t.price)}`).join(', ')} per topping. Premium toppings can cost more.`,
+    });
+  }
+  if (ladder) {
+    faqs.push({
+      question: `How much is a large build-your-own ${displayName(item).toLowerCase()} with toppings?`,
+      answer: `About ${money(ladder.prices[0])} with no toppings, ${money(ladder.prices[1])} with one, ${money(ladder.prices[2])} with two and ${money(ladder.prices[3])} with three, in our store sample. Inside a deal the topping count often stops mattering — a carryout large is a flat price with any toppings.`,
+    });
+  }
+  if (versus.length) {
+    faqs.push({
+      question: `Is it cheaper to build your own pizza or order a specialty pizza at ${BRAND.name}?`,
+      answer: cheaperSpecialties.length
+        ? `For pizzas with four or more toppings, the specialty is usually cheaper. In our sample, building the ${cheaperSpecialties[0].title.toLowerCase()}'s ${cheaperSpecialties[0].toppings.length} toppings yourself costs ${money(cheaperSpecialties[0].built)} on a large, against ${money(cheaperSpecialties[0].specialty)} for the specialty. With two or three toppings, building your own usually wins.`
+        : 'With two or three toppings, building your own is usually cheaper; past that, check the specialty section before checking out.',
+    });
+  }
+  return faqs;
 }
 
 export { PIZZA_SIZES, DIAMETER, SLICES_PER_ADULT };
