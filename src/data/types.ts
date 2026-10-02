@@ -86,9 +86,6 @@ export interface MenuItem {
   /** Calories for the default/reference serving. */
   calories: number;
   caloriesNote: string;
-  /** Editorial score out of 5 from our own tasting notes. */
-  rating: number;
-  reviewCount: number;
   image: string;
   imageAlt: string;
   ingredients: string[];

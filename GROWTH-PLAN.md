@@ -92,6 +92,16 @@ Left unused (no confident match, flagged rather than guessed): `extravaganzza-pi
 
 ---
 
+## 2e. Menu item pages (all 20) — 2026-10-02
+
+- **Fake ratings removed (policy risk).** Every item showed "4.x / 5 (N reader ratings)" and sent `aggregateRating` in Product markup, but the site has never collected a rating. Google treats that as structured-data spam (manual-action risk for the whole site). `rating`/`reviewCount` are gone from the data, the page, the cards and the schema. Only reintroduce ratings if a real rating system exists.
+- **Product → MenuItem.** Product + Offer `InStock` for items the site doesn't sell put pages into Merchant listings. Item pages and the homepage price list now use schema.org `MenuItem` with per-size offers and nutrition; plus Article (authors, real dates), Breadcrumb, FAQ.
+- **Search intent:** titles/H1 now lead with "Domino's {item} Price"; answer-first meta description ≤155 chars; quick-answer box at the top.
+- **Original computed sections** (`src/lib/menu-item-insights.ts`): price per square inch by size, cheapest way to buy (deal vs menu), how many to order by group size, rank among all pizzas, whole-pizza calories, and generated head-query FAQs. Content went from ~600 to ~1,450 words on pizza pages.
+- **Real freshness:** `ITEMS_UPDATED` date replaces the auto current-month "Last updated".
+
+---
+
 ## 3. Already working in your favor
 
 Worth knowing before you start changing things — most sites applying for AdSense are missing all of this.

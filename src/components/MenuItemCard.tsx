@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Star } from 'lucide-react';
+import { Flame } from 'lucide-react';
 import type { MenuItem } from '@/data/types';
 import { CURRENCY_SYMBOL } from '@/lib/site-config';
 
@@ -50,8 +50,8 @@ export default function MenuItemCard({
             <span className="ml-1 text-[12px] font-medium text-ink-muted">example</span>
           </p>
           <p className="inline-flex items-center gap-1 text-[13px] font-semibold text-ink-muted">
-            <Star className="h-3.5 w-3.5 fill-brand text-brand" aria-hidden="true" />
-            {item.rating.toFixed(1)}
+            <Flame className="h-3.5 w-3.5 text-brand" aria-hidden="true" />
+            {item.calories} cal
           </p>
         </div>
       </div>

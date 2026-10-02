@@ -128,35 +128,37 @@ export function articleSchema(post: Post, author: Author | undefined): Json {
   };
 }
 
+/**
+ * schema.org MenuItem for an item page.
+ *
+ * Deliberately not Product: this site does not sell the item, so Product +
+ * Offer markup would put the page into Merchant listings (which expects a
+ * seller, shipping and returns) and would invite review-snippet markup. There
+ * is also no aggregateRating — the site does not collect reader ratings, and
+ * Google treats rating markup without genuine ratings behind it as spam.
+ */
 export function menuItemSchema(item: MenuItem): Json {
   const url = absoluteUrl(`/menus-prices/${item.slug}`);
-  const prices = item.sizes.length ? item.sizes.map((s) => s.price) : [item.price];
   return {
     '@context': 'https://schema.org',
-    '@type': 'Product',
-    '@id': `${url}#product`,
+    '@type': 'MenuItem',
+    '@id': `${url}#item`,
     name: item.title,
     description: item.description,
     url,
-    category: item.category,
     image: absoluteUrl(item.image),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: item.rating,
-      reviewCount: item.reviewCount,
-      bestRating: 5,
-      worstRating: 1,
+    nutrition: {
+      '@type': 'NutritionInformation',
+      calories: `${item.calories} calories`,
+      servingSize: item.caloriesNote,
     },
-    offers: {
-      '@type': 'AggregateOffer',
+    offers: item.sizes.map((s) => ({
+      '@type': 'Offer',
+      name: `${s.name} (${s.detail})`,
+      price: s.price.toFixed(2),
       priceCurrency: item.currency || CURRENCY,
-      lowPrice: Math.min(...prices).toFixed(2),
-      highPrice: Math.max(...prices).toFixed(2),
-      offerCount: prices.length,
-      availability: 'https://schema.org/InStock',
-      /** Prices are illustrative; this is stated in the visible copy too. */
-      description: 'Example price for reference. Verify at official checkout.',
-    },
+      description: 'Example price from our store sample, not a live offer. Verify at official checkout.',
+    })),
   };
 }
 
@@ -177,15 +179,15 @@ export function priceListSchema(opts: {
     itemListElement: opts.items.map((item, i) => ({
       '@type': 'ListItem',
       position: i + 1,
+      // MenuItem, not Product — see menuItemSchema for why.
       item: {
-        '@type': 'Product',
+        '@type': 'MenuItem',
         name: item.name,
         url: absoluteUrl(item.path),
         offers: {
           '@type': 'Offer',
           price: item.price.toFixed(2),
           priceCurrency: CURRENCY,
-          availability: 'https://schema.org/InStock',
           description: 'Example price for reference. Verify at official checkout.',
         },
       },

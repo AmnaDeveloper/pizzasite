@@ -10,8 +10,6 @@
     "currency": "USD",
     "calories": 200,
     "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
-    "rating": 4.2,
-    "reviewCount": 318,
     "image": "/images/menu/classic-cheese-pizza.jpg",
     "imageAlt": "Classic cheese pizza cut into eight slices on a white plate",
     "ingredients": [
@@ -86,8 +84,6 @@
     "currency": "USD",
     "calories": 230,
     "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
-    "rating": 4.5,
-    "reviewCount": 612,
     "image": "/images/menu/pepperoni-pizza.webp",
     "imageAlt": "Photo of a baked pepperoni pizza with melted mozzarella",
     "ingredients": [
@@ -162,8 +158,6 @@
     "currency": "USD",
     "calories": 260,
     "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
-    "rating": 4.4,
-    "reviewCount": 274,
     "image": "/images/menu/loaded-supreme-pizza.webp",
     "imageAlt": "Photo of a loaded pizza with pepperoni, sausage, mushroom, olives, onion and green pepper",
     "ingredients": [
@@ -241,8 +235,6 @@
     "currency": "USD",
     "calories": 310,
     "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
-    "rating": 4.6,
-    "reviewCount": 401,
     "image": "/images/menu/meat-lovers-pizza.jpg",
     "imageAlt": "Meat lover’s pizza loaded with pepperoni and sausage on a dark serving tray",
     "ingredients": [
@@ -320,8 +312,6 @@
     "currency": "USD",
     "calories": 200,
     "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
-    "rating": 4.1,
-    "reviewCount": 189,
     "image": "/images/menu/veggie-garden-pizza.jpg",
     "imageAlt": "Veggie garden pizza topped with bell peppers, mushrooms and onions on a wooden board",
     "ingredients": [
@@ -399,8 +389,6 @@
     "currency": "USD",
     "calories": 250,
     "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
-    "rating": 4.3,
-    "reviewCount": 226,
     "image": "/images/menu/bbq-chicken-pizza.jpg",
     "imageAlt": "BBQ chicken pizza with red onion and herbs, one slice lifted",
     "ingredients": [
@@ -476,8 +464,6 @@
     "currency": "USD",
     "calories": 245,
     "caloriesNote": "Approximate, per slice of a large hand-tossed pizza cut into eight.",
-    "rating": 4.2,
-    "reviewCount": 167,
     "image": "/images/menu/buffalo-chicken-pizza.jpg",
     "imageAlt": "Buffalo chicken pizza with a ranch drizzle and green onions on a wooden board",
     "ingredients": [
@@ -554,8 +540,6 @@
     "currency": "USD",
     "calories": 200,
     "caloriesNote": "Approximate for a plain base, per slice of a large cut into eight. Each topping adds roughly 10–40 calories per slice.",
-    "rating": 4.4,
-    "reviewCount": 355,
     "image": "/images/menu/hand-tossed-build-your-own.jpg",
     "imageAlt": "Hand-tossed cheese pizza with a puffy golden crust, one slice pulled away",
     "ingredients": [
@@ -630,8 +614,6 @@
     "currency": "USD",
     "calories": 140,
     "caloriesNote": "Approximate for a plain base, per slice of a large cut into eight equivalent portions.",
-    "rating": 4.3,
-    "reviewCount": 241,
     "image": "/images/menu/thin-crust-build-your-own.png",
     "imageAlt": "Abstract illustration representing a thin crust build-your-own pizza",
     "ingredients": [
@@ -701,8 +683,6 @@
     "currency": "USD",
     "calories": 280,
     "caloriesNote": "Approximate for a plain base, per slice of a large cut into eight.",
-    "rating": 4.5,
-    "reviewCount": 298,
     "image": "/images/menu/pan-pizza-build-your-own.jpg",
     "imageAlt": "Thick pan pizza in a black pan showing its tall, airy crust",
     "ingredients": [
@@ -771,8 +751,6 @@
     "currency": "USD",
     "calories": 140,
     "caloriesNote": "Approximate, per stick, before dipping sauce.",
-    "rating": 4.4,
-    "reviewCount": 384,
     "image": "/images/menu/garlic-parmesan-breadsticks.jpg",
     "imageAlt": "Garlic parmesan breadsticks with a pot of marinara dipping sauce",
     "ingredients": [
@@ -833,8 +811,6 @@
     "currency": "USD",
     "calories": 175,
     "caloriesNote": "Approximate, per piece, before dipping sauce.",
-    "rating": 4.6,
-    "reviewCount": 452,
     "image": "/images/menu/cheesy-bread.webp",
     "imageAlt": "Photo of stuffed cheesy bread pulled apart showing melted cheese",
     "ingredients": [
@@ -895,8 +871,6 @@
     "currency": "USD",
     "calories": 60,
     "caloriesNote": "Approximate, per piece, before sauce.",
-    "rating": 4.3,
-    "reviewCount": 267,
     "image": "/images/menu/boneless-chicken-bites.webp",
     "imageAlt": "Photo of boneless chicken bites with dipping sauces",
     "ingredients": [
@@ -956,8 +930,6 @@
     "currency": "USD",
     "calories": 90,
     "caloriesNote": "Approximate, per wing, before sauce.",
-    "rating": 4,
-    "reviewCount": 213,
     "image": "/images/menu/chicken-wings.jpg",
     "imageAlt": "Plate of roasted chicken wings with a ranch dip",
     "ingredients": [
@@ -1016,8 +988,6 @@
     "currency": "USD",
     "calories": 620,
     "caloriesNote": "Approximate, for the full single-serving dish.",
-    "rating": 4.1,
-    "reviewCount": 154,
     "image": "/images/menu/chicken-alfredo-pasta.jpg",
     "imageAlt": "Bowl of penne chicken alfredo pasta topped with grilled chicken and parsley",
     "ingredients": [
@@ -1073,8 +1043,6 @@
     "currency": "USD",
     "calories": 700,
     "caloriesNote": "Approximate, for the full sandwich as served.",
-    "rating": 4.2,
-    "reviewCount": 132,
     "image": "/images/menu/italian-sub-sandwich.jpg",
     "imageAlt": "Italian sub sandwich with salami, ham, lettuce, tomato and peppers",
     "ingredients": [
@@ -1134,8 +1102,6 @@
     "currency": "USD",
     "calories": 400,
     "caloriesNote": "Approximate, per individual cake.",
-    "rating": 4.7,
-    "reviewCount": 508,
     "image": "/images/menu/chocolate-lava-cake.jpg",
     "imageAlt": "Chocolate lava cake with a molten centre next to a scoop of vanilla ice cream",
     "ingredients": [
@@ -1194,8 +1160,6 @@
     "currency": "USD",
     "calories": 130,
     "caloriesNote": "Approximate, per twist, before icing dip.",
-    "rating": 4.4,
-    "reviewCount": 291,
     "image": "/images/menu/cinnamon-twists.jpg",
     "imageAlt": "Cinnamon sugar twists with a small bowl of icing dip",
     "ingredients": [
@@ -1250,8 +1214,6 @@
     "currency": "USD",
     "calories": 100,
     "caloriesNote": "Approximate, per 8 fl oz serving of a regular (non-diet) soda.",
-    "rating": 3.9,
-    "reviewCount": 96,
     "image": "/images/menu/two-liter-soda.png",
     "imageAlt": "Abstract illustration representing a two-litre soda bottle",
     "ingredients": [
@@ -1300,8 +1262,6 @@
     "currency": "USD",
     "calories": 0,
     "caloriesNote": "Bottled water contains no calories. Juice and regular sodas vary — check the label.",
-    "rating": 3.8,
-    "reviewCount": 74,
     "image": "/images/menu/bottled-water-and-juice.jpg",
     "imageAlt": "Bottles of water and assorted fruit juices on a table",
     "ingredients": [
