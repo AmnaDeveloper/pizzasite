@@ -616,8 +616,8 @@
     "currency": "USD",
     "calories": 140,
     "caloriesNote": "Approximate for a plain base, per slice of a large cut into eight equivalent portions.",
-    "image": "/images/menu/thin-crust-build-your-own.png",
-    "imageAlt": "Abstract illustration representing a thin crust build-your-own pizza",
+    "image": "/images/menu/thin-crust-build-your-own.jpg",
+    "imageAlt": "Thin-crust cheese pizza cut into squares on a wooden board",
     "ingredients": [
       "Thin crust base",
       "Tomato pizza sauce",
@@ -1217,8 +1217,8 @@
     "currency": "USD",
     "calories": 100,
     "caloriesNote": "Approximate, per 8 fl oz serving of a regular (non-diet) soda.",
-    "image": "/images/menu/two-liter-soda.png",
-    "imageAlt": "Abstract illustration representing a two-litre soda bottle",
+    "image": "/images/menu/two-liter-soda.jpg",
+    "imageAlt": "Glasses of cola, lemon-lime and orange soda poured over ice",
     "ingredients": [
       "Carbonated soft drink, 2 litre bottle"
     ],
