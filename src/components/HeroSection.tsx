@@ -59,16 +59,16 @@ export default function HeroSection() {
               Updated {currentMonthYear()}
             </p>
 
-            {/* Mobile steps down to 40px — 56px does not fit a phone without
-                breaking mid-word. Inter is a variable font, so 900 is real. */}
-            <h1 className="mt-6 text-[2.5rem] font-black leading-[1.03] tracking-tight sm:text-[56px]">
+            {/* 60px Poppins on desktop. Poppins runs wider than the old face, so
+                tablets get 48px and phones 40px to avoid breaking mid-word. */}
+            <h1 className="mt-6 text-[2.5rem] font-extrabold leading-[1.15] tracking-tight sm:text-[48px] lg:text-[60px]">
               {BRAND.name}{' '}
               {/* The red rule marks the phrase the page is actually about. */}
               <span className="relative whitespace-nowrap">
                 menu prices
                 <span
                   aria-hidden="true"
-                  className="absolute inset-x-0 -bottom-1.5 h-1.5 rounded-full bg-brand sm:-bottom-2 sm:h-2"
+                  className="absolute inset-x-0 -bottom-0.5 h-1.5 rounded-full bg-brand sm:-bottom-1 sm:h-2"
                 />
               </span>
               , coupons and deals

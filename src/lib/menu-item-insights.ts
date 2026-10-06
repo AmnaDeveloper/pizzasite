@@ -67,7 +67,7 @@ export function quickAnswer(item: MenuItem): string {
     const biggest = item.sizes[item.sizes.length - 1];
     const route = cheapestRoute(item);
     return (
-      `A large ${displayName(item).toLowerCase()} (${DIAMETER.Large} inch, ${large.slices} slices) is about ` +
+      `A large ${displayName(item).toLowerCase()} (${DIAMETER.Large} inch${large.slices ? `, ${large.slices} slices` : ''}) is about ` +
       `${money(large.price)} at ${BRAND.name} in our store sample. Sizes run from ` +
       `${money(smallest.price)} for a ${DIAMETER[smallest.name]}-inch ${smallest.name.toLowerCase()} to ` +
       `${money(biggest.price)} for a ${DIAMETER[biggest.name]}-inch ${biggest.name.toLowerCase()}.` +
@@ -187,14 +187,17 @@ export function generatedFaqs(item: MenuItem): Faq[] {
           : ''
       } Franchise stores set their own prices, so confirm the total at checkout.`,
     });
-    faqs.push({
-      question: `How many slices are in a ${BRAND.name} ${name}?`,
-      answer: item.sizes
-        .filter((s) => s.slices)
-        .map((s) => `${s.name}: ${s.slices} slices`)
-        .join('; ')
-        .concat('. At three slices per adult, a large feeds two to three people as a meal.'),
-    });
+    // Square-cut pizzas have no slice count in the data — skip rather than guess.
+    if (item.sizes.some((s) => s.slices)) {
+      faqs.push({
+        question: `How many slices are in a ${BRAND.name} ${name}?`,
+        answer: item.sizes
+          .filter((s) => s.slices)
+          .map((s) => `${s.name}: ${s.slices} slices`)
+          .join('; ')
+          .concat('. At three slices per adult, a large feeds two to three people as a meal.'),
+      });
+    }
     faqs.push({
       question: `How many calories are in a ${BRAND.name} ${name}?`,
       answer: `About ${item.calories} calories per slice${
