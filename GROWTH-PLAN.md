@@ -102,6 +102,12 @@ Left unused (no confident match, flagged rather than guessed): `extravaganzza-pi
 
 ---
 
+## 2f. robots.txt blocked /_next/ (2026-10-12)
+
+Search Console flagged "Blocked by robots.txt". `robots.ts` disallowed `/_next/`, which is where Next.js serves every optimised image (`/_next/image?url=…`) and all CSS/JS (`/_next/static/…`). Google could not index a single image or render pages with their styles. Removed; only `/api/` stays disallowed. **Rule: never disallow `/_next/` on this site.**
+
+---
+
 ## 3. Already working in your favor
 
 Worth knowing before you start changing things — most sites applying for AdSense are missing all of this.

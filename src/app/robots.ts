@@ -8,7 +8,10 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: '/',
         // API routes hold nothing indexable and must never appear in results.
-        disallow: ['/api/', '/_next/'],
+        // Never disallow /_next/: every image (/_next/image) and all CSS/JS
+        // (/_next/static) are served from there, and Google needs them to
+        // render pages and index images.
+        disallow: ['/api/'],
       },
       // Google's ad crawler needs access to render pages for ad targeting.
       { userAgent: 'Mediapartners-Google', allow: '/' },
