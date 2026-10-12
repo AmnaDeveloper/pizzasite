@@ -17,7 +17,6 @@ export const authors: Author[] = [
       'Oversees the site end to end — what gets published, how prices are sourced, and how corrections are handled. Her standing rule for this site: if a figure cannot be shown with its working, it does not get published as fact.',
     avatar: '/images/authors/amna-sadam.png',
     avatarAlt: 'Avatar tile for Amna Sadam, Co-Founder',
-    email: 'amna@sliceandsave.com',
   },
   {
     slug: 'maha-iqbal',
@@ -29,7 +28,6 @@ export const authors: Author[] = [
       'Reviews and edits every guide before it goes live, cross-checking nutrition and allergen claims against each chain\'s own published data rather than presenting an estimate as fact.',
     avatar: '/images/authors/maha-iqbal.png',
     avatarAlt: 'Avatar tile for Maha Iqbal, Content Lead',
-    email: 'maha@sliceandsave.com',
   },
 ];
 

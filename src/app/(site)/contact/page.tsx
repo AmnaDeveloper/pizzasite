@@ -11,8 +11,6 @@ import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
 import {
   BRAND,
   CONTACT_EMAIL,
-  EDITORIAL_EMAIL,
-  ORGANIZATION,
   SITE_NAME,
 } from '@/lib/site-config';
 
@@ -156,21 +154,10 @@ export default function ContactPage() {
                     {CONTACT_EMAIL}
                   </a>
                 </li>
-                <li className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 shrink-0 text-navy" aria-hidden="true" />
-                  <a
-                    href={`mailto:${EDITORIAL_EMAIL}`}
-                    className="font-semibold text-navy hover:text-brand"
-                  >
-                    {EDITORIAL_EMAIL}
-                  </a>
-                </li>
               </ul>
               <p className="mt-4 text-[13px] leading-relaxed text-ink-muted">
-                {ORGANIZATION.legalName}
-                <br />
-                {ORGANIZATION.addressLocality}, {ORGANIZATION.addressRegion},{' '}
-                {ORGANIZATION.addressCountry}
+                Price corrections and general questions both come here — put
+                “Correction” in the subject line if you are reporting a price.
               </p>
               <p className="mt-3 text-[13px] leading-relaxed text-ink-muted">
                 Read how we handle your message in our{' '}

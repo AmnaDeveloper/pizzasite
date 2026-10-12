@@ -10,7 +10,6 @@ import {
   BRAND,
   CONTACT_EMAIL,
   NOT_AFFILIATED_DISCLAIMER,
-  ORGANIZATION,
   SITE_NAME,
 } from '@/lib/site-config';
 
@@ -55,7 +54,7 @@ export default function DisclaimerPage() {
         <div className="prose-guide mt-8">
           <h2>We are not the brand</h2>
           <p>
-            {SITE_NAME}, published by {ORGANIZATION.legalName}, is an independent editorial
+            {SITE_NAME} is an independent editorial
             website. We have no affiliation, association, authorisation, endorsement or
             sponsorship relationship with {BRAND.name} or with any of its subsidiaries,
             franchisees or affiliates.

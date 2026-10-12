@@ -8,7 +8,8 @@
  * ── BEFORE YOU DEPLOY ─────────────────────────────────────────────────────────
  * 1. Set SITE_URL to your real domain (no trailing slash).
  * 2. Fill in the THIRD_PARTY ids once you have them (GA4, AdSense, Clarity).
- * 3. Update CONTACT_EMAIL and SOCIAL_LINKS.
+ * 3. Keep CONTACT_EMAIL pointing at an inbox that receives mail; add SOCIAL_LINKS
+ *    only for accounts that exist.
  * Everything else can stay as-is.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -97,26 +98,15 @@ export const ADSENSE_PUB_ID = THIRD_PARTY.ADSENSE_PUB_ID;
 export const CLARITY_ID = THIRD_PARTY.CLARITY_ID;
 export const GOOGLE_SITE_VERIFICATION = THIRD_PARTY.GOOGLE_SITE_VERIFICATION;
 
-export const CONTACT_EMAIL = 'hello@sliceandsave.com';
-export const EDITORIAL_EMAIL = 'corrections@sliceandsave.com';
+/** The inbox that actually receives mail. Corrections go to the same address. */
+export const CONTACT_EMAIL = 'codepixel484@gmail.com';
+export const EDITORIAL_EMAIL = CONTACT_EMAIL;
 
-export const SOCIAL_LINKS = {
-  twitter: 'https://twitter.com/sliceandsave',
-  facebook: 'https://www.facebook.com/sliceandsave',
-  pinterest: 'https://www.pinterest.com/sliceandsave',
-  youtube: 'https://www.youtube.com/@sliceandsave',
-} as const;
-
-/** Twitter handle used in the twitter:site card tag. */
-export const TWITTER_HANDLE = '@sliceandsave';
-
-export const ORGANIZATION = {
-  legalName: 'Slice & Save Media',
-  foundingYear: 2023,
-  addressLocality: 'Austin',
-  addressRegion: 'TX',
-  addressCountry: 'US',
-} as const;
+/**
+ * Social profiles. Empty on purpose: only list accounts that exist — a link to
+ * a profile that 404s is a trust signal working against the site.
+ */
+export const SOCIAL_LINKS: Record<string, string> = {};
 
 /**
  * Rendered in the footer of every page, in the header notice bar, and inside

@@ -5,7 +5,6 @@ import {
   SITE_TITLE_DEFAULT,
   SITE_TITLE_TEMPLATE,
   SITE_URL,
-  TWITTER_HANDLE,
   GOOGLE_SITE_VERIFICATION,
 } from './site-config';
 import { currentMonthYear } from './utils/date';
@@ -89,8 +88,6 @@ export function generatePageSEO(input: PageSEOInput): Metadata {
     },
     twitter: {
       card: 'summary_large_image',
-      site: TWITTER_HANDLE,
-      creator: TWITTER_HANDLE,
       title: `${title} | ${SITE_NAME}`,
       description,
       images: [ogImage],
@@ -129,7 +126,6 @@ export const rootMetadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: TWITTER_HANDLE,
     title: SITE_TITLE_DEFAULT,
     description: SITE_DESCRIPTION,
     images: [absoluteUrl('/images/og-default.png')],

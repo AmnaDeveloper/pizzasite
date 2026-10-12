@@ -14,7 +14,6 @@ import {
   CONTACT_EMAIL,
   EDITORIAL_EMAIL,
   NOT_AFFILIATED_DISCLAIMER,
-  ORGANIZATION,
   SITE_NAME,
 } from '@/lib/site-config';
 
@@ -240,15 +239,16 @@ export default function AboutPage() {
               <dt className="text-[12px] font-bold uppercase tracking-wide text-ink-muted">
                 Published by
               </dt>
-              <dd className="mt-1 font-semibold text-ink">{ORGANIZATION.legalName}</dd>
+              <dd className="mt-1 font-semibold text-ink">{SITE_NAME}</dd>
             </div>
             <div className="rounded-card border border-line bg-surface-alt p-4">
               <dt className="text-[12px] font-bold uppercase tracking-wide text-ink-muted">
-                Based in
+                Edited by
               </dt>
               <dd className="mt-1 font-semibold text-ink">
-                {ORGANIZATION.addressLocality}, {ORGANIZATION.addressRegion},{' '}
-                {ORGANIZATION.addressCountry}
+                <Link href="/team" className="hover:text-brand">
+                  Amna Sadam & Maha Iqbal
+                </Link>
               </dd>
             </div>
             <div className="rounded-card border border-line bg-surface-alt p-4">
@@ -266,9 +266,7 @@ export default function AboutPage() {
                 Corrections
               </dt>
               <dd className="mt-1 font-semibold text-ink">
-                <a href={`mailto:${EDITORIAL_EMAIL}`} className="hover:text-brand">
-                  {EDITORIAL_EMAIL}
-                </a>
+                Same address — put “Correction” in the subject
               </dd>
             </div>
           </dl>

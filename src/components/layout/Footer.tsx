@@ -56,6 +56,7 @@ export default function Footer() {
                 {CONTACT_EMAIL}
               </a>
 
+              {Object.keys(SOCIAL_LINKS).length ? (
               <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[14px]">
                 {Object.entries(SOCIAL_LINKS).map(([name, url]) => (
                   <li key={name}>
@@ -70,6 +71,7 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
+              ) : null}
             </div>
 
             {COLUMNS.map((col) => (

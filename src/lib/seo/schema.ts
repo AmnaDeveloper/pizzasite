@@ -4,8 +4,8 @@
  */
 import {
   BRAND,
+  CONTACT_EMAIL,
   CURRENCY,
-  ORGANIZATION,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_URL,
@@ -22,23 +22,16 @@ export function organizationSchema(): Json {
     '@type': 'Organization',
     '@id': `${SITE_URL}/#organization`,
     name: SITE_NAME,
-    legalName: ORGANIZATION.legalName,
     url: SITE_URL,
     description: SITE_DESCRIPTION,
-    foundingDate: String(ORGANIZATION.foundingYear),
     logo: {
       '@type': 'ImageObject',
       url: absoluteUrl('/logo.svg'),
       width: 512,
       height: 512,
     },
-    sameAs: Object.values(SOCIAL_LINKS),
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: ORGANIZATION.addressLocality,
-      addressRegion: ORGANIZATION.addressRegion,
-      addressCountry: ORGANIZATION.addressCountry,
-    },
+    ...(Object.keys(SOCIAL_LINKS).length ? { sameAs: Object.values(SOCIAL_LINKS) } : {}),
+    email: CONTACT_EMAIL,
     /** Explicit, machine-readable statement that we are an independent publisher. */
     disambiguatingDescription: `${SITE_NAME} is an independent publisher and is not affiliated with ${BRAND.name}.`,
   };

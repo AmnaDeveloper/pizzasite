@@ -5,7 +5,7 @@ import LastUpdated from '@/components/LastUpdated';
 import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema } from '@/lib/seo/schema';
-import { CONTACT_EMAIL, ORGANIZATION, SITE_NAME, SITE_URL } from '@/lib/site-config';
+import { CONTACT_EMAIL, SITE_NAME, SITE_URL } from '@/lib/site-config';
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -43,8 +43,8 @@ export default function PrivacyPolicyPage() {
             fog. If anything here is unclear, email us and we will explain it.
           </p>
           <p>
-            {SITE_NAME} is published by {ORGANIZATION.legalName}, based in{' '}
-            {ORGANIZATION.addressLocality}, {ORGANIZATION.addressRegion}. For questions
+            {SITE_NAME} is an independent website run by its editors, Amna Sadam and Maha
+            Iqbal. For questions
             about this policy or about your data, contact{' '}
             <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
           </p>

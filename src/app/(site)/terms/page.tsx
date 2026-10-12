@@ -8,7 +8,6 @@ import { breadcrumbSchema } from '@/lib/seo/schema';
 import {
   BRAND,
   CONTACT_EMAIL,
-  ORGANIZATION,
   SITE_NAME,
   SITE_URL,
 } from '@/lib/site-config';
@@ -44,7 +43,7 @@ export default function TermsPage() {
         <div className="prose-guide mt-8">
           <p>
             These terms govern your use of {SITE_URL}, published by{' '}
-            {ORGANIZATION.legalName} ({SITE_NAME}, “we”, “us”). By
+            {SITE_NAME} (“we”, “us”). By
             using the site you accept them. If you do not accept them, please do not use the
             site.
           </p>
@@ -84,7 +83,7 @@ export default function TermsPage() {
           <h2>3. Intellectual property</h2>
           <p>
             All original text, layout, illustration, code and other material on this site is
-            owned by {ORGANIZATION.legalName} and protected by copyright. You may read,
+            owned by {SITE_NAME} and protected by copyright. You may read,
             print and share our pages for personal, non-commercial use, and you may quote a
             short extract with clear attribution and a link.
           </p>
@@ -154,7 +153,7 @@ export default function TermsPage() {
 
           <h2>8. Limitation of liability</h2>
           <p>
-            To the fullest extent permitted by law, neither {ORGANIZATION.legalName} nor its
+            To the fullest extent permitted by law, neither {SITE_NAME} nor its
             contributors will be liable for any indirect, incidental, special, consequential
             or punitive damages, or for any loss of profits, revenue, data or goodwill,
             arising out of or in connection with your use of this site or your reliance on
@@ -168,7 +167,7 @@ export default function TermsPage() {
 
           <h2>9. Indemnity</h2>
           <p>
-            You agree to indemnify and hold harmless {ORGANIZATION.legalName} and its
+            You agree to indemnify and hold harmless {SITE_NAME} and its
             contributors from any claim, loss or expense arising out of your misuse of the
             site or your breach of these terms.
           </p>
@@ -182,10 +181,9 @@ export default function TermsPage() {
 
           <h2>11. Governing law</h2>
           <p>
-            These terms are governed by the laws of the State of{' '}
-            {ORGANIZATION.addressRegion === 'TX' ? 'Texas' : ORGANIZATION.addressRegion},
-            United States, without regard to its conflict-of-laws rules. Nothing here
-            affects mandatory consumer protection rights available to you where you live.
+            These terms are governed by the law that applies where {SITE_NAME} is operated,
+            without regard to conflict-of-laws rules. Nothing here affects mandatory
+            consumer protection rights available to you where you live.
           </p>
 
           <h2>12. Contact</h2>

@@ -89,13 +89,24 @@ export async function POST(request: Request) {
 
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, CONTACT_TO } = process.env;
 
-  // No mail transport configured — accept the message so the form is usable in dev.
+  // No mail transport configured. In development, accept so the form is usable;
+  // in production, say so — telling a reader their message "reached us" when it
+  // was dropped is worse than no form at all.
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
-    console.info('[contact] SMTP not configured; message accepted but not sent.', {
-      topic,
-      from: email,
-    });
-    return NextResponse.json({ ok: true, delivered: false });
+    if (process.env.NODE_ENV !== 'production') {
+      console.info('[contact] SMTP not configured; message accepted but not sent.', {
+        topic,
+        from: email,
+      });
+      return NextResponse.json({ ok: true, delivered: false });
+    }
+    return NextResponse.json(
+      {
+        ok: false,
+        error: `The form is not available right now. Please email us at ${CONTACT_EMAIL} instead.`,
+      },
+      { status: 503 },
+    );
   }
 
   try {
