@@ -18,7 +18,10 @@ export default function AdSlot({
   minHeight?: number;
   className?: string;
 }) {
-  if (!ADSENSE_PUB_ID) return null;
+  // Only render for a real AdSense ad unit ID (numeric). Placeholder names
+  // like "home-mid" would reserve an empty box that never fills; until real
+  // units are created, Auto ads (loaded in app/layout.tsx) place the ads.
+  if (!ADSENSE_PUB_ID || !slotId || !/^\d+$/.test(slotId)) return null;
 
   return (
     <aside

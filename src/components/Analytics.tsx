@@ -1,5 +1,5 @@
 import Script from 'next/script';
-import { ADSENSE_PUB_ID, CLARITY_ID, GA4_ID } from '@/lib/site-config';
+import { CLARITY_ID, GA4_ID } from '@/lib/site-config';
 
 /**
  * Third-party scripts. Each block renders only when its ID is configured, so a
@@ -34,14 +34,7 @@ y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         </Script>
       ) : null}
 
-      {ADSENSE_PUB_ID ? (
-        <Script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUB_ID}`}
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
-      ) : null}
+      {/* The AdSense loader lives in app/layout.tsx <head>. */}
     </>
   );
 }

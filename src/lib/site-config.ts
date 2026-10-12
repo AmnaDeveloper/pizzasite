@@ -85,7 +85,8 @@ export const THIRD_PARTY = {
   /** e.g. 'G-XXXXXXXXXX' */
   GA4_ID: process.env.NEXT_PUBLIC_GA4_ID ?? '',
   /** e.g. 'ca-pub-0000000000000000' */
-  ADSENSE_PUB_ID: process.env.NEXT_PUBLIC_ADSENSE_PUB_ID ?? '',
+  /** AdSense publisher ID. The env var overrides it if set. */
+  ADSENSE_PUB_ID: process.env.NEXT_PUBLIC_ADSENSE_PUB_ID || 'ca-pub-7176456641838512',
   /** Microsoft Clarity project id, e.g. 'abcd1234' */
   CLARITY_ID: process.env.NEXT_PUBLIC_CLARITY_ID ?? '',
   /** Search Console HTML-tag verification token */

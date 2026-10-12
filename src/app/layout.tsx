@@ -5,7 +5,7 @@ import Analytics from '@/components/Analytics';
 import JsonLd from '@/components/JsonLd';
 import { rootMetadata } from '@/lib/seo-config';
 import { organizationSchema, websiteSchema } from '@/lib/seo/schema';
-import { COLORS } from '@/lib/site-config';
+import { ADSENSE_PUB_ID, COLORS } from '@/lib/site-config';
 
 /**
  * Poppins for every heading (see globals.css). Body text is Arial, a system
@@ -30,6 +30,17 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={poppins.variable}>
+      {/* AdSense loader in the server-rendered <head>, exactly as AdSense
+          supplies it, so its crawler finds the code in the raw HTML. */}
+      <head>
+        {ADSENSE_PUB_ID ? (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUB_ID}`}
+            crossOrigin="anonymous"
+          />
+        ) : null}
+      </head>
       <body className="min-h-dvh antialiased">
         {/* Site-wide structured data: who publishes this and what the site is. */}
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
