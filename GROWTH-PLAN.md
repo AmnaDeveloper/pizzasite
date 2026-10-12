@@ -108,6 +108,16 @@ Search Console flagged "Blocked by robots.txt". `robots.ts` disallowed `/_next/`
 
 ---
 
+## 2g. AdSense "low value content" pass (2026-10-12)
+
+- **Trust:** contact email is now `codepixel484@gmail.com` (the old `@sliceandsave.com` addresses had no mail server and bounced). Social links removed (Twitter/YouTube 404'd; no real accounts). Unverified "Slice & Save Media, Austin TX, founded 2023" removed from schema and the About/Contact/Privacy/Terms/Disclaimer pages. Contact form no longer claims delivery when SMTP isn't configured in production — **set SMTP_HOST/SMTP_USER/SMTP_PASS in Coolify** or it will ask readers to email instead.
+- **Fabricated data removed:** /hours showed "typical hours" for 16 cities generated from a code pattern. Replaced with the general weekly pattern (labelled as such), a last-order calculator, holiday hours and how to check a store. `src/data/locations.ts` deleted.
+- **Thin pages strengthened:** /store-locator (tricky addresses, carryout store choice, more FAQs); 10 non-pizza item pages get price per piece, cheapest order by group size and a same-category comparison, plus piece FAQs.
+- **Metadata:** 8 over-long titles/descriptions fixed; /posts description no longer claims a "former delivery driver and registered dietitian".
+- **Team page:** duplicate hidden h2 per author removed.
+
+---
+
 ## 3. Already working in your favor
 
 Worth knowing before you start changing things — most sites applying for AdSense are missing all of this.

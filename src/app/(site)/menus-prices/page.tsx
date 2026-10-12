@@ -44,11 +44,10 @@ const MENU_FAQS = [
 ];
 
 export const metadata: Metadata = generatePageSEO({
-  title: `${BRAND.name} Menu Prices — Full List with Sizes & Calories (${currentMonthYear()})`,
+  title: `${BRAND.name} Menu Prices (${currentMonthYear()})`,
   description:
-    `Example prices for 20 ${BRAND.name} menu items with size ladders, calorie counts, ` +
-    `ingredients and allergens. Prices start from ${CURRENCY_SYMBOL}${lowestMenuPrice().toFixed(2)} — ` +
-    'examples only, verify at official checkout.',
+    `${BRAND.name} menu prices for all 20 items — pizzas by size, sides, wings, pasta, desserts ` +
+    `and drinks — with calories and allergens. From ${CURRENCY_SYMBOL}${lowestMenuPrice().toFixed(2)}.`,
   path: '/menus-prices',
   keywords: [
     'dominos menu prices',

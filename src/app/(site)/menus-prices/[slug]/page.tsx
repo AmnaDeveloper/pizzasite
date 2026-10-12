@@ -35,6 +35,11 @@ import {
   crustComparison,
   buildYourOwnFaqs,
   impliedToppingPrices,
+  perPieceRows,
+  sidesPlan,
+  servingBasis,
+  categoryPeers,
+  pieceFaqs,
   money,
   pizzaRanking,
   quickAnswer,
@@ -108,6 +113,9 @@ export default async function MenuItemPage({ params }: Props) {
   const versus = specialtyVersusBuild(item);
   const crusts = byo ? crustComparison() : [];
   const toppingPrices = impliedToppingPrices();
+  const pieces = perPieceRows(item);
+  const sideGroups = sidesPlan(item);
+  const peers = categoryPeers(item);
   const flatTopping =
     toppingPrices.length > 0 && toppingPrices.every((t) => t.price === toppingPrices[0].price)
       ? toppingPrices[0].price
@@ -144,6 +152,7 @@ export default async function MenuItemPage({ params }: Props) {
   const faqs = [
     ...generatedFaqs(item),
     ...buildYourOwnFaqs(item),
+    ...pieceFaqs(item),
     ...item.faqs.filter((f) => !/how many people/i.test(f.question) || !pizza),
   ];
 
@@ -188,7 +197,9 @@ export default async function MenuItemPage({ params }: Props) {
     ...(ladder.length ? [{ href: '#toppings', label: 'What toppings cost' }] : []),
     ...(versus.length ? [{ href: '#build-or-specialty', label: 'Build vs specialty' }] : []),
     ...(crusts.length > 1 ? [{ href: '#crusts', label: 'Crusts compared' }] : []),
-    ...(plan.length ? [{ href: '#how-many', label: 'How many to order' }] : []),
+    ...(plan.length || sideGroups.length ? [{ href: '#how-many', label: 'How many to order' }] : []),
+    ...(pieces.length ? [{ href: '#per-piece', label: 'Price per piece' }] : []),
+    ...(peers.length > 1 ? [{ href: '#compare', label: `Compare ${item.category.toLowerCase()}` }] : []),
     { href: '#nutrition', label: 'Calories & allergens' },
     { href: '#faq', label: 'FAQ' },
   ];
@@ -439,6 +450,143 @@ export default async function MenuItemPage({ params }: Props) {
                 </p>
               </div>
             </div>
+          </section>
+        ) : null}
+
+        {/* ── Price per piece (sides, chicken, desserts) ───────────────── */}
+        {pieces.length ? (
+          <section aria-labelledby="per-piece" className="mt-14">
+            <h2 id="per-piece" className={H2}>
+              {BRAND.name} {name}: price per {pieces[0].unit.replace(/s$/, '')}
+            </h2>
+            <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
+              {pieces.length > 1
+                ? `The large size doubles the count but not the price, so each ${pieces[0].unit.replace(/s$/, '')} costs less. Here is what you pay per ${pieces[0].unit.replace(/s$/, '')} in each size.`
+                : `What one ${pieces[0].unit.replace(/s$/, '')} works out at, so you can compare it with other items on the menu.`}
+            </p>
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              {pieces.map((r, i) => {
+                const best = pieces.length > 1 && i === pieces.length - 1;
+                return (
+                  <div
+                    key={r.size}
+                    className={`rounded-card border p-5 ${best ? 'border-brand/40 bg-brand-soft/60' : 'border-line bg-surface'}`}
+                  >
+                    <p className="text-[12px] font-bold uppercase tracking-wide text-ink-muted">
+                      {r.size} · {r.pieces} {r.unit}
+                    </p>
+                    <p className="mt-2 flex items-baseline gap-2">
+                      <span className="text-[2rem] font-black leading-none tabular-nums text-brand">
+                        {money(r.perPiece)}
+                      </span>
+                      <span className="text-[14px] text-ink-muted">per {r.unit.replace(/s$/, '')}</span>
+                    </p>
+                    <p className="mt-2 text-[14px] text-ink-muted">
+                      {money(r.price)} for the {r.size.toLowerCase()}
+                      {best
+                        ? ` — ${Math.round((1 - r.perPiece / pieces[0].perPiece) * 100)}% less per ${r.unit.replace(/s$/, '')} than the ${pieces[0].size.toLowerCase()}`
+                        : ''}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
+        {/* ── How many to order (sides, chicken, desserts) ─────────────── */}
+        {sideGroups.length ? (
+          <section aria-labelledby="how-many" className="mt-14">
+            <h2 id="how-many" className={H2}>
+              How {plural ? 'many' : 'much'} {name} to order for a group
+            </h2>
+            <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
+              Planning on {servingBasis(item)}, this is the cheapest combination of sizes
+              for each group and what it costs at menu price.
+            </p>
+            <div className="table-scroll mt-5 overflow-hidden rounded-card border border-line">
+              <table className="w-full min-w-[30rem] text-[15px]">
+                <caption className="sr-only">
+                  Cheapest {name} order by group size
+                </caption>
+                <thead>
+                  <tr className="bg-navy text-left text-[11px] uppercase tracking-wide text-white">
+                    <th scope="col" className="px-4 py-3 font-bold">People</th>
+                    <th scope="col" className="px-4 py-3 font-bold">Order</th>
+                    <th scope="col" className="px-3 py-3 text-right font-bold">You get</th>
+                    <th scope="col" className="px-4 py-3 text-right font-bold">Cost</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-line">
+                  {sideGroups.map((g) => (
+                    <tr key={g.people} className="odd:bg-surface even:bg-surface-alt">
+                      <th scope="row" className="px-4 py-3 text-left font-semibold text-ink">
+                        <span className="inline-flex items-center gap-2">
+                          <Users className="h-4 w-4 text-navy" aria-hidden="true" />
+                          {g.people} people
+                        </span>
+                      </th>
+                      <td className="px-4 py-3 text-ink">{g.combo}</td>
+                      <td className="px-3 py-3 text-right tabular-nums text-ink-muted">
+                        {g.pieces} {g.unit}
+                      </td>
+                      <td className="px-4 py-3 text-right font-extrabold tabular-nums text-brand">
+                        {money(g.price)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-[14px] leading-relaxed text-ink-muted">
+              Feeding a crowd?{' '}
+              <Link href="/drinks" className="font-semibold text-navy underline underline-offset-2">
+                Our drinks & sides guide
+              </Link>{' '}
+              covers which sides go furthest per dollar.
+            </p>
+          </section>
+        ) : null}
+
+        {/* ── Compare within the category ──────────────────────────────── */}
+        {peers.length > 1 ? (
+          <section aria-labelledby="compare" className="mt-14">
+            <h2 id="compare" className={H2}>
+              {item.title} vs other {BRAND.name} {item.category.toLowerCase()}
+            </h2>
+            <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
+              Every item in the {item.category.toLowerCase()} section, cheapest first, with
+              the starting price and calories from our sample.
+            </p>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+              {peers.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={`/menus-prices/${p.slug}`}
+                    aria-current={p.current ? 'page' : undefined}
+                    className={`flex h-full flex-col rounded-card border p-4 transition-colors ${
+                      p.current
+                        ? 'border-brand bg-brand-soft/60'
+                        : 'border-line bg-surface hover:border-navy'
+                    }`}
+                  >
+                    <span className="flex items-baseline justify-between gap-3">
+                      <span className="text-[16px] font-extrabold text-ink">{p.title}</span>
+                      <span className="text-[18px] font-black tabular-nums text-brand">
+                        {money(p.from)}
+                      </span>
+                    </span>
+                    <span className="mt-1 text-[13px] text-ink-muted">
+                      {p.detail}
+                      {p.perPiece ? ` · ${money(p.perPiece)} per ${p.unit!.replace(/s$/, '')}` : ''}
+                    </span>
+                    <span className="mt-1 text-[13px] text-ink-muted">
+                      {p.calories} cal — {p.caloriesNote.charAt(0).toLowerCase() + p.caloriesNote.slice(1)}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </section>
         ) : null}
 

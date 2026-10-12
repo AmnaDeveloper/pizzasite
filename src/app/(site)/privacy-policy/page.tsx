@@ -15,8 +15,8 @@ const CRUMBS = [
 export const metadata: Metadata = generatePageSEO({
   title: 'Privacy Policy',
   description:
-    `How ${SITE_NAME} handles personal information: what we collect, the cookies used by Google ` +
-    'advertising and analytics, your choices, and how to contact us about your data.',
+    `How ${SITE_NAME} handles personal information: what we collect, the advertising and ` +
+    'analytics cookies we use, your choices, and how to contact us.',
   path: '/privacy-policy',
 });
 

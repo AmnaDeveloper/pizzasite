@@ -21,8 +21,8 @@ const CRUMBS = [
 export const metadata: Metadata = generatePageSEO({
   title: 'Disclaimer',
   description:
-    `${SITE_NAME} is an independent guide and is not affiliated with ${BRAND.name}. What our ` +
-    'prices mean, what our nutrition information does not mean, and the limits of everything here.',
+    `${SITE_NAME} is an independent guide, not affiliated with ${BRAND.name}. What our prices ` +
+    'mean, what our nutrition information does not, and the limits of this site.',
   path: '/disclaimer',
 });
 

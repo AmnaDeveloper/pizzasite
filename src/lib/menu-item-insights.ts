@@ -381,4 +381,120 @@ export function buildYourOwnFaqs(item: MenuItem): Faq[] {
   return faqs;
 }
 
+/* ------------------------------------------------- sides, chicken & extras */
+
+/** "8 sticks", "16 wings", "8 twists with icing dip" → 8 / 16 / 8. */
+export function piecesOf(detail: string): { count: number; unit: string } | null {
+  const m = detail.match(/(\d+)\s+(sticks|pieces|wings|twists|cakes)\b/i);
+  return m ? { count: Number(m[1]), unit: m[2].toLowerCase() } : null;
+}
+
+export function perPieceRows(item: MenuItem) {
+  if (isPizza(item)) return [];
+  const rows = item.sizes.flatMap((s) => {
+    const p = piecesOf(s.detail);
+    return p ? [{ size: s.name, pieces: p.count, unit: p.unit, price: s.price, perPiece: s.price / p.count }] : [];
+  });
+  return rows.length >= 1 ? rows : [];
+}
+
+/**
+ * How much of this item each person needs, as a side alongside pizza (or as a
+ * main for pasta and subs). Matches the planning rules on the drinks & sides
+ * page: one 8-piece bread side per four people, four wings each.
+ */
+const SERVING_RULE: Record<string, { perPerson: number; unit: string; basis: string }> = {
+  'garlic-parmesan-breadsticks': { perPerson: 2, unit: 'sticks', basis: 'two sticks each alongside pizza' },
+  'cheesy-bread': { perPerson: 2, unit: 'pieces', basis: 'two pieces each alongside pizza' },
+  'cinnamon-twists': { perPerson: 2, unit: 'twists', basis: 'two twists each for dessert' },
+  'chicken-wings': { perPerson: 4, unit: 'wings', basis: 'four wings each as a side' },
+  'boneless-chicken-bites': { perPerson: 4, unit: 'pieces', basis: 'four pieces each as a side' },
+};
+
+/** Cheapest mix of sizes that covers each group size. */
+export function sidesPlan(item: MenuItem) {
+  const rule = SERVING_RULE[item.slug];
+  if (!rule) return [];
+  const packs = item.sizes.flatMap((s) => {
+    const p = piecesOf(s.detail);
+    return p ? [{ name: s.name, pieces: p.count, price: s.price }] : [];
+  });
+  if (!packs.length) return [];
+  return [2, 4, 6, 8, 10, 12].map((people) => {
+    const need = people * rule.perPerson;
+    // Small search: try every count of the biggest pack, fill with the rest.
+    let best: { price: number; pieces: number; combo: string } | null = null;
+    const sorted = [...packs].sort((a, b) => b.pieces - a.pieces);
+    const big = sorted[0];
+    const small = sorted[sorted.length - 1];
+    for (let nBig = 0; nBig <= Math.ceil(need / big.pieces); nBig++) {
+      const rest = Math.max(0, need - nBig * big.pieces);
+      const nSmall = sorted.length > 1 ? Math.ceil(rest / small.pieces) : 0;
+      if (sorted.length === 1 && rest > 0) continue;
+      const price = Math.round((nBig * big.price + nSmall * small.price) * 100) / 100;
+      const pieces = nBig * big.pieces + nSmall * small.pieces;
+      const combo = [
+        nBig ? `${nBig} × ${big.name.toLowerCase()}` : '',
+        nSmall ? `${nSmall} × ${small.name.toLowerCase()}` : '',
+      ]
+        .filter(Boolean)
+        .join(' + ');
+      if (!best || price < best.price || (price === best.price && pieces < best.pieces)) {
+        best = { price, pieces, combo };
+      }
+    }
+    return { people, need, ...best!, unit: rule.unit };
+  });
+}
+
+export function servingBasis(item: MenuItem): string | null {
+  return SERVING_RULE[item.slug]?.basis ?? null;
+}
+
+/** Other items in the same section of the menu, cheapest first. */
+export function categoryPeers(item: MenuItem) {
+  if (isPizza(item)) return [];
+  return menuItems
+    .filter((m) => m.category === item.category)
+    .map((m) => {
+      const first = m.sizes[0];
+      const p = piecesOf(first.detail);
+      return {
+        slug: m.slug,
+        title: m.title,
+        from: Math.min(...m.sizes.map((s) => s.price)),
+        detail: first.detail,
+        perPiece: p ? first.price / p.count : null,
+        unit: p?.unit ?? null,
+        calories: m.calories,
+        caloriesNote: m.caloriesNote,
+        current: m.slug === item.slug,
+      };
+    })
+    .sort((a, b) => a.from - b.from);
+}
+
+/** Extra FAQs for sides, chicken and desserts sold by the piece. */
+export function pieceFaqs(item: MenuItem): Faq[] {
+  const rows = perPieceRows(item);
+  if (!rows.length) return [];
+  const name = displayName(item).toLowerCase();
+  const plural = isPlural(item);
+  const faqs: Faq[] = [
+    {
+      question: `How many ${rows[0].unit} come in ${BRAND.name} ${name}?`,
+      answer: `${rows.map((r) => `${r.size}: ${r.pieces} ${r.unit} for about ${money(r.price)}`).join('; ')} in our store sample.`,
+    },
+  ];
+  if (rows.length > 1) {
+    const [a, b] = [rows[0], rows[rows.length - 1]];
+    const cheaper = Math.round((1 - b.perPiece / a.perPiece) * 100);
+    faqs.push({
+      question: `Is a large order of ${BRAND.name} ${name} worth it?`,
+      answer: `Per piece, yes: about ${money(b.perPiece)} each in the ${b.size.toLowerCase()} against ${money(a.perPiece)} in the ${a.size.toLowerCase()} — roughly ${cheaper}% cheaper. It only pays off if ${plural ? 'they' : 'it'} will actually get eaten; ${b.pieces} ${b.unit} is a lot for two people.`,
+    });
+  }
+  return faqs;
+}
+
 export { PIZZA_SIZES, DIAMETER, SLICES_PER_ADULT };

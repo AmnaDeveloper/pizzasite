@@ -9,7 +9,6 @@ import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
 import { BRAND, NOT_AFFILIATED_SHORT } from '@/lib/site-config';
-import { currentMonthYear } from '@/lib/utils/date';
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -33,6 +32,16 @@ const LOCATOR_FAQS = [
       'Zone maps are updated periodically and new streets can lag behind construction. Call the nearest store directly — staff can often serve an address the online checker has not yet picked up.',
   },
   {
+    question: 'Can I get pizza delivered to a hotel or a park?',
+    answer:
+      'A hotel, yes — give the street address and room number and expect to meet the driver in the lobby. A park or beach has no street address, so a normal delivery usually is not possible; some ordering apps offer fixed drop-off points instead, or you can use a nearby address and walk over.',
+  },
+  {
+    question: 'Why is my order coming from a store further away?',
+    answer:
+      'Your address sits inside that store’s delivery zone. Zones are drawn around driving time, so a store that looks further away can be quicker to reach than one just across a freeway or river.',
+  },
+  {
     question: 'Why do two nearby stores show different deals?',
     answer:
       'Franchisees opt into promotions individually because they absorb the margin cost. A nationally advertised offer is live only at participating stores, which is why checking your own store page matters more than searching for a code.',
@@ -40,10 +49,10 @@ const LOCATOR_FAQS = [
 ];
 
 export const metadata: Metadata = generatePageSEO({
-  title: `How the ${BRAND.name} Store Locator Works — and Why It Picks That Store (${currentMonthYear()})`,
+  title: `How the ${BRAND.name} Store Locator Works`,
   description:
-    'Why delivery zones follow driving routes rather than distance, how store assignment affects which ' +
-    'deals you see, and what to do when the locator does not recognise your address.',
+    'Why delivery zones follow driving routes, not distance; how your assigned store decides which ' +
+    'deals you see; and what to do when your address is not recognised.',
   path: '/store-locator',
   keywords: [
     'pizza store locator',
@@ -52,6 +61,33 @@ export const metadata: Metadata = generatePageSEO({
     'which store delivers to me',
   ],
 });
+
+const TRICKY_ADDRESSES = [
+  {
+    title: 'Apartments and gated communities',
+    body: 'Put the building, unit number and gate code in the delivery instructions, not just the street address. If the entrance is round the back, say so — drivers lose most time at the gate, not on the road.',
+  },
+  {
+    title: 'Campuses and dorms',
+    body: 'Many campuses route all deliveries to a single drop-off point. Use the building name, and meet the driver at the main entrance if your dorm needs a key card.',
+  },
+  {
+    title: 'Hotels',
+    body: 'Give the hotel’s street address and your room number, and expect to meet the driver in the lobby — most hotels do not let delivery drivers go up to rooms.',
+  },
+  {
+    title: 'Offices and business parks',
+    body: 'Add the company name and floor, and check reception will accept food after hours. Large orders go far more smoothly when one person is named as the contact.',
+  },
+  {
+    title: 'Parks, beaches and venues',
+    body: 'Places without a street address can’t take a normal delivery. Some ordering apps offer set drop-off points for these; otherwise, pick a nearby address you can walk to.',
+  },
+  {
+    title: 'Brand-new streets',
+    body: 'New builds can take months to appear in delivery maps. Enter the nearest established address with a clear note, or call the store directly — staff can often serve what the website can’t find.',
+  },
+];
 
 const STEPS = [
   {
@@ -171,6 +207,71 @@ export default function StoreLocatorPage() {
       </section>
 
       <AdSlot slotId="locator-mid" className="py-8" />
+
+      <section aria-labelledby="tricky-addresses" className="mx-auto max-w-3xl px-4 py-12">
+        <h2
+          id="tricky-addresses"
+          className="text-3xl font-extrabold tracking-tight text-navy-dark"
+        >
+          Ordering to a tricky address
+        </h2>
+        <p className="mt-3 text-[16px] leading-relaxed text-ink-muted">
+          Most failed or late deliveries are not the store’s fault — the driver simply
+          cannot find the door. These are the addresses that cause the most trouble, and
+          what to type so the order arrives.
+        </p>
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+          {TRICKY_ADDRESSES.map((a) => (
+            <li key={a.title} className="rounded-card border border-line bg-surface p-5">
+              <h3 className="text-base font-extrabold text-ink">{a.title}</h3>
+              <p className="mt-1.5 text-[15px] leading-relaxed text-ink-muted">{a.body}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="carryout-choice" className="border-y border-line bg-surface-alt">
+        <div className="mx-auto max-w-3xl px-4 py-12">
+          <h2
+            id="carryout-choice"
+            className="text-3xl font-extrabold tracking-tight text-navy-dark"
+          >
+            Carryout: you can pick the store
+          </h2>
+          <div className="prose-guide mt-4">
+            <p>
+              Delivery is locked to the store whose zone covers your address. Carryout is
+              not — you can collect from any store you are willing to drive to. That opens
+              up a small but real saving that most people never use.
+            </p>
+            <p>
+              Because each franchisee chooses its own promotions, the store near your office
+              and the store near your home may show different deal lists on the same day.
+              Before a large order, enter each address in the app, compare the deals
+              pages, and collect from whichever is running the better offer. It takes two
+              minutes and can be worth several dollars on a family order.
+            </p>
+            <p>
+              The same trick works for hours: if your usual store has stopped taking orders,
+              a store across town that closes later may still accept a carryout.
+            </p>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href="/posts/carryout-vs-delivery-which-is-cheaper"
+              className="inline-flex items-center gap-2 rounded-md bg-brand px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-dark"
+            >
+              Carryout vs delivery, worked out
+            </Link>
+            <Link
+              href="/hours"
+              className="inline-flex items-center gap-2 rounded-md border border-navy px-4 py-2.5 text-sm font-bold text-navy transition-colors hover:bg-navy hover:text-white"
+            >
+              Opening hours & last orders
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <div className="mx-auto max-w-3xl px-4 pb-16">
         <FaqAccordion faqs={LOCATOR_FAQS} heading="Store locator questions" />

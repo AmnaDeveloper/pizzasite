@@ -44,8 +44,8 @@ const CONTACT_FAQS = [
 export const metadata: Metadata = generatePageSEO({
   title: 'Contact Us',
   description:
-    `Get in touch with ${SITE_NAME} — price corrections, content feedback, broken links and ` +
-    'advertising enquiries. We reply to most messages within two working days.',
+    `Contact ${SITE_NAME} about price corrections, content feedback, broken links or advertising. ` +
+    'We reply to most messages within two working days.',
   path: '/contact',
   keywords: ['contact slice and save', 'report price error', 'pizza guide contact'],
 });

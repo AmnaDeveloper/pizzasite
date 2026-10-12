@@ -69,10 +69,8 @@ export default function TeamPage() {
           {authors.map((author) => {
             const written = getPostsByAuthor(author.slug);
             return (
-              <section key={author.slug} aria-labelledby={`${author.slug}-heading`}>
-                <h2 id={`${author.slug}-heading`} className="sr-only">
-                  {author.name}
-                </h2>
+              <section key={author.slug} aria-label={author.name}>
+                {/* AuthorBio renders the name as this section's visible h2. */}
                 <AuthorBio author={author} variant="full" />
 
                 {written.length ? (

@@ -17,10 +17,10 @@ const CRUMBS = [
 ];
 
 export const metadata: Metadata = generatePageSEO({
-  title: `Pizza Money-Saving Guides & Menu Explainers (${currentMonthYear()})`,
+  title: `Pizza Money-Saving Guides (${currentMonthYear()})`,
   description:
-    'In-depth guides on pizza pricing, deals, crusts, nutrition, tipping and delivery — ' +
-    'written by a price researcher, a former delivery driver and a registered dietitian.',
+    'In-depth guides on pizza prices, deals, crusts, nutrition, tipping and delivery — each one ' +
+    'worked through against our own menu and price data.',
   path: '/posts',
   keywords: [
     'pizza guides',
