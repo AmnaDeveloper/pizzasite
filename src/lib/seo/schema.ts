@@ -54,14 +54,8 @@ export function websiteSchema(): Json {
     description: SITE_DESCRIPTION,
     publisher: { '@id': `${SITE_URL}/#organization` },
     inLanguage: 'en-US',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${SITE_URL}/posts?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
+    // No SearchAction: the site has no search results page, and Google was
+    // crawling the literal "/posts?q={search_term_string}" template as a URL.
   };
 }
 
