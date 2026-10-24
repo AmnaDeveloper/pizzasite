@@ -12,6 +12,7 @@ import {
   NOT_AFFILIATED_DISCLAIMER,
   SITE_NAME,
 } from '@/lib/site-config';
+import { priceSourceSentence } from '@/lib/price-source';
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -79,7 +80,7 @@ export default function DisclaimerPage() {
             illustration, text and layout on this site is our own original work.
           </p>
 
-          <h2>Prices are examples, not quotations</h2>
+          <h2>Prices are estimates, not quotations</h2>
           <p>
             This is the most important thing on this page.
           </p>
@@ -90,27 +91,25 @@ export default function DisclaimerPage() {
             and no site — including this one — can tell you what your store will charge.
           </p>
           <p>
-            Every price shown here is an illustrative example gathered from a rolling sample
-            of stores. It is useful for comparison: whether a large is better value than a
+            {priceSourceSentence()} The prices are useful for comparison: whether a large is better value than a
             medium, whether a specialty pizza beats four toppings, what a side really adds
-            to a total. It is not a quotation, an offer or a guarantee, and it may differ
+            to a total. They are not a quotation, an offer or a guarantee, and they may differ
             from what you are charged. Always confirm the final total at official checkout
             before ordering.
           </p>
 
-          <h2>Coupon codes on this site are illustrative</h2>
+          <h2>We do not list coupon codes</h2>
           <p>
-            The codes shown on our <Link href="/coupons">coupons page</Link> are placeholders
-            we wrote to demonstrate what each type of offer looks like. They are not live
-            promotional codes and they will not work at checkout. Live offers appear on the
-            official site, personalised to your store, because franchisees opt into
-            promotions individually.
+            Our <Link href="/coupons">coupons page</Link> explains the types of offer that
+            run again and again, with typical prices, but it deliberately lists no codes.
+            Live offers appear on the official site, personalised to your store, because
+            franchisees opt into promotions individually.
           </p>
 
           <h2>Nutrition and allergen information</h2>
           <p>
             Nutritional values, ingredient lists and allergen information on this site are
-            general guidance compiled for consumer reference. They are approximate,
+            general guidance and estimates for consumer reference. They are approximate,
             formulations change without notice, and portioning at a store is done by hand
             against a target rather than measured precisely.
           </p>
@@ -129,10 +128,8 @@ export default function DisclaimerPage() {
           <h2>Hours, availability and delivery zones</h2>
           <p>
             Opening hours, item availability and delivery coverage shown here describe a
-            market in general, not any individual store, and they change frequently. Store
-            addresses and phone numbers shown on our city pages are illustrative
-            service-area examples rather than the contact details of a specific store. Use
-            the official store finder for anything you intend to act on.
+            typical pattern, not any individual store, and they change frequently. Use the
+            official store finder for anything you intend to act on.
           </p>
 
           <h2>Advertising</h2>

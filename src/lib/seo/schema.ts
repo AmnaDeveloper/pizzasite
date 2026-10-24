@@ -13,6 +13,7 @@ import {
 } from '../site-config';
 import { absoluteUrl } from '../seo-config';
 import type { Author, Faq, MenuItem, Post } from '@/data/types';
+import { priceNoteText } from '../price-source';
 
 type Json = Record<string, unknown>;
 
@@ -144,7 +145,7 @@ export function menuItemSchema(item: MenuItem): Json {
       name: `${s.name} (${s.detail})`,
       price: s.price.toFixed(2),
       priceCurrency: item.currency || CURRENCY,
-      description: 'Example price from our store sample, not a live offer. Verify at official checkout.',
+      description: priceNoteText(),
     })),
   };
 }

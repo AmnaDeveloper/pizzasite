@@ -130,7 +130,6 @@ export default function CouponsClient({
                     ) : (
                       <span>{coupon.expiry}</span>
                     )}
-                    <span className="shrink-0">Example offer</span>
                   </div>
                 </div>
               </article>

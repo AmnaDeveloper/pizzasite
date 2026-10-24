@@ -52,6 +52,7 @@ import {
 import { authors } from '@/data/authors';
 import { BRAND, NOT_AFFILIATED_SHORT, SITE_URL } from '@/lib/site-config';
 import { currentMonthYear, formatLongDate, toIsoDate } from '@/lib/utils/date';
+import { PRICE_ADJ, priceSourceSentence } from '@/lib/price-source';
 
 /**
  * Date the item pages' content last genuinely changed. Shown on the page and
@@ -138,10 +139,10 @@ export default async function MenuItemPage({ params }: Props) {
   const compareSentence = !current
     ? ''
     : cheaperCount === 0
-      ? `At ${money(current.large)} for a large it is the ${tiedWith.length ? 'joint-' : ''}cheapest pizza on the menu in our sample${
+      ? `At ${money(current.large)} for a large it is the ${tiedWith.length ? 'joint-' : ''}cheapest pizza on the menu${
           tiedWith.length ? `, level with the ${tiedWith.map((t) => t.title.toLowerCase()).join(' and ')}` : ''
         } — the reference price every topping and specialty premium is measured against.`
-      : `At ${money(current.large)} for a large, ${cheaperCount} of the ${ranking.length} pizzas in our sample cost less. It is ${money(
+      : `At ${money(current.large)} for a large, ${cheaperCount} of the ${ranking.length} pizzas cost less. It is ${money(
           current.large - cheapest.large,
         )} more than the cheapest large on the menu.`;
   const large = sizeOf(item, 'Large');
@@ -257,7 +258,7 @@ export default async function MenuItemPage({ params }: Props) {
             </span>
             <span className="inline-flex items-center gap-1.5">
               <CalendarCheck className="h-4 w-4 text-navy" aria-hidden="true" />
-              Prices last checked{' '}
+              Page updated{' '}
               <time dateTime={toIsoDate(ITEMS_UPDATED)}>{formatLongDate(ITEMS_UPDATED)}</time>
             </span>
           </div>
@@ -340,7 +341,7 @@ export default async function MenuItemPage({ params }: Props) {
           <div className="table-scroll mt-5 overflow-hidden rounded-card border border-line">
             <table className="w-full text-[15px]">
               <caption className="sr-only">
-                Example {BRAND.name} prices by size for the {name}
+                {PRICE_ADJ} {BRAND.name} prices by size for the {name}
               </caption>
               <thead>
                 <tr className="bg-navy text-left text-[11px] uppercase tracking-wide text-white">
@@ -349,7 +350,7 @@ export default async function MenuItemPage({ params }: Props) {
                   {pizza ? (
                     <th scope="col" className="px-3 py-3 text-right font-bold">Slices</th>
                   ) : null}
-                  <th scope="col" className="px-4 py-3 text-right font-bold">Example price</th>
+                  <th scope="col" className="px-4 py-3 text-right font-bold">{PRICE_ADJ} price</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
@@ -376,10 +377,7 @@ export default async function MenuItemPage({ params }: Props) {
           </div>
           <PriceNote className="mt-3" />
           <p className="mt-3 text-[14px] leading-relaxed text-ink-muted">
-            Prices come from a rolling sample of stores. {BRAND.name} is largely run by
-            franchisees who set their own prices, so your store may charge a little more or
-            less — compare items against each other here, then confirm the total at
-            checkout. See the{' '}
+            {priceSourceSentence()} See the{' '}
             <Link href="/menus-prices" className="font-semibold text-navy underline underline-offset-2">
               full {BRAND.name} menu with prices
             </Link>
@@ -443,7 +441,7 @@ export default async function MenuItemPage({ params }: Props) {
                 </p>
                 <p className="mt-1.5 text-[15px] leading-relaxed text-ink-muted">{route.how}</p>
                 <p className="mt-2 text-[13px] text-ink-muted">
-                  Example deal price — participation is store by store.{' '}
+                  {PRICE_ADJ} deal price — participation is store by store.{' '}
                   <Link href={`/coupons#${route.couponId}`} className="font-semibold text-navy underline underline-offset-2">
                     How this deal works
                   </Link>
@@ -598,7 +596,7 @@ export default async function MenuItemPage({ params }: Props) {
             </h2>
             <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
               {flatTopping
-                ? `In our store sample a pepperoni pizza costs ${money(flatTopping)} more than a cheese pizza at every size, so ${money(flatTopping)} is what one topping adds. Here is the ${name} with up to five toppings.`
+                ? `On these prices a pepperoni pizza costs ${money(flatTopping)} more than a cheese pizza at every size, so ${money(flatTopping)} is what one topping adds. Here is the ${name} with up to five toppings.`
                 : `Each topping adds the gap between a cheese and a pepperoni pizza of the same size. Here is the ${name} with up to five toppings.`}
             </p>
             <p className="mt-5 text-[12px] font-semibold text-ink-muted md:hidden">
@@ -607,7 +605,7 @@ export default async function MenuItemPage({ params }: Props) {
             <div className="table-scroll mt-2 overflow-hidden rounded-card border border-line md:mt-5">
               <table className="w-full min-w-[36rem] text-[15px]">
                 <caption className="sr-only">
-                  Example price of a {BRAND.name} {name} by size and number of toppings
+                  {PRICE_ADJ} price of a {BRAND.name} {name} by size and number of toppings
                 </caption>
                 <thead>
                   <tr className="bg-navy text-left text-[11px] uppercase tracking-wide text-white">
@@ -660,7 +658,7 @@ export default async function MenuItemPage({ params }: Props) {
               Build your own or order a specialty pizza?
             </h2>
             <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
-              We priced each specialty pizza’s toppings on a large build-your-own and put it
+              We added up each specialty pizza’s toppings on a large build-your-own and put it
               next to the specialty’s own price. The label on each row shows which is the
               cheaper way to get the same pizza.
             </p>
@@ -722,7 +720,7 @@ export default async function MenuItemPage({ params }: Props) {
               Hand tossed vs thin crust vs pan: price and calories
             </h2>
             <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
-              The same build-your-own pizza on each crust, from our store sample.
+              The same build-your-own pizza on each crust, side by side.
             </p>
             <ul className="mt-5 grid gap-4 md:grid-cols-3">
               {crusts.map((c) => {
@@ -880,7 +878,7 @@ export default async function MenuItemPage({ params }: Props) {
                 </li>
               ))}
             </ol>
-            <p className="mt-2 text-[13px] text-ink-muted">Large ({DIAMETER.Large}″) example prices.</p>
+            <p className="mt-2 text-[13px] text-ink-muted">Large ({DIAMETER.Large}″) {PRICE_ADJ.toLowerCase()} prices.</p>
           </section>
         ) : null}
 

@@ -11,6 +11,7 @@ import {
   SITE_NAME,
   SITE_URL,
 } from '@/lib/site-config';
+import { priceSourceSentence } from '@/lib/price-source';
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -61,10 +62,9 @@ export default function TermsPage() {
             account.
           </p>
 
-          <h2>2. Prices and other information are examples</h2>
+          <h2>2. Prices and other information are estimates</h2>
           <p>
-            All prices shown on this site are illustrative examples gathered for reference
-            and comparison. They are not offers, quotations or guarantees.
+            {priceSourceSentence()} They are not offers, quotations or guarantees.
           </p>
           <p>
             Chain pizza stores are largely operated by independent franchisees who set their

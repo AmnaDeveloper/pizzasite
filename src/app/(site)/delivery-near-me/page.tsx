@@ -61,7 +61,7 @@ const DELIVERY_FAQS = [
 ];
 
 export const metadata: Metadata = generatePageSEO({
-  title: `${BRAND.name} Delivery: Zones, Times & Costs (${currentMonthYear()})`,
+  title: `${BRAND.name} Delivery: Zones, Times & Costs`,
   description:
     'How pizza delivery zones are drawn, what actually determines your wait, and what delivery ' +
     'really costs once the fee and tip are counted.',

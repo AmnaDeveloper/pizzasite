@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const POPULAR = [
-  { href: '/menus-prices', label: 'Menu & example prices', desc: '20 items with sizes, calories and allergens' },
+  { href: '/menus-prices', label: 'Menu & prices', desc: '20 items with sizes, calories and allergens' },
   { href: '/coupons', label: 'Coupons & deal types', desc: 'Every offer structure, explained properly' },
   { href: '/delivery-near-me', label: 'Delivery near me', desc: 'Zones, timing and what delivery really costs' },
   { href: '/posts', label: 'Money-saving guides', desc: '18 long-form guides from our editorial team' },

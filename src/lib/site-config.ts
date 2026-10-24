@@ -124,9 +124,23 @@ export const NOT_AFFILIATED_DISCLAIMER =
 export const NOT_AFFILIATED_SHORT =
   `Independent guide — not affiliated with ${BRAND.name}. Example prices only.`;
 
-/** Reusable price caveat. Use this exact string wherever a price is displayed. */
-export const PRICE_DISCLAIMER =
-  'Example price — varies by location and changes over time. Verify at official checkout.';
+/**
+ * WHERE THE PRICES COME FROM — the single source of truth for every sentence
+ * on the site that describes the prices.
+ *
+ * While `verified` is false the site calls its prices estimates, because they
+ * were not copied from a real store. Once someone checks a store's menu on the
+ * official site and imports it (see ADSENSE-READINESS.md, phase 2), set
+ * `verified: true` plus `store` and `checkedOn`, and every page switches to
+ * "checked at <store> on <date>". Never set it to true without doing that.
+ */
+export const PRICE_SOURCE = {
+  verified: false,
+  /** e.g. "a Domino's store in Austin, Texas (ZIP 78701)" */
+  store: '',
+  /** ISO date the menu was checked, e.g. "2026-11-02" */
+  checkedOn: '',
+};
 
 export const NAV_LINKS = [
   { href: '/menus-prices', label: 'Menu & Prices' },

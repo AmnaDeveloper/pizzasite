@@ -12,9 +12,9 @@ export const authors: Author[] = [
     name: 'Amna Sadam',
     role: 'Co-Founder',
     bio:
-      "Amna co-founded this site to answer one question honestly: what does a chain pizza order actually cost once every fee and surcharge is counted, and which order of clicks gets you the better deal. She sets the direction for what gets covered, keeps the pricing data current, and signs off on every guide before it publishes.",
+      "Amna co-founded this site to answer one question honestly: what does a chain pizza order actually cost once every fee and surcharge is counted, and which order of clicks gets you the better deal. She sets the direction for what gets covered and signs off on every guide before it publishes.",
     credentials:
-      'Oversees the site end to end — what gets published, how prices are sourced, and how corrections are handled. Her standing rule for this site: if a figure cannot be shown with its working, it does not get published as fact.',
+      'Oversees the site end to end — what gets published and how corrections are handled. Her standing rule for this site: show the working behind every figure, and say plainly when a number is an estimate.',
     avatar: '/images/authors/amna-sadam.png',
     avatarAlt: 'Avatar tile for Amna Sadam, Co-Founder',
   },
@@ -23,9 +23,9 @@ export const authors: Author[] = [
     name: 'Maha Iqbal',
     role: 'Content Lead',
     bio:
-      'Maha leads day-to-day content on the site — the deal breakdowns, delivery and ordering guides, and the menu, nutrition and allergen pages. She writes each guide against the site\'s own pricing and menu data rather than reusing what other sites already say, and flags where a chain simply has not published a figure instead of estimating one.',
+      'Maha leads day-to-day content on the site — the deal breakdowns, delivery and ordering guides, and the menu, nutrition and allergen pages. She writes each guide from scratch rather than reusing what other sites already say, and works the arithmetic through on the page so readers can check it.',
     credentials:
-      'Reviews and edits every guide before it goes live, cross-checking nutrition and allergen claims against each chain\'s own published data rather than presenting an estimate as fact.',
+      'Reviews and edits every guide before it goes live, and labels calorie, allergen and price figures as estimates wherever they have not been confirmed.',
     avatar: '/images/authors/maha-iqbal.png',
     avatarAlt: 'Avatar tile for Maha Iqbal, Content Lead',
   },

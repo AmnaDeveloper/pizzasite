@@ -32,6 +32,7 @@ import { authors } from '@/data/authors';
 import { coupons } from '@/data/coupons';
 import { BRAND, CURRENCY_SYMBOL, SITE_NAME } from '@/lib/site-config';
 import { currentMonthYear } from '@/lib/utils/date';
+import { priceSourceSentence, PRICE_ADJ } from '@/lib/price-source';
 
 const money = (n: number) => `${CURRENCY_SYMBOL}${n.toFixed(2)}`;
 
@@ -60,7 +61,7 @@ const HOME_FAQS = [
   {
     question: `How much is a large pizza at ${BRAND.name}?`,
     answer:
-      'A large cheese pizza is around $14.99 at menu price in our sample of stores, and a large pepperoni around $16.49. On a flat-rate carryout offer the same large pizza commonly drops to about $7.99, which is why the offer you order under matters more than the item you choose. These are example prices — franchise stores set their own, so confirm the total at official checkout.',
+      'A large cheese pizza is around $14.99 at menu price by our estimate, and a large pepperoni around $16.49. On a flat-rate carryout offer the same large pizza commonly drops to about $7.99, which is why the offer you order under matters more than the item you choose. These are estimates — franchise stores set their own prices, so confirm the total at official checkout.',
   },
   {
     question: `What is the cheapest way to order ${BRAND.name}?`,
@@ -101,7 +102,7 @@ const HOME_FAQS = [
   {
     question: 'Where do your prices come from?',
     answer:
-      'From a rolling sample of stores that our team prices periodically, plus reader reports that we verify before publishing. Because franchise stores set their own prices, every figure on this site is an example for reference rather than a quotation — your store may differ.',
+      priceSourceSentence(),
   },
   {
     question: 'How often is the site updated?',
@@ -298,7 +299,7 @@ export default function HomePage() {
             id="prices"
             eyebrow="Prices at a glance"
             title={`${BRAND.name} menu prices for ${currentMonthYear()}`}
-            intro={`Every price below is an example drawn from a rolling sample of stores. ${BRAND.name} is largely a franchise network, so there is no single national price list — use these to compare items against each other, then confirm the total at official checkout.`}
+            intro={priceSourceSentence()}
           />
 
           {/* Key facts — the answer-first summary Google can lift as a snippet. */}
@@ -308,7 +309,7 @@ export default function HomePage() {
                 {BRAND.name} price ranges by section
               </h3>
               <p className="mt-2 text-[14px] leading-relaxed text-ink-muted">
-                Lowest to highest example price across every size in our sample, for all{' '}
+                Lowest to highest {PRICE_ADJ.toLowerCase()} price across every size, for all{' '}
                 {menuItems.length} items on this page.
               </p>
             </div>
@@ -363,7 +364,7 @@ export default function HomePage() {
             <MenuPriceTable
               groups={pizzaGroups}
               variant="pizza"
-              caption={`Example ${BRAND.name} pizza prices by size and crust`}
+              caption={`${PRICE_ADJ} ${BRAND.name} pizza prices by size and crust`}
             />
           </div>
 
@@ -380,7 +381,7 @@ export default function HomePage() {
             <MenuPriceTable
               groups={otherGroups}
               variant="other"
-              caption={`Example ${BRAND.name} prices for sides, chicken, pasta, desserts and drinks`}
+              caption={`${PRICE_ADJ} ${BRAND.name} prices for sides, chicken, pasta, desserts and drinks`}
             />
           </div>
 
@@ -396,7 +397,7 @@ export default function HomePage() {
               id="best-value"
               eyebrow="Our analysis"
               title="Which pizza size is the best value?"
-              intro={`Pizza is sold by diameter but eaten by area, and the two don't scale together. We divided each example price by the size of the pizza. The result: a 16-inch extra large costs about ${SMALL_TO_XL_SAVING}% less per square inch than a 10-inch small.`}
+              intro={`Pizza is sold by diameter but eaten by area, and the two don't scale together. We divided each price by the size of the pizza. The result: a 16-inch extra large costs about ${SMALL_TO_XL_SAVING}% less per square inch than a 10-inch small.`}
               ctaHref="/posts/large-vs-medium-pizza-value"
               ctaLabel="Read the full breakdown"
             />
@@ -426,7 +427,7 @@ export default function HomePage() {
               </div>
             </div>
             <p className="mt-4 text-[13px] leading-relaxed text-ink-muted">
-              Based on example {VALUE_ITEM.title.toLowerCase()} prices from our store sample,
+              Based on {PRICE_ADJ.toLowerCase()} {VALUE_ITEM.title.toLowerCase()} prices,
               hand-tossed crust. Other pizzas follow the same pattern.
             </p>
           </div>
@@ -438,7 +439,7 @@ export default function HomePage() {
         items={popularItems}
         eyebrow="Menu & prices"
         title={`Most-ordered ${BRAND.name} items and what they cost`}
-        intro="Example prices with sizes, calories and allergens on every item — plus an honest note on whether it is worth ordering at menu price or only inside a deal."
+        intro="Prices by size, calories and allergens on every item — plus an honest note on whether it is worth ordering at menu price or only inside a deal."
         ctaHref="/menus-prices"
         ctaLabel={`All ${menuItems.length} items`}
         prioritiseFirstImage
@@ -519,9 +520,6 @@ export default function HomePage() {
                   <p className="mt-2 line-clamp-3 flex-1 text-[14px] leading-relaxed text-ink-muted">
                     {coupon.desc}
                   </p>
-                  <p className="mt-4 border-t border-line pt-3 text-[12px] leading-snug text-ink-muted">
-                    Example of an offer type, not a live code.
-                  </p>
                 </article>
               </li>
             ))}
@@ -538,7 +536,7 @@ export default function HomePage() {
             id="guides"
             eyebrow="Money-saving guides"
             title="Where the money actually goes"
-            intro="Long-form guides on the decisions that change what you pay — carryout versus delivery, sizes, toppings, tips and rewards — each worked through against our own price data."
+            intro="Long-form guides on the decisions that change what you pay — carryout versus delivery, sizes, toppings, tips and rewards — each worked through with the arithmetic shown."
             ctaHref="/posts"
             ctaLabel={`All ${posts.length} guides`}
           />
@@ -569,9 +567,8 @@ export default function HomePage() {
                 <li className="flex gap-3">
                   <BadgeCheck className="mt-0.5 h-5 w-5 shrink-0 text-navy" aria-hidden="true" />
                   <span>
-                    <strong className="font-bold text-ink">A rolling store sample.</strong>{' '}
-                    We price the menu across a sample of stores and publish example figures,
-                    never a single “national” price that doesn’t exist.
+                    <strong className="font-bold text-ink">Honest about the prices.</strong>{' '}
+                    {priceSourceSentence()}
                   </span>
                 </li>
                 <li className="flex gap-3">
@@ -590,7 +587,7 @@ export default function HomePage() {
                     <Link href="/contact" className="font-semibold text-navy underline underline-offset-2 hover:text-brand">
                       Tell us
                     </Link>{' '}
-                    — reader reports are verified, then folded in.
+                    — we update the page when a report holds up.
                   </span>
                 </li>
                 <li className="flex gap-3">

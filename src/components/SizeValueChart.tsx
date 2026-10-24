@@ -58,7 +58,7 @@ export default function SizeValueChart({ item }: { item: MenuItem }) {
     <div className="table-scroll self-start overflow-hidden rounded-card border border-line bg-surface">
       <table className="w-full text-[15px]">
         <caption className="sr-only">
-          Example price per square inch for a {item.title.toLowerCase()} by size
+          Price per square inch for a {item.title.toLowerCase()} by size
         </caption>
         <thead>
           <tr className="bg-navy text-left text-[11px] uppercase tracking-wide text-white">

@@ -25,7 +25,7 @@ const DRINK_FAQS = [
   {
     question: `How much are drinks at ${BRAND.name}?`,
     answer:
-      'A two-litre bottle is around $3.49 in our sample of stores and an individual bottle around $2.29 to $2.79. Both are roughly double what the same product costs in a supermarket. It is a convenience charge rather than a scandal, and it is the easiest line to remove from an order without anyone eating less.',
+      'A two-litre bottle is around $3.49 by our estimate and an individual bottle around $2.29 to $2.79. Both are roughly double what the same product costs in a supermarket. It is a convenience charge rather than a scandal, and it is the easiest line to remove from an order without anyone eating less.',
   },
   {
     question: 'What is the cheapest side to order?',
@@ -68,7 +68,7 @@ const DRINK_FAQS = [
 export const metadata: Metadata = generatePageSEO({
   title: `${BRAND.name} Sides & Drinks Prices`,
   description:
-    'Example prices for breadsticks, wings, pasta, desserts and drinks — plus which sides are ' +
+    'Prices for breadsticks, wings, pasta, desserts and drinks — plus which sides are ' +
     'worth the money, which travel badly, and the one line worth deleting.',
   path: '/drinks',
   keywords: [
@@ -232,7 +232,7 @@ export default function DrinksPage() {
         <div className="table-scroll mt-6 overflow-hidden rounded-card border border-line">
           <table className="w-full min-w-[46rem] text-[15px]">
             <caption className="sr-only">
-              Each side and drink with its example price, how many people it feeds, and our
+              Each side and drink with its estimated price, how many people it feeds, and our
               verdict
             </caption>
             <thead>
@@ -373,7 +373,7 @@ export default function DrinksPage() {
                 </table>
               </div>
               <p className="mt-3 text-[13px] leading-relaxed text-ink-muted">
-                Store figures are our example prices. The shop column is an approximate
+                Store figures are our estimated prices. The shop column is an approximate
                 typical retail price for the same product, included to show the direction
                 and rough scale rather than as a surveyed figure.
               </p>
@@ -497,7 +497,7 @@ export default function DrinksPage() {
                 {section.intro}
               </p>
               <p className="mt-2 text-sm text-ink-muted">
-                Example prices from {CURRENCY_SYMBOL}
+                Prices from {CURRENCY_SYMBOL}
                 {Math.min(...section.items.map((i) => i.price)).toFixed(2)}
               </p>
               <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -522,7 +522,7 @@ export default function DrinksPage() {
           <p className="mt-8 max-w-3xl text-[15px] leading-relaxed text-ink-muted">
             Working out the rest of the order?{' '}
             <Link href="/menus-prices" className="font-semibold text-navy hover:text-brand">
-              See the full menu with example prices
+              See the full menu with prices
             </Link>
             , compare{' '}
             <Link href="/coupons" className="font-semibold text-navy hover:text-brand">

@@ -62,7 +62,7 @@ export default function HeroSection() {
           </p>
 
           <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/85">
-            Every {BRAND.name} menu item with its example price by size, the deal types
+            Every {BRAND.name} menu item with its estimated price by size, the deal types
             that actually lower your total, food photos and ordering tips
             {largeCheese ? ` — a large cheese pizza is about ${money(largeCheese)}` : ''}.
             Page updated {formatLongDate(HOME_UPDATED)}.

@@ -1,5 +1,5 @@
 import { AlertCircle } from 'lucide-react';
-import { PRICE_DISCLAIMER } from '@/lib/site-config';
+import { priceNoteText } from '@/lib/price-source';
 
 /**
  * The example-price caveat. Rendered anywhere a number that looks like a price
@@ -11,7 +11,7 @@ export default function PriceNote({ className = '' }: { className?: string }) {
       className={`flex items-start gap-2 rounded-md bg-brand-soft px-3 py-2 text-[13px] leading-snug text-brand-dark ${className}`}
     >
       <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-      <span>{PRICE_DISCLAIMER}</span>
+      <span>{priceNoteText()}</span>
     </p>
   );
 }

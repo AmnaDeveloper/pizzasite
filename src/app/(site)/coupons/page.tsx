@@ -40,6 +40,7 @@ import { BRAND, CURRENCY_SYMBOL, SITE_NAME, SITE_URL } from '@/lib/site-config';
 import { currentMonthYear, formatLongDate, toIsoDate } from '@/lib/utils/date';
 import { getPost } from '@/lib/content';
 import type { Post } from '@/data/types';
+import { PRICE_ADJ } from '@/lib/price-source';
 
 /** Date this page's content last genuinely changed — update it with the content. */
 const PAGE_UPDATED = '2026-10-02';
@@ -263,8 +264,8 @@ export default function CouponsPage() {
             </h1>
             <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/85">
               Promotions rotate every few weeks, but the deal structures underneath them
-              barely change. We priced the same food at menu price and on each deal, so you
-              can see what every offer type really saves — and which one fits the order
+              barely change. We worked out the same food at menu price and on each deal, so
+              you can see what every offer type really saves — and which one fits the order
               you’re about to place.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -481,8 +482,8 @@ export default function CouponsPage() {
               </h2>
               <p className="mt-3 text-[16px] leading-relaxed text-ink-muted">
                 We built the same basket twice — once at menu price, once on the deal —
-                using example prices from our store sample. Every item links to its own
-                price page so you can check the working.
+                using the {PRICE_ADJ.toLowerCase()} prices on this site. Every item links to its
+                own price page so you can check the working.
               </p>
             </div>
           </div>
@@ -831,8 +832,8 @@ export default function CouponsPage() {
             <div className="mt-6 rounded-card border border-line bg-surface-alt p-5">
               <p className="text-[15px] font-extrabold text-ink">Seen a different price?</p>
               <p className="mt-1 text-[14px] leading-relaxed text-ink-muted">
-                Deal prices are reviewed monthly. Price reports from readers are the most
-                useful thing you can send us.
+                If your store charges something different, tell us — real prices from
+                readers are the most useful thing you can send.
               </p>
               <Link
                 href="/contact"

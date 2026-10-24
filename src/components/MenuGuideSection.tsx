@@ -11,7 +11,7 @@ import SectionHeading from './SectionHeading';
 export default function MenuGuideSection({
   items,
   eyebrow = 'Menu & prices',
-  title = 'Menu items and example prices',
+  title = 'Menu items and prices',
   intro,
   ctaHref = '/menus-prices',
   ctaLabel = 'See the full menu guide',

@@ -10,6 +10,7 @@ import { coupons } from '@/data/coupons';
 import type { Faq, MenuItem } from '@/data/types';
 import { BRAND, CURRENCY_SYMBOL } from './site-config';
 import { menuItems } from './content';
+import { priceBasis } from './price-source';
 
 export const money = (n: number) => `${CURRENCY_SYMBOL}${n.toFixed(2)}`;
 
@@ -68,7 +69,7 @@ export function quickAnswer(item: MenuItem): string {
     const route = cheapestRoute(item);
     return (
       `A large ${displayName(item).toLowerCase()} (${DIAMETER.Large} inch${large.slices ? `, ${large.slices} slices` : ''}) is about ` +
-      `${money(large.price)} at ${BRAND.name} in our store sample. Sizes run from ` +
+      `${money(large.price)} at ${BRAND.name} ${priceBasis()}. Sizes run from ` +
       `${money(smallest.price)} for a ${DIAMETER[smallest.name]}-inch ${smallest.name.toLowerCase()} to ` +
       `${money(biggest.price)} for a ${DIAMETER[biggest.name]}-inch ${biggest.name.toLowerCase()}.` +
       (route ? ` On a carryout deal the same large commonly drops to about ${money(route.dealPrice)}.` : '')
@@ -77,8 +78,8 @@ export function quickAnswer(item: MenuItem): string {
   const sizes = item.sizes.map((s) => `${s.name.toLowerCase()} ${money(s.price)}`).join(', ');
   const plural = isPlural(item);
   return low === high
-    ? `${item.title} ${plural ? 'are' : 'is'} about ${money(low)} at ${BRAND.name} in our store sample (${lowerFirst(item.sizes[0].detail)}).`
-    : `${item.title} ${plural ? 'cost' : 'costs'} about ${money(low)} to ${money(high)} at ${BRAND.name} in our store sample — ${sizes}.`;
+    ? `${item.title} ${plural ? 'are' : 'is'} about ${money(low)} at ${BRAND.name} ${priceBasis()} (${lowerFirst(item.sizes[0].detail)}).`
+    : `${item.title} ${plural ? 'cost' : 'costs'} about ${money(low)} to ${money(high)} at ${BRAND.name} ${priceBasis()} — ${sizes}.`;
 }
 
 export type CheapestRoute = {
@@ -181,7 +182,7 @@ export function generatedFaqs(item: MenuItem): Faq[] {
     const whole = wholeLargeCalories(item);
     faqs.push({
       question: `How much is a large ${name} at ${BRAND.name}?`,
-      answer: `About ${money(large.price)} at menu price for a ${DIAMETER.Large}-inch large in our sample of stores. ${
+      answer: `About ${money(large.price)} at menu price for a ${DIAMETER.Large}-inch large ${priceBasis()}. ${
         route
           ? `On a flat-rate carryout offer it commonly drops to about ${money(route.dealPrice)} — a saving of ${money(route.saving)}.`
           : ''
@@ -270,7 +271,7 @@ const byId = (slug: string) => menuItems.find((m) => m.slug === slug);
 /**
  * The implied price of one topping, per size: pepperoni minus cheese. Both are
  * the same pizza apart from one topping, so the gap is what a topping costs in
- * our sample. Returns null for a size if either price is missing.
+ * these prices. Returns null for a size if either price is missing.
  */
 export function impliedToppingPrices(): { size: string; price: number }[] {
   const cheese = byId('classic-cheese-pizza');
@@ -360,21 +361,21 @@ export function buildYourOwnFaqs(item: MenuItem): Faq[] {
     faqs.push({
       question: `How much does a topping cost at ${BRAND.name}?`,
       answer: flat
-        ? `About ${money(tops[0].price)} per topping in our sample, at every size — that is the gap between a cheese and a pepperoni pizza of the same size. Premium toppings such as chicken or extra cheese can cost more, and some stores charge more per topping on bigger pizzas, so watch the total as you add them.`
-        : `In our sample: ${tops.map((t) => `${t.size.toLowerCase()} ${money(t.price)}`).join(', ')} per topping. Premium toppings can cost more.`,
+        ? `About ${money(tops[0].price)} per topping on these prices, at every size — that is the gap between a cheese and a pepperoni pizza of the same size. Premium toppings such as chicken or extra cheese can cost more, and some stores charge more per topping on bigger pizzas, so watch the total as you add them.`
+        : `On these prices: ${tops.map((t) => `${t.size.toLowerCase()} ${money(t.price)}`).join(', ')} per topping. Premium toppings can cost more.`,
     });
   }
   if (ladder) {
     faqs.push({
       question: `How much is a large build-your-own ${displayName(item).toLowerCase()} with toppings?`,
-      answer: `About ${money(ladder.prices[0])} with no toppings, ${money(ladder.prices[1])} with one, ${money(ladder.prices[2])} with two and ${money(ladder.prices[3])} with three, in our store sample. Inside a deal the topping count often stops mattering — a carryout large is a flat price with any toppings.`,
+      answer: `About ${money(ladder.prices[0])} with no toppings, ${money(ladder.prices[1])} with one, ${money(ladder.prices[2])} with two and ${money(ladder.prices[3])} with three, ${priceBasis()}. Inside a deal the topping count often stops mattering — a carryout large is a flat price with any toppings.`,
     });
   }
   if (versus.length) {
     faqs.push({
       question: `Is it cheaper to build your own pizza or order a specialty pizza at ${BRAND.name}?`,
       answer: cheaperSpecialties.length
-        ? `For pizzas with four or more toppings, the specialty is usually cheaper. In our sample, building the ${cheaperSpecialties[0].title.toLowerCase()}'s ${cheaperSpecialties[0].toppings.length} toppings yourself costs ${money(cheaperSpecialties[0].built)} on a large, against ${money(cheaperSpecialties[0].specialty)} for the specialty. With two or three toppings, building your own usually wins.`
+        ? `For pizzas with four or more toppings, the specialty is usually cheaper. On these prices, building the ${cheaperSpecialties[0].title.toLowerCase()}'s ${cheaperSpecialties[0].toppings.length} toppings yourself costs ${money(cheaperSpecialties[0].built)} on a large, against ${money(cheaperSpecialties[0].specialty)} for the specialty. With two or three toppings, building your own usually wins.`
         : 'With two or three toppings, building your own is usually cheaper; past that, check the specialty section before checking out.',
     });
   }
@@ -483,7 +484,7 @@ export function pieceFaqs(item: MenuItem): Faq[] {
   const faqs: Faq[] = [
     {
       question: `How many ${rows[0].unit} come in ${BRAND.name} ${name}?`,
-      answer: `${rows.map((r) => `${r.size}: ${r.pieces} ${r.unit} for about ${money(r.price)}`).join('; ')} in our store sample.`,
+      answer: `${rows.map((r) => `${r.size}: ${r.pieces} ${r.unit} for about ${money(r.price)}`).join('; ')}, ${priceBasis()}.`,
     },
   ];
   if (rows.length > 1) {

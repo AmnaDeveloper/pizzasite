@@ -14,6 +14,7 @@ import { breadcrumbSchema, collectionPageSchema, faqSchema } from '@/lib/seo/sch
 import { getAllMenuItems, getMenuCategories, lowestMenuPrice } from '@/lib/content';
 import { BRAND, CURRENCY_SYMBOL } from '@/lib/site-config';
 import { currentMonthYear } from '@/lib/utils/date';
+import { priceSourceSentence } from '@/lib/price-source';
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -24,7 +25,7 @@ const MENU_FAQS = [
   {
     question: 'Are these the real prices at my local store?',
     answer:
-      'They are examples gathered from a sample of stores, not a live price feed. Franchise stores set their own prices, so treat every figure here as a reference point and confirm the total at official checkout.',
+      priceSourceSentence(),
   },
   {
     question: 'Which menu item gives the best value?',
@@ -58,6 +59,24 @@ export const metadata: Metadata = generatePageSEO({
   ],
 });
 
+/** A short buying guide per menu section — what is worth it and what fits a deal. */
+const SECTION_GUIDE: Record<string, string> = {
+  'Specialty Pizza':
+    'Specialty pizzas carry four or five toppings for less than you would pay adding the same toppings yourself, so they are the better buy once you want three or more. They are also the pizzas that extract the most from a flat-price carryout deal, because the deal price does not rise with the toppings.',
+  'Build Your Own':
+    'The same base price as a cheese pizza, plus a fixed amount per topping. One or two toppings: build your own. Four or more: check the specialty section first. Hand tossed and thin crust cost the same; pan costs more and stops at large.',
+  Sides:
+    'Bread sides are made from the same dough as the pizza, so they are cheap to make and turn up in almost every bundle. One eight-piece side covers about four people alongside pizza, and the large size is the cheaper buy per piece.',
+  Chicken:
+    'The most expensive way to feed a group, because part of what you pay for is bone weight — boneless bites give more edible food per dollar than wings. Plan on about four pieces each as a side.',
+  'Pasta & Sandwiches':
+    'One adult portion each, modest by restaurant standards. At menu price they are poor value; as a qualifying item in a two-for deal they are among the best picks on the menu.',
+  Desserts:
+    'Small add-ons that are better collected than delivered — a lava cake loses its molten centre as it cools. Cinnamon twists stretch further across a group than the two-cake lava order.',
+  Drinks:
+    'The easiest line to cut. Bottled drinks cost roughly twice what a supermarket charges, so buying them separately trims a family order without anyone eating less.',
+};
+
 export default function MenuIndexPage() {
   const items = getAllMenuItems();
   const categories = getMenuCategories();
@@ -70,7 +89,7 @@ export default function MenuIndexPage() {
           faqSchema(MENU_FAQS),
           collectionPageSchema({
             name: `${BRAND.name} menu prices`,
-            description: `Example prices for ${items.length} menu items.`,
+            description: `Prices for ${items.length} menu items.`,
             path: '/menus-prices',
             items: items.map((i) => ({
               name: i.title,
@@ -91,7 +110,7 @@ export default function MenuIndexPage() {
           </h1>
           <p className="mt-4 max-w-2xl text-[17px] leading-relaxed text-ink-muted">
             {items.length} items priced across {categories.length} sections. Each one has a
-            size ladder, an example price, calorie information, the full ingredient and
+            size ladder, an estimated price, calorie information, the full ingredient and
             allergen list, and our note on whether it is worth ordering at menu price or
             only inside a deal.
           </p>
@@ -150,7 +169,7 @@ export default function MenuIndexPage() {
               {category}
             </h2>
             <p className="mt-2 text-[15px] text-ink-muted">
-              {inCategory.length} item{inCategory.length === 1 ? '' : 's'} · example prices
+              {inCategory.length} item{inCategory.length === 1 ? '' : 's'} · prices
               from {CURRENCY_SYMBOL}
               {Math.min(...inCategory.map((i) => i.price)).toFixed(2)}
               {['Sides', 'Chicken', 'Desserts', 'Drinks'].includes(category) ? (
@@ -165,6 +184,27 @@ export default function MenuIndexPage() {
                 </>
               ) : null}
             </p>
+            {SECTION_GUIDE[category] ? (
+              <p className="mt-3 max-w-3xl text-[15px] leading-relaxed text-ink">
+                {SECTION_GUIDE[category]}
+              </p>
+            ) : null}
+            {inCategory.length > 1 ? (() => {
+              const cheapest = [...inCategory].sort((a, b) => a.price - b.price)[0];
+              const prices = inCategory.flatMap((i) => i.sizes.map((sz) => sz.price));
+              return (
+                <p className="mt-2 text-[14px] text-ink-muted">
+                  Cheapest here:{' '}
+                  <Link href={`/menus-prices/${cheapest.slug}`} className="font-semibold text-navy hover:underline">
+                    {cheapest.title}
+                  </Link>{' '}
+                  from {CURRENCY_SYMBOL}
+                  {cheapest.price.toFixed(2)}. Prices in this section run {CURRENCY_SYMBOL}
+                  {Math.min(...prices).toFixed(2)}–{CURRENCY_SYMBOL}
+                  {Math.max(...prices).toFixed(2)} across all sizes.
+                </p>
+              );
+            })() : null}
             <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {inCategory.map((item, i) => (
                 <MenuItemCard key={item.id} item={item} priority={ci === 0 && i === 0} />

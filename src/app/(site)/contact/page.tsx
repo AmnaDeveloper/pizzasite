@@ -27,7 +27,7 @@ const CONTACT_FAQS = [
   {
     question: 'How quickly do you reply?',
     answer:
-      'Most messages get a reply within two working days. Price corrections tend to be quickest because we can usually verify them the same day.',
+      'Most messages get a reply within two working days. Price corrections are especially welcome — tell us the store and the date you saw the price.',
   },
   {
     question: 'I found a price that is wrong. What should I include?',

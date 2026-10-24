@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "audit:adsense": "node scripts/adsense-audit.mjs",
+    "prices:template": "node scripts/import-prices.mjs template",
+    "prices:import": "node scripts/import-prices.mjs import"
   },
   "dependencies": {
     "lucide-react": "^1.27.0",

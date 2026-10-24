@@ -54,7 +54,7 @@ export function relativeAge(input: string | Date, now: Date = new Date()): strin
 
 /**
  * Replaces the literal token {{MONTH_YEAR}} in stored content with the current
- * month and year. Lets a data file say "prices checked {{MONTH_YEAR}}" without
+ * month and year. Lets a data file say "updated {{MONTH_YEAR}}" without
  * anyone having to hand-edit it every month.
  */
 export function withCurrentMonthYear(text: string): string {

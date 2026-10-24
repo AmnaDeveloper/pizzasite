@@ -16,6 +16,7 @@ import {
   NOT_AFFILIATED_DISCLAIMER,
   SITE_NAME,
 } from '@/lib/site-config';
+import { priceSourceSentence } from '@/lib/price-source';
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -35,7 +36,7 @@ const ABOUT_FAQS = [
   {
     question: 'Where do your prices come from?',
     answer:
-      'A rolling sample of stores that our team prices periodically, supplemented by reader reports we verify before publishing. Because franchise stores set their own prices, every figure is an example for reference rather than a quotation.',
+      priceSourceSentence(),
   },
   {
     question: 'What do you do when you get something wrong?',
@@ -101,18 +102,15 @@ export default function AboutPage() {
         <div className="prose-guide mt-9 max-w-3xl">
           <h2>Why this site exists</h2>
           <p>
-            It started with a spreadsheet. Amna, who co-founded the site, got tired of
-            never knowing what a pizza order would actually cost until checkout, and
-            began writing down what she actually paid — not the advertised price, the real
-            one, including the delivery fee, the small-order surcharge and the tip.
+            Ordering chain pizza online is full of small decisions that change the total:
+            carryout or delivery, the deal tile or the menu, a large or two mediums, which
+            item goes into a flat-price slot, and what the delivery fee actually covers.
+            None of it is secret, but none of it is explained in one place either.
           </p>
           <p>
-            What that spreadsheet showed, after a few months, was that the same food ordered
-            two different ways could differ by eight or nine dollars. Not because of a
-            secret coupon, but because of the order in which you clicked things: whether you
-            chose carryout before or after building the basket, whether you started from the
-            deals page or the menu, whether you put a plain cheese pizza or a fully loaded
-            one into a flat-price slot.
+            {SITE_NAME} is run by Amna Sadam and Maha Iqbal. We write plain explanations of
+            those decisions and show the arithmetic behind each one, so you can see for
+            yourself why one way of ordering the same food costs less than another.
           </p>
           <p>
             None of that is hidden, exactly. It is just not explained anywhere, because the
@@ -122,16 +120,11 @@ export default function AboutPage() {
 
           <h2>What we publish</h2>
           <p>
-            Three things, essentially. Example prices for every item on a chain pizza menu,
+            Three things, essentially. Estimated prices for every item on the menu,
             with sizes, calories and allergens. Explanations of how each deal structure
             works — what qualifies, what is excluded, and which item to put in the slot.
             And long-form guides on the decisions that change what you pay: crust choice,
             pizza size, tipping, rewards, when carryout stops being worth the drive.
-          </p>
-          <p>
-            We also write city guides, because delivery is a local problem. A page that says
-            the same thing about Seattle and Houston is a page that has told you nothing
-            about either.
           </p>
 
           <h2>How we handle prices</h2>
@@ -141,11 +134,10 @@ export default function AboutPage() {
           </p>
           <p>
             Chain pizza stores are mostly franchises, and franchisees set their own prices.
-            There is no single national price for a large pepperoni pizza. What we publish
-            is a set of example prices drawn from a rolling sample of stores, useful for
-            comparison — is a large better value than a medium, does a specialty pizza beat
-            four toppings, what does a side really add to the total — but not a quotation
-            for your store.
+            There is no single national price for a large pepperoni pizza. {priceSourceSentence()}{' '}
+            They are useful for comparison — is a large better value than a medium, does a
+            specialty pizza beat four toppings, what does a side really add to the total —
+            but they are not a quotation for your store.
           </p>
           <p>
             That is why every price on this site carries the same caveat, and why we would

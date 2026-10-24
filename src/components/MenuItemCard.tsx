@@ -47,7 +47,6 @@ export default function MenuItemCard({
           <p className="text-[17px] font-extrabold text-brand">
             {CURRENCY_SYMBOL}
             {item.price.toFixed(2)}
-            <span className="ml-1 text-[12px] font-medium text-ink-muted">example</span>
           </p>
           <p className="inline-flex items-center gap-1 text-[13px] font-semibold text-ink-muted">
             <Flame className="h-3.5 w-3.5 text-brand" aria-hidden="true" />

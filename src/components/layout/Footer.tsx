@@ -44,8 +44,8 @@ export default function Footer() {
 
               <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-white/80">
                 An independent, unofficial guide to {BRAND.name} menu prices, coupons,
-                rewards and delivery in the United States. We track example prices and
-                explain how the deals actually work.
+                rewards and delivery in the United States. We estimate prices, show the
+                arithmetic, and explain how the deals actually work.
               </p>
 
               <a
