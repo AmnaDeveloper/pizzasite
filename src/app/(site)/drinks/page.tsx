@@ -11,6 +11,7 @@ import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
 import { getMenuByCategory } from '@/lib/content';
+import PriceTag from '@/components/PriceTag';
 import { BRAND, CURRENCY_SYMBOL } from '@/lib/site-config';
 
 const CRUMBS = [
@@ -25,17 +26,17 @@ const DRINK_FAQS = [
   {
     question: `How much are drinks at ${BRAND.name}?`,
     answer:
-      'A two-litre bottle is around $3.49 by our estimate and an individual bottle around $2.29 to $2.79. Both are roughly double what the same product costs in a supermarket. It is a convenience charge rather than a scandal, and it is the easiest line to remove from an order without anyone eating less.',
+      'A 2-liter bottle was $4.49 and a 20-ounce Dasani water or Gold Peak sweet tea $3.49 at the Columbus, Ohio store we checked on 25 October 2026, before tax. Both cost well above supermarket prices. It is a convenience charge rather than a scandal, and it is the easiest line to remove from an order without anyone eating less.',
   },
   {
     question: 'What is the cheapest side to order?',
     answer:
-      'Cinnamon twists and plain breadsticks are the cheapest per person, at around $5.49 and $6.49 for a portion that serves three or four alongside pizza. Wings are the most expensive way to feed people, because a large share of what you pay for is bone weight.',
+      'Bread Bites: $5.99 for 16 pieces in garlic, parmesan or cinnamon at the store we checked — about $1.50 a head for four people. Wings are the most expensive way to feed people, at $10.99 for eight, because a large share of what you pay for is bone weight.',
   },
   {
     question: 'Which side gives the most food for the money?',
     answer:
-      'Boneless chicken bites, if you want protein — there is no bone weight, so almost all of it is edible. For sheer volume, bread sides win: they are made from the same dough as the pizza, which is why they cost the store very little and appear in nearly every bundle.',
+      'Loaded Chicken, if you want protein — eight boneless pieces for $8.99 against $10.99 for eight wings, and almost all of it is edible. For sheer volume, bread sides win: they are made from the same dough as the pizza, which is why they cost the store very little and appear in nearly every bundle.',
   },
   {
     question: 'Is the soda delivered cold?',
@@ -50,12 +51,12 @@ const DRINK_FAQS = [
   {
     question: 'Which sides survive a long delivery?',
     answer:
-      'Boneless chicken and cinnamon twists travel best. Cheesy bread and lava cakes are the worst — melted cheese firms up as it cools and a lava cake loses its molten centre entirely, which is the whole point of it. If your delivery is long, order those two only on a carryout trip.',
+      'Loaded Chicken and Cinnamon Bread Bites travel best. Stuffed Cheesy Bread and lava cakes are the worst — melted cheese firms up as it cools and a lava cake loses its molten centre entirely, which is the whole point of it. If your delivery is long, order those two only on a carryout trip.',
   },
   {
     question: 'How many sides do I need for a group?',
     answer:
-      'One bread side per four people works alongside pizza, and it lets you order one fewer pizza because people fill up faster. Wings are the exception — at four to five per person, feeding ten people means two large portions, which usually costs more than an extra pizza.',
+      'One 16-piece order of Bread Bites covers about four people alongside pizza, and it lets you order one fewer pizza because people fill up faster. Wings are the exception — at four per person, feeding ten people means five 8-piece orders, $54.95 at the prices we checked, which costs more than an extra pizza.',
   },
   {
     question: `What is the cheapest way to get drinks with a ${BRAND.name} order?`,
@@ -68,13 +69,13 @@ const DRINK_FAQS = [
 export const metadata: Metadata = generatePageSEO({
   title: `${BRAND.name} Sides & Drinks Prices`,
   description:
-    'Prices for breadsticks, wings, pasta, desserts and drinks — plus which sides are ' +
-    'worth the money, which travel badly, and the one line worth deleting.',
+    'Bread bites, wings, desserts and drinks with prices checked at a real store — which ' +
+    'sides are worth it, which travel badly, and the line to delete.',
   path: '/drinks',
   keywords: [
     'dominos sides prices',
     'dominos drinks price',
-    'pizza breadsticks price',
+    'dominos bread bites price',
     'dominos wings price',
     'cheapest pizza side',
   ],
@@ -86,66 +87,68 @@ export const metadata: Metadata = generatePageSEO({
  * the direction and rough scale, which is what the decision turns on.
  */
 const MARKUP = [
-  { item: 'Two-litre soda bottle', store: 3.49, shop: 2.0 },
-  { item: 'Bottled soda, 20 fl oz', store: 2.79, shop: 2.0 },
-  { item: 'Bottled juice, single serve', store: 2.79, shop: 1.6 },
-  { item: 'Bottled water, 16.9 fl oz', store: 2.29, shop: 0.5 },
+  { item: '2-Liter Coke', store: 4.49, shop: 2.29 },
+  { item: 'Gold Peak Sweet Tea, single bottle', store: 3.49, shop: 2.0 },
+  { item: 'Dasani water, 20 fl oz', store: 3.49, shop: 1.79 },
 ];
 
-/** Our own verdict on each side, kept blunt. */
+/**
+ * Our own verdict on each side, kept blunt. Store prices are the checked ones
+ * (data/verified-prices-2026-10-25.json).
+ */
 const VERDICTS = [
   {
-    item: 'Cinnamon twists',
-    price: 5.49,
-    feeds: '3–4 as dessert',
+    item: 'Cinnamon Bread Bites (16)',
+    price: 5.99,
+    feeds: '4 as dessert',
     verdict: 'Best value dessert on the menu, by a distance',
     good: true,
   },
   {
-    item: 'Garlic parmesan breadsticks',
-    price: 6.49,
-    feeds: '3–4 as a side',
-    verdict: 'The reliable bundle filler — cheap for the store, filling for you',
+    item: 'Garlic or Parmesan Bread Bites (16)',
+    price: 5.99,
+    feeds: '4 as a side',
+    verdict: 'The cheapest side — cheap for the store, filling for you',
     good: true,
   },
   {
-    item: 'Chocolate lava cakes (2)',
-    price: 5.99,
-    feeds: '2',
+    item: 'Lava Cake Flight (3)',
+    price: 9.99,
+    feeds: '3',
     verdict: 'Excellent collected, ordinary after a long delivery',
     good: true,
   },
   {
-    item: 'Cheesy bread',
+    item: 'Stuffed Cheesy Bread',
     price: 8.49,
     feeds: '3–4 as a side',
-    verdict: 'Take it when a bundle prices it the same as plain breadsticks',
+    verdict: '$2.50 more than Bread Bites, with a dip included — worth it more often than not',
     good: true,
   },
   {
-    item: 'Boneless chicken bites',
+    item: 'Loaded Chicken (8)',
     price: 8.99,
     feeds: '2 as a side',
-    verdict: 'Most edible weight per dollar, and the best leftovers on the menu',
+    verdict: 'All meat and $2 cheaper than eight wings — the protein pick',
     good: true,
   },
   {
-    item: 'Chicken wings',
-    price: 9.49,
+    item: '8-piece wings',
+    price: 10.99,
     feeds: '2 as a side',
     verdict: 'Worst food per dollar — you are buying bone weight',
     good: false,
   },
   {
-    item: 'Two-litre soda',
-    price: 3.49,
+    item: '2-Liter soda',
+    price: 4.49,
     feeds: '6–8 glasses',
     verdict: 'Fine inside a bundle, poor value bought separately',
     good: false,
   },
   {
-    item: 'Bottled water',
-    price: 2.29,
+    item: 'Dasani water, 20 fl oz',
+    price: 3.49,
     feeds: '1',
     verdict: 'The one item we would simply not order',
     good: false,
@@ -262,9 +265,8 @@ export default function DrinksPage() {
                   <th scope="row" className="px-4 py-3 text-left font-semibold text-ink">
                     {row.item}
                   </th>
-                  <td className="px-4 py-3 text-right font-extrabold tabular-nums text-brand">
-                    {CURRENCY_SYMBOL}
-                    {row.price.toFixed(2)}
+                  <td className="px-4 py-3 text-right font-extrabold text-brand">
+                    <PriceTag price={row.price} verified />
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-ink-muted">{row.feeds}</td>
                   <td className="px-4 py-3 text-[14px] text-ink-muted">
@@ -303,9 +305,9 @@ export default function DrinksPage() {
               </h2>
               <div className="prose-guide mt-5 text-[15px]">
                 <p>
-                  A two-litre bottle from a pizza store costs roughly twice what the same
-                  bottle costs in a supermarket. An individual bottle costs about half the
-                  price of the two-litre for about a quarter of the liquid. Neither is a
+                  A 2-liter bottle cost $4.49 at the store we checked — well above what the
+                  same bottle costs in a supermarket. A 20-ounce bottle cost $3.49: nearly the
+                  price of the 2-liter for less than a third of the liquid. Neither is a
                   scandal — you are paying for the convenience of not making a second stop
                   — but both are worth knowing before you add them to a basket.
                 </p>
@@ -404,11 +406,11 @@ export default function DrinksPage() {
                 <p>Ranked by how well they hold up:</p>
                 <ul>
                   <li>
-                    <strong>Boneless chicken</strong> — travels best, and reheats better in
+                    <strong>Loaded Chicken</strong> — travels best, and reheats better in
                     an air fryer or hot oven than anything else on the menu.
                   </li>
                   <li>
-                    <strong>Cinnamon twists</strong> — no molten centre to lose. Good for
+                    <strong>Cinnamon Bread Bites</strong> — no molten centre to lose. Good for
                     about half an hour, chewy after an hour.
                   </li>
                   <li>
@@ -416,11 +418,11 @@ export default function DrinksPage() {
                     side so the skin does not soften in transit.
                   </li>
                   <li>
-                    <strong>Breadsticks</strong> — harden as they cool, faster than pizza
+                    <strong>Bread Bites</strong> — harden as they cool, faster than pizza
                     does. Reheat in an oven, never a microwave.
                   </li>
                   <li>
-                    <strong>Cheesy bread</strong> — melted cheese sets within about twenty
+                    <strong>Stuffed Cheesy Bread</strong> — melted cheese sets within about twenty
                     minutes and the texture changes noticeably.
                   </li>
                   <li>
@@ -431,7 +433,7 @@ export default function DrinksPage() {
                 <p>
                   If your store is close enough that{' '}
                   <Link href="/delivery-near-me">carryout makes sense</Link>, the two items
-                  that gain the most from it are cheesy bread and lava cakes.
+                  that gain the most from it are Stuffed Cheesy Bread and lava cakes.
                 </p>
               </div>
             </div>
@@ -443,20 +445,20 @@ export default function DrinksPage() {
               </h2>
               <div className="prose-guide mt-5 text-[15px]">
                 <p>
-                  The planning number that holds up is <strong>one bread side per four
-                  people</strong> alongside pizza. That is enough for everyone to have some,
+                  The planning number that holds up is <strong>one 16-piece order of Bread
+                  Bites per four people</strong> alongside pizza. That is enough for everyone to have some,
                   and it lets you order one fewer pizza because bread fills people up faster
                   than an extra slice does.
                 </p>
                 <p>
-                  Wings break that rule. As a side you need four to five per person, so a
-                  group of ten means two large portions — usually more expensive than simply
+                  Wings break that rule. As a side you need about four per person, so a
+                  group of ten means five 8-piece orders — $54.95 at the prices we checked, more than simply
                   adding another pizza, and it feeds fewer people. Wings work as a treat for
                   a small group and badly as catering for a large one.
                 </p>
                 <p>
-                  Desserts are the opposite. A single order of cinnamon twists covers three
-                  or four people, where two lava cakes cover two. For a party, twists are
+                  Desserts are the opposite. A 16-piece order of Cinnamon Bread Bites ($5.99)
+                  covers four people, where the three-cake Lava Cake Flight ($9.99) covers three. For a party, the bread bites are
                   the efficient choice; for two people at home, the cakes are the better
                   one.
                 </p>

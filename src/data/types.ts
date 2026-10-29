@@ -67,8 +67,14 @@ export type MenuCategory =
 export interface MenuSize {
   name: string;
   detail: string;
-  /** Example price in USD. */
+  /** Price in USD. */
   price: number;
+  /**
+   * True only when this exact price was copied from a real store's menu
+   * (PRICE_SOURCE in site-config says which store and when). Everything else
+   * is an estimate and is labelled "est." on the page.
+   */
+  verified?: boolean;
   slices?: number;
 }
 

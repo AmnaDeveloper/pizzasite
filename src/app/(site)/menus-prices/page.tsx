@@ -11,6 +11,8 @@ import AdSlot from '@/components/AdSlot';
 import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, collectionPageSchema, faqSchema } from '@/lib/seo/schema';
+import verifiedPrices from '../../../../data/verified-prices-2026-10-25.json';
+import PriceTag from '@/components/PriceTag';
 import { getAllMenuItems, getMenuCategories, lowestMenuPrice } from '@/lib/content';
 import { BRAND, CURRENCY_SYMBOL } from '@/lib/site-config';
 import { currentMonthYear } from '@/lib/utils/date';
@@ -47,8 +49,8 @@ const MENU_FAQS = [
 export const metadata: Metadata = generatePageSEO({
   title: `${BRAND.name} Menu Prices (${currentMonthYear()})`,
   description:
-    `${BRAND.name} menu prices for all 20 items — pizzas by size, sides, wings, pasta, desserts ` +
-    `and drinks — with calories and allergens. From ${CURRENCY_SYMBOL}${lowestMenuPrice().toFixed(2)}.`,
+    `${BRAND.name} menu prices checked at a real store: pizzas by size, sides, wings, pasta, ` +
+    `desserts and drinks, with calories and allergens. From ${CURRENCY_SYMBOL}${lowestMenuPrice().toFixed(2)}.`,
   path: '/menus-prices',
   keywords: [
     'dominos menu prices',
@@ -59,22 +61,36 @@ export const metadata: Metadata = generatePageSEO({
   ],
 });
 
+/**
+ * Checked items without their own page — taken from the price check file, so
+ * every row here is a real price from the real store.
+ */
+const PAGED = new Set(['ExtravaganZZa', 'MeatZZa', 'Pacific Veggie', 'Memphis BBQ Chicken', 'Philly Cheese Steak']);
+const ALSO_ON_MENU = (verifiedPrices.items as { section: string; name: string; size?: string; price: number; calories?: string }[])
+  .filter(
+    (i) =>
+      (i.section === 'Specialty Pizza' && !PAGED.has(i.name)) ||
+      ['Salads', 'Extras'].includes(i.section) ||
+      /Marbled Cookie Brownie|Mac & Cheese|Sandwich|Philly Cheese Steak$/.test(i.name) && i.section !== 'Specialty Pizza' && i.section !== 'Sandwiches',
+  )
+  .map((i) => ({ name: i.name, size: i.size ?? '', price: i.price, calories: i.calories ?? '—' }));
+
 /** A short buying guide per menu section — what is worth it and what fits a deal. */
 const SECTION_GUIDE: Record<string, string> = {
   'Specialty Pizza':
-    'Specialty pizzas carry four or five toppings for less than you would pay adding the same toppings yourself, so they are the better buy once you want three or more. They are also the pizzas that extract the most from a flat-price carryout deal, because the deal price does not rise with the toppings.',
+    'Every large specialty pizza we checked cost the same $19.99, whether it carried four toppings or nine — so the most heavily topped ones are the best value if you like what is on them. They are also the pizzas that get the most out of a flat-price carryout deal, because the deal price does not rise with the toppings.',
   'Build Your Own':
-    'The same base price as a cheese pizza, plus a fixed amount per topping. One or two toppings: build your own. Four or more: check the specialty section first. Hand tossed and thin crust cost the same; pan costs more and stops at large.',
+    'A large hand-tossed cheese pizza was $13.99 in our check; each topping adds a charge we have not checked yet. One or two toppings: build your own. Four or more: the $19.99 specialty pizzas usually win. Hand tossed stops at large, and Handmade Pan is made as a 12-inch medium only.',
   Sides:
-    'Bread sides are made from the same dough as the pizza, so they are cheap to make and turn up in almost every bundle. One eight-piece side covers about four people alongside pizza, and the large size is the cheaper buy per piece.',
+    'Bread sides are made from the same dough as the pizza, so they are cheap to make and turn up in almost every bundle. Sixteen Bread Bites for $5.99 cover about four people alongside pizza; Stuffed Cheesy Bread is $8.49 and comes with a dip.',
   Chicken:
-    'The most expensive way to feed a group, because part of what you pay for is bone weight — boneless bites give more edible food per dollar than wings. Plan on about four pieces each as a side.',
+    'The most expensive way to feed a group — eight wings were $10.99, and part of what you pay for is bone. Loaded Chicken gives eight boneless pieces for $8.99. Plan on about four pieces each as a side.',
   'Pasta & Sandwiches':
-    'One adult portion each, modest by restaurant standards. At menu price they are poor value; as a qualifying item in a two-for deal they are among the best picks on the menu.',
+    'One adult portion each: pastas $8.49 and sandwiches $8.99 in our check, whichever filling you choose. At menu price they are modest value; as a qualifying item in a two-for deal they are among the best picks on the menu.',
   Desserts:
-    'Small add-ons that are better collected than delivered — a lava cake loses its molten centre as it cools. Cinnamon twists stretch further across a group than the two-cake lava order.',
+    'Small add-ons that are better collected than delivered — a lava cake loses its molten centre as it cools. Sixteen Cinnamon Bread Bites ($5.99) stretch further across a group than the three-cake Lava Cake Flight ($9.99).',
   Drinks:
-    'The easiest line to cut. Bottled drinks cost roughly twice what a supermarket charges, so buying them separately trims a family order without anyone eating less.',
+    'The easiest line to cut. A 2-liter was $4.49 and a 20-ounce bottle $3.49 in our check — well above supermarket prices — so buying drinks separately trims a family order without anyone eating less.',
 };
 
 export default function MenuIndexPage() {
@@ -128,7 +144,7 @@ export default function MenuIndexPage() {
           <div className="relative mt-7 aspect-[21/9] overflow-hidden rounded-card border border-line">
             <Image
               src="/images/menus-prices-hero.jpg"
-              alt="An overhead spread of pizzas, wings, breadsticks and dessert on a wooden table"
+              alt="An overhead spread of pizzas, wings, bread and dessert on a wooden table"
               fill
               priority
               sizes="(max-width: 768px) 100vw, 1152px"
@@ -213,6 +229,43 @@ export default function MenuIndexPage() {
           </section>
         );
       })}
+
+      <section aria-labelledby="also-on-menu" className="border-t border-line bg-surface-alt">
+        <div className="mx-auto max-w-6xl px-4 py-12">
+          <h2 id="also-on-menu" className="text-2xl font-extrabold tracking-tight text-navy-dark">
+            Also on the menu
+          </h2>
+          <p className="mt-2 max-w-3xl text-[15px] leading-relaxed text-ink-muted">
+            Items we checked at the same store that do not have their own page yet.
+          </p>
+          <div className="table-scroll mt-5 overflow-hidden rounded-card border border-line bg-surface">
+            <table className="w-full text-[15px]">
+              <caption className="sr-only">Other checked menu prices</caption>
+              <thead>
+                <tr className="bg-navy text-left text-[11px] uppercase tracking-wide text-white">
+                  <th scope="col" className="px-4 py-3 font-bold">Item</th>
+                  <th scope="col" className="hidden px-4 py-3 font-bold sm:table-cell">Calories</th>
+                  <th scope="col" className="px-4 py-3 text-right font-bold">Price</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-line">
+                {ALSO_ON_MENU.map((row) => (
+                  <tr key={row.name} className="odd:bg-surface even:bg-surface-alt">
+                    <th scope="row" className="px-4 py-3 text-left font-semibold text-ink">
+                      {row.name}
+                      {row.size ? <span className="ml-1.5 text-[13px] font-medium text-ink-muted">{row.size}</span> : null}
+                    </th>
+                    <td className="hidden px-4 py-3 text-[14px] text-ink-muted sm:table-cell">{row.calories}</td>
+                    <td className="px-4 py-3 text-right font-extrabold text-brand">
+                      <PriceTag price={row.price} verified />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
 
       <AdSlot slotId="menu-index" className="py-6" />
 

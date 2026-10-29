@@ -7,14 +7,14 @@ import { BRAND, CURRENCY_SYMBOL } from '@/lib/site-config';
 import { currentYear, formatLongDate } from '@/lib/utils/date';
 
 /** Date the homepage figures were last checked. Update it with the content. */
-const HOME_UPDATED = '2026-10-12';
+const HOME_UPDATED = '2026-10-29';
 
 const money = (n: number) => `${CURRENCY_SYMBOL}${n.toFixed(2)}`;
 
 /**
  * Homepage hero: badges, a large uppercase headline, a short answer-first
  * paragraph, two calls to action and three headline stats on the left; a
- * framed food photo with the cheapest pizza pinned to it on the right.
+ * framed food photo with a checked price pinned to it on the right.
  *
  * Colours stay inside the site's two-hue palette: navy background, brand red
  * accents, and the red tint (brand-soft) for the sub-headline. Contrast on
@@ -23,13 +23,14 @@ const money = (n: number) => `${CURRENCY_SYMBOL}${n.toFixed(2)}`;
 export default function HeroSection() {
   const year = currentYear();
   const cheese = getMenuItem('classic-cheese-pizza');
-  const cheapestPizza = cheese ? Math.min(...cheese.sizes.map((s) => s.price)) : null;
-  const largeCheese = cheese?.sizes.find((s) => s.name === 'Large')?.price;
+  // Lead with a checked price, never an estimate.
+  const large = cheese?.sizes.find((s) => s.name === 'Large' && s.verified);
+  const largeCheese = large?.price;
 
   const stats = [
     { label: 'Menu items', value: String(menuItems.length) },
     { label: 'Deal types', value: String(coupons.length) },
-    ...(cheapestPizza ? [{ label: 'Pizzas from', value: money(cheapestPizza) }] : []),
+    ...(largeCheese ? [{ label: 'Large pizza', value: money(largeCheese) }] : []),
   ];
 
   return (
@@ -62,9 +63,10 @@ export default function HeroSection() {
           </p>
 
           <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/85">
-            Every {BRAND.name} menu item with its estimated price by size, the deal types
+            Every {BRAND.name} menu item with prices checked at a real store — estimates
+            where we have not checked yet — the deal types
             that actually lower your total, food photos and ordering tips
-            {largeCheese ? ` — a large cheese pizza is about ${money(largeCheese)}` : ''}.
+            {largeCheese ? ` — a large cheese pizza was ${money(largeCheese)} at the Columbus, Ohio store we checked` : ''}.
             Page updated {formatLongDate(HOME_UPDATED)}.
           </p>
 
@@ -98,7 +100,7 @@ export default function HeroSection() {
           </dl>
         </div>
 
-        {/* Framed photo with the cheapest pizza pinned to the corner. */}
+        {/* Framed photo with a checked price pinned to the corner. */}
         <figure className="relative border-[5px] border-brand bg-navy shadow-2xl shadow-black/40">
           <div className="relative aspect-[4/3]">
             <Image
@@ -110,13 +112,13 @@ export default function HeroSection() {
               className="object-cover"
             />
           </div>
-          {cheapestPizza ? (
+          {largeCheese ? (
             <figcaption className="absolute bottom-0 left-0 bg-brand px-5 py-3 text-white">
               <span className="block text-[11px] font-bold uppercase tracking-[0.14em] text-white/90">
-                Cheapest pizza
+                Checked price
               </span>
               <span className="mt-0.5 block font-heading text-[1.25rem] font-extrabold leading-tight sm:text-[1.5rem]">
-                Small cheese {money(cheapestPizza)}
+                Large cheese {money(largeCheese)}
               </span>
             </figcaption>
           ) : null}

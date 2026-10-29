@@ -3,7 +3,7 @@
  * way to buy it, how many to order, where it ranks on price, and the
  * question-shaped FAQs built from those numbers.
  *
- * Everything is derived from menu-items.json and coupons.ts so the 20 item
+ * Everything is derived from menu-items.json and coupons.ts so the item
  * pages stay consistent with the price tables elsewhere on the site.
  */
 import { coupons } from '@/data/coupons';
@@ -23,13 +23,40 @@ const SLICES_PER_ADULT = 3;
 export function isPizza(item: MenuItem): boolean {
   return (
     (item.category === 'Specialty Pizza' || item.category === 'Build Your Own') &&
-    item.sizes.some((s) => s.name === 'Large')
+    item.sizes.some((s) => DIAMETER[s.name])
   );
+}
+
+/**
+ * The size a pizza page leads with: the large where there is one, otherwise
+ * the biggest size offered (Handmade Pan only comes as a medium).
+ */
+export function refSize(item: MenuItem) {
+  return (
+    item.sizes.find((s) => s.name === 'Large') ??
+    [...item.sizes].filter((s) => DIAMETER[s.name]).sort((a, b) => DIAMETER[b.name] - DIAMETER[a.name])[0] ??
+    item.sizes[0]
+  );
+}
+
+/** True when every option of an item shares one price (wing flavours, soda flavours). */
+export function singlePrice(item: MenuItem): boolean {
+  return item.sizes.every((s) => s.price === item.sizes[0].price && Boolean(s.verified) === Boolean(item.sizes[0].verified));
 }
 
 /** Search-friendly name for headings and prose; falls back to the menu title. */
 export function displayName(item: MenuItem): string {
   return item.seoName ?? item.title;
+}
+
+/**
+ * The name as it reads mid-sentence. Named specialty pizzas are proper nouns
+ * ("ExtravaganZZa", "Pacific Veggie") and keep their spelling; generic items
+ * ("cheese pizza", "8-piece wings") are lower-cased.
+ */
+export function proseName(item: MenuItem): string {
+  const n = displayName(item);
+  return item.category === 'Specialty Pizza' && item.slug !== 'pepperoni-pizza' ? n : n.toLowerCase();
 }
 
 export function sizeOf(item: MenuItem, name: string) {
@@ -63,23 +90,30 @@ export function quickAnswer(item: MenuItem): string {
   const low = Math.min(...item.sizes.map((s) => s.price));
   const high = Math.max(...item.sizes.map((s) => s.price));
   if (isPizza(item)) {
-    const large = sizeOf(item, 'Large')!;
-    const smallest = item.sizes[0];
-    const biggest = item.sizes[item.sizes.length - 1];
+    const ref = refSize(item);
+    const others = item.sizes.filter((s) => s !== ref && DIAMETER[s.name]);
     const route = cheapestRoute(item);
-    return (
-      `A large ${displayName(item).toLowerCase()} (${DIAMETER.Large} inch${large.slices ? `, ${large.slices} slices` : ''}) is about ` +
-      `${money(large.price)} at ${BRAND.name} ${priceBasis()}. Sizes run from ` +
-      `${money(smallest.price)} for a ${DIAMETER[smallest.name]}-inch ${smallest.name.toLowerCase()} to ` +
-      `${money(biggest.price)} for a ${DIAMETER[biggest.name]}-inch ${biggest.name.toLowerCase()}.` +
-      (route ? ` On a carryout deal the same large commonly drops to about ${money(route.dealPrice)}.` : '')
-    );
+    const label = `${ref.name.toLowerCase()} ${proseName(item)} (${DIAMETER[ref.name]} inch${ref.slices ? `, ${ref.slices} slices` : ''})`;
+    const lead = ref.verified
+      ? `A ${label} is ${money(ref.price)} at ${BRAND.name} ${priceBasis(true)}, before tax.`
+      : `A ${label} is about ${money(ref.price)} at ${BRAND.name} ${priceBasis(false)}.`;
+    const range = others.length
+      ? ` ${others.every((o) => !o.verified) ? 'Our estimates for the other sizes' : 'Other sizes'}: ${others
+          .map((o) => `${money(o.price)} for a ${DIAMETER[o.name]}-inch ${o.name.toLowerCase()}`)
+          .join(', ')}.`
+      : '';
+    const deal = route ? ` A flat-rate carryout deal, where your store runs one, is about ${money(route.dealPrice)} by our estimate.` : '';
+    return lead + range + deal;
+  }
+  const plural = isPlural(item);
+  const v = item.sizes.every((s) => s.verified);
+  const basis = priceBasis(v);
+  if (singlePrice(item)) {
+    const options = item.sizes.length > 1 ? ` — any of the ${item.sizes.length} options (${item.sizes.map((s) => s.name).join(', ')})` : ` (${lowerFirst(item.sizes[0].detail)})`;
+    return `${item.title} ${plural ? 'are' : 'is'} ${v ? '' : 'about '}${money(low)} at ${BRAND.name} ${basis}${options}.`;
   }
   const sizes = item.sizes.map((s) => `${s.name.toLowerCase()} ${money(s.price)}`).join(', ');
-  const plural = isPlural(item);
-  return low === high
-    ? `${item.title} ${plural ? 'are' : 'is'} about ${money(low)} at ${BRAND.name} ${priceBasis()} (${lowerFirst(item.sizes[0].detail)}).`
-    : `${item.title} ${plural ? 'cost' : 'costs'} about ${money(low)} to ${money(high)} at ${BRAND.name} ${priceBasis()} — ${sizes}.`;
+  return `${item.title} ${plural ? 'cost' : 'costs'} ${v ? '' : 'about '}${money(low)} to ${money(high)} at ${BRAND.name} ${basis} — ${sizes}.`;
 }
 
 export type CheapestRoute = {
@@ -121,7 +155,7 @@ export function cheapestRoute(item: MenuItem): CheapestRoute | null {
     };
   };
 
-  if (isPizza(item)) {
+  if (isPizza(item) && sizeOf(item, 'Large')) {
     return pick(
       'cpn-carryout-deal',
       'Large',
@@ -147,8 +181,8 @@ export function cheapestRoute(item: MenuItem): CheapestRoute | null {
 
 /** How many large pizzas a group needs at three slices per adult, and the menu cost. */
 export function servingPlan(item: MenuItem) {
-  const large = sizeOf(item, 'Large');
-  if (!isPizza(item) || !large?.slices) return [];
+  const large = isPizza(item) ? refSize(item) : undefined;
+  if (!large?.slices) return [];
   const route = cheapestRoute(item);
   return [2, 4, 6, 8, 10, 12].map((people) => {
     const pizzas = Math.ceil((people * SLICES_PER_ADULT) / large.slices!);
@@ -166,27 +200,30 @@ export function servingPlan(item: MenuItem) {
 export function pizzaRanking(item: MenuItem) {
   if (!isPizza(item)) return [];
   return menuItems
-    .filter(isPizza)
-    .map((p) => ({ slug: p.slug, title: displayName(p), large: sizeOf(p, 'Large')!.price, current: p.slug === item.slug }))
+    .filter((p) => isPizza(p) && sizeOf(p, 'Large'))
+    .map((p) => {
+      const l = sizeOf(p, 'Large')!;
+      return { slug: p.slug, title: displayName(p), large: l.price, verified: Boolean(l.verified), current: p.slug === item.slug };
+    })
     .sort((a, b) => a.large - b.large || a.title.localeCompare(b.title));
 }
 
 /** Question-shaped FAQs for the head queries, generated from the item's numbers. */
 export function generatedFaqs(item: MenuItem): Faq[] {
-  const name = displayName(item).toLowerCase();
+  const name = proseName(item);
   const faqs: Faq[] = [];
   const route = cheapestRoute(item);
 
   if (isPizza(item)) {
-    const large = sizeOf(item, 'Large')!;
+    const ref = refSize(item);
     const whole = wholeLargeCalories(item);
     faqs.push({
-      question: `How much is a large ${name} at ${BRAND.name}?`,
-      answer: `About ${money(large.price)} at menu price for a ${DIAMETER.Large}-inch large ${priceBasis()}. ${
+      question: `How much is a ${ref.name.toLowerCase()} ${name} at ${BRAND.name}?`,
+      answer: `${ref.verified ? '' : 'About '}${money(ref.price)} at menu price for a ${DIAMETER[ref.name]}-inch ${ref.name.toLowerCase()}, ${priceBasis(ref.verified)}. ${
         route
-          ? `On a flat-rate carryout offer it commonly drops to about ${money(route.dealPrice)} — a saving of ${money(route.saving)}.`
+          ? `A flat-rate carryout deal, where your store runs one, is about ${money(route.dealPrice)} by our estimate.`
           : ''
-      } Franchise stores set their own prices, so confirm the total at checkout.`,
+      } Franchise stores set their own prices, so confirm the total at checkout.`.replace(/\s+/g, ' '),
     });
     // Square-cut pizzas have no slice count in the data — skip rather than guess.
     if (item.sizes.some((s) => s.slices)) {
@@ -196,7 +233,7 @@ export function generatedFaqs(item: MenuItem): Faq[] {
           .filter((s) => s.slices)
           .map((s) => `${s.name}: ${s.slices} slices`)
           .join('; ')
-          .concat('. At three slices per adult, a large feeds two to three people as a meal.'),
+          .concat(`. At three slices per adult, a ${refSize(item).name.toLowerCase()} feeds two to three people as a meal.`),
       });
     }
     faqs.push({
@@ -211,7 +248,7 @@ export function generatedFaqs(item: MenuItem): Faq[] {
     faqs.push({
       question: `How much ${plural ? 'are' : 'is'} ${subject}?`,
       answer: `${quickAnswer(item)} ${
-        route ? `On the ${route.dealLabel} ${plural ? 'they are' : 'it is'} about ${money(route.dealPrice)}.` : ''
+        route ? `On the ${route.dealLabel}, where a store offers it, ${plural ? 'they are' : 'it is'} about ${money(route.dealPrice)} by our estimate.` : ''
       } Prices vary by store, so check the total at checkout.`.replace(/\s+/g, ' ').trim(),
     });
     faqs.push({
@@ -236,11 +273,11 @@ export function seoTitle(item: MenuItem, monthYear: string): string {
 export function seoDescription(item: MenuItem): string {
   const fit = (s: string) => (s.length <= 155 ? s : `${s.slice(0, 152).replace(/[\s,;—-]+\S*$/, '')}…`);
   if (isBuildYourOwn(item)) {
-    const large = sizeOf(item, 'Large')!;
+    const ref = refSize(item);
     const tops = impliedToppingPrices();
-    const perTopping = tops.find((t) => t.size === 'Large')?.price;
+    const perTopping = tops.find((t) => t.size === ref.name)?.price;
     return fit(
-      `${BRAND.name} ${displayName(item).toLowerCase()}: a large is ${money(large.price)}` +
+      `${BRAND.name} ${proseName(item)}: a ${ref.name.toLowerCase()} is ${money(ref.price)}${ref.verified ? ' (checked)' : ' (est.)'}` +
         (perTopping ? ` plus about ${money(perTopping)} per topping` : '') +
         (specialtyVersusBuild(item).length
           ? `. Prices by size, build-your-own vs specialty, crusts compared and calories.`
@@ -248,19 +285,19 @@ export function seoDescription(item: MenuItem): string {
     );
   }
   if (isPizza(item)) {
-    const large = sizeOf(item, 'Large')!;
-    const smallest = item.sizes[0];
-    const biggest = item.sizes[item.sizes.length - 1];
+    const ref = refSize(item);
     return fit(
-      `${BRAND.name} ${displayName(item).toLowerCase()} costs ${money(smallest.price)}–${money(biggest.price)}; ` +
-        `a large is ${money(large.price)}. Prices by size, slices, calories, allergens and the cheapest way to order.`,
+      `${BRAND.name} ${proseName(item)} price: a ${ref.name.toLowerCase()} is ${money(ref.price)}` +
+        `${ref.verified ? ' (checked at a Columbus, Ohio store)' : ' by our estimate'}. Sizes, calories, toppings and the cheapest way to order.`,
     );
   }
   const low = Math.min(...item.sizes.map((s) => s.price));
   const high = Math.max(...item.sizes.map((s) => s.price));
   const range = low === high ? money(low) : `${money(low)}–${money(high)}`;
+  const checked = item.sizes.every((s) => s.verified);
+  const verb = isPlural(item) ? 'cost' : 'costs';
   return fit(
-    `${BRAND.name} ${displayName(item).toLowerCase()} costs about ${range}. Sizes, calories, ingredients, allergens and the cheapest way to order it.`,
+    `${BRAND.name} ${proseName(item)} ${verb} ${checked ? '' : 'about '}${range}${checked ? ' (checked at a Columbus, Ohio store)' : ''}. Options, calories, allergens and the cheapest way to order.`,
   );
 }
 
@@ -313,12 +350,12 @@ export function specialtyVersusBuild(item: MenuItem) {
   if (!cheese || !base || !toppingLarge || base.price !== sizeOf(cheese, 'Large')?.price) return [];
 
   return menuItems
-    .filter((m) => m.category === 'Specialty Pizza' && !['classic-cheese-pizza', 'pepperoni-pizza'].includes(m.slug))
+    .filter((m) => m.category === 'Specialty Pizza' && m.slug !== 'pepperoni-pizza')
     .flatMap((m) => {
       const large = sizeOf(m, 'Large');
       if (!large) return [];
-      // Ingredients are listed dough, sauce, cheese, then toppings.
-      const toppings = m.ingredients.slice(3);
+      // Ingredients are listed dough, sauce, cheese, then toppings; seasonings are not charged as toppings.
+      const toppings = m.ingredients.slice(3).filter((t) => !/seasoning|sauce/i.test(t));
       const built = Math.round((base.price + toppings.length * toppingLarge) * 100) / 100;
       return [
         {
@@ -326,6 +363,7 @@ export function specialtyVersusBuild(item: MenuItem) {
           title: m.title,
           toppings,
           specialty: large.price,
+          specialtyVerified: Boolean(large.verified),
           built,
           difference: Math.round((built - large.price) * 100) / 100,
         },
@@ -336,14 +374,16 @@ export function specialtyVersusBuild(item: MenuItem) {
 
 /** Hand tossed vs thin vs pan, side by side. */
 export function crustComparison() {
-  return menuItems.filter(isBuildYourOwn).map((m) => ({
+  return menuItems.filter((m) => isBuildYourOwn(m) && m.slug !== 'classic-cheese-pizza').map((m) => ({
     slug: m.slug,
     name: displayName(m),
-    large: sizeOf(m, 'Large')!.price,
+    refName: refSize(m).name,
+    large: refSize(m).price,
+    largeVerified: Boolean(refSize(m).verified),
     smallest: m.sizes[0].price,
     calories: m.calories,
     sizes: m.sizes.map((s) => s.name),
-    slicesLarge: sizeOf(m, 'Large')?.slices,
+    slicesLarge: refSize(m).slices,
   }));
 }
 
@@ -361,21 +401,21 @@ export function buildYourOwnFaqs(item: MenuItem): Faq[] {
     faqs.push({
       question: `How much does a topping cost at ${BRAND.name}?`,
       answer: flat
-        ? `About ${money(tops[0].price)} per topping on these prices, at every size — that is the gap between a cheese and a pepperoni pizza of the same size. Premium toppings such as chicken or extra cheese can cost more, and some stores charge more per topping on bigger pizzas, so watch the total as you add them.`
-        : `On these prices: ${tops.map((t) => `${t.size.toLowerCase()} ${money(t.price)}`).join(', ')} per topping. Premium toppings can cost more.`,
+        ? `We have not checked the topping charge yet; our estimate is about ${money(tops[0].price)} per topping. Premium toppings such as chicken, steak or extra cheese can cost more, and some stores charge more per topping on bigger pizzas, so watch the total as you add them.`
+        : `We have not checked the topping charge yet. Our estimates: ${tops.map((t) => `${t.size.toLowerCase()} ${money(t.price)}`).join(', ')} per topping. Premium toppings can cost more.`,
     });
   }
   if (ladder) {
     faqs.push({
-      question: `How much is a large build-your-own ${displayName(item).toLowerCase()} with toppings?`,
-      answer: `About ${money(ladder.prices[0])} with no toppings, ${money(ladder.prices[1])} with one, ${money(ladder.prices[2])} with two and ${money(ladder.prices[3])} with three, ${priceBasis()}. Inside a deal the topping count often stops mattering — a carryout large is a flat price with any toppings.`,
+      question: `How much is a large build-your-own ${proseName(item)} with toppings?`,
+      answer: `${money(ladder.prices[0])} with no toppings${refSize(item).verified ? ` (checked at ${'a Columbus, Ohio store'})` : ''}; with our estimated topping charge, about ${money(ladder.prices[1])} with one, ${money(ladder.prices[2])} with two and ${money(ladder.prices[3])} with three. Inside a deal the topping count often stops mattering — a carryout large is a flat price with any toppings.`,
     });
   }
   if (versus.length) {
     faqs.push({
       question: `Is it cheaper to build your own pizza or order a specialty pizza at ${BRAND.name}?`,
       answer: cheaperSpecialties.length
-        ? `For pizzas with four or more toppings, the specialty is usually cheaper. On these prices, building the ${cheaperSpecialties[0].title.toLowerCase()}'s ${cheaperSpecialties[0].toppings.length} toppings yourself costs ${money(cheaperSpecialties[0].built)} on a large, against ${money(cheaperSpecialties[0].specialty)} for the specialty. With two or three toppings, building your own usually wins.`
+        ? `For pizzas with four or more toppings, the specialty is usually cheaper. Every large specialty pizza we checked was ${money(cheaperSpecialties[0].specialty)}; adding the ${cheaperSpecialties[0].title}’s ${cheaperSpecialties[0].toppings.length} toppings to a cheese pizza yourself would come to about ${money(cheaperSpecialties[0].built)} with our estimated topping charge. With two or three toppings, building your own usually wins.`
         : 'With two or three toppings, building your own is usually cheaper; past that, check the specialty section before checking out.',
     });
   }
@@ -384,7 +424,7 @@ export function buildYourOwnFaqs(item: MenuItem): Faq[] {
 
 /* ------------------------------------------------- sides, chicken & extras */
 
-/** "8 sticks", "16 wings", "8 twists with icing dip" → 8 / 16 / 8. */
+/** "8 pieces", "16 pieces with icing dip", "3 cakes" → 8 / 16 / 3. */
 export function piecesOf(detail: string): { count: number; unit: string } | null {
   const m = detail.match(/(\d+)\s+(sticks|pieces|wings|twists|cakes)\b/i);
   return m ? { count: Number(m[1]), unit: m[2].toLowerCase() } : null;
@@ -394,32 +434,38 @@ export function perPieceRows(item: MenuItem) {
   if (isPizza(item)) return [];
   const rows = item.sizes.flatMap((s) => {
     const p = piecesOf(s.detail);
-    return p ? [{ size: s.name, pieces: p.count, unit: p.unit, price: s.price, perPiece: s.price / p.count }] : [];
+    return p
+      ? [{ size: s.name, pieces: p.count, unit: p.unit, price: s.price, verified: Boolean(s.verified), perPiece: s.price / p.count }]
+      : [];
   });
-  return rows.length >= 1 ? rows : [];
+  // Flavours that share a count and price (four wing sauces at one price) are one row.
+  const unique = rows.filter((r, i) => rows.findIndex((x) => x.pieces === r.pieces && x.price === r.price) === i);
+  return unique.map((r) =>
+    rows.filter((x) => x.pieces === r.pieces && x.price === r.price).length > 1 ? { ...r, size: 'Any flavour' } : r,
+  );
 }
 
 /**
  * How much of this item each person needs, as a side alongside pizza (or as a
  * main for pasta and subs). Matches the planning rules on the drinks & sides
- * page: one 8-piece bread side per four people, four wings each.
+ * page: four bread bites and four wings each.
  */
 const SERVING_RULE: Record<string, { perPerson: number; unit: string; basis: string }> = {
-  'garlic-parmesan-breadsticks': { perPerson: 2, unit: 'sticks', basis: 'two sticks each alongside pizza' },
-  'cheesy-bread': { perPerson: 2, unit: 'pieces', basis: 'two pieces each alongside pizza' },
-  'cinnamon-twists': { perPerson: 2, unit: 'twists', basis: 'two twists each for dessert' },
+  'bread-bites': { perPerson: 4, unit: 'pieces', basis: 'four bread bites each alongside pizza' },
+  'cinnamon-bread-bites': { perPerson: 4, unit: 'pieces', basis: 'four pieces each for dessert' },
   'chicken-wings': { perPerson: 4, unit: 'wings', basis: 'four wings each as a side' },
-  'boneless-chicken-bites': { perPerson: 4, unit: 'pieces', basis: 'four pieces each as a side' },
+  'loaded-chicken': { perPerson: 4, unit: 'pieces', basis: 'four pieces each as a side' },
 };
 
 /** Cheapest mix of sizes that covers each group size. */
 export function sidesPlan(item: MenuItem) {
   const rule = SERVING_RULE[item.slug];
   if (!rule) return [];
-  const packs = item.sizes.flatMap((s) => {
+  const all = item.sizes.flatMap((s) => {
     const p = piecesOf(s.detail);
-    return p ? [{ name: s.name, pieces: p.count, price: s.price }] : [];
+    return p ? [{ name: `${p.count}-piece order`, pieces: p.count, price: s.price }] : [];
   });
+  const packs = all.filter((p, i) => all.findIndex((x) => x.pieces === p.pieces) === i);
   if (!packs.length) return [];
   return [2, 4, 6, 8, 10, 12].map((people) => {
     const need = people * rule.perPerson;
@@ -479,12 +525,12 @@ export function categoryPeers(item: MenuItem) {
 export function pieceFaqs(item: MenuItem): Faq[] {
   const rows = perPieceRows(item);
   if (!rows.length) return [];
-  const name = displayName(item).toLowerCase();
+  const name = proseName(item);
   const plural = isPlural(item);
   const faqs: Faq[] = [
     {
       question: `How many ${rows[0].unit} come in ${BRAND.name} ${name}?`,
-      answer: `${rows.map((r) => `${r.size}: ${r.pieces} ${r.unit} for about ${money(r.price)}`).join('; ')}, ${priceBasis()}.`,
+      answer: `${rows.map((r) => `${r.size === 'Any flavour' ? 'Any flavour' : r.size}: ${r.pieces} ${r.unit} for ${r.verified ? '' : 'about '}${money(r.price)}`).join('; ')}, ${priceBasis(rows.every((r) => r.verified))}, before tax.`,
     },
   ];
   if (rows.length > 1) {

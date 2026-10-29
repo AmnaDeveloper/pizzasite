@@ -128,18 +128,17 @@ export const NOT_AFFILIATED_SHORT =
  * WHERE THE PRICES COME FROM — the single source of truth for every sentence
  * on the site that describes the prices.
  *
- * While `verified` is false the site calls its prices estimates, because they
- * were not copied from a real store. Once someone checks a store's menu on the
- * official site and imports it (see ADSENSE-READINESS.md, phase 2), set
- * `verified: true` plus `store` and `checkedOn`, and every page switches to
- * "checked at <store> on <date>". Never set it to true without doing that.
+ * Individual prices carry `verified: true` in menu-items.json only when they
+ * were copied from this store's menu on this date; everything else is shown as
+ * an estimate. Never mark a price verified without checking it.
  */
 export const PRICE_SOURCE = {
-  verified: false,
-  /** e.g. "a Domino's store in Austin, Texas (ZIP 78701)" */
-  store: '',
-  /** ISO date the menu was checked, e.g. "2026-11-02" */
-  checkedOn: '',
+  /** The store whose carryout menu the checked prices were copied from. */
+  store: "Domino's, 628 N High St, Columbus, OH 43215",
+  /** Short form for running text. */
+  storeShort: 'a Columbus, Ohio store',
+  /** ISO date the menu was checked. */
+  checkedOn: '2026-10-25',
 };
 
 export const NAV_LINKS = [

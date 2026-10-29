@@ -32,7 +32,7 @@ const BASKETS: DealBasket[] = [
   {
     couponId: 'cpn-carryout-deal',
     dealPrice: 7.99,
-    basket: [{ slug: 'pepperoni-pizza', size: 'Large' }],
+    basket: [{ slug: 'extravaganzza', size: 'Large' }],
     feeds: 3,
     note: 'Carryout also removes the delivery fee and tip, which is not counted here.',
   },
@@ -40,8 +40,8 @@ const BASKETS: DealBasket[] = [
     couponId: 'cpn-mix-match',
     dealPrice: 6.99 * 2,
     basket: [
-      { slug: 'pepperoni-pizza', size: 'Medium' },
-      { slug: 'chicken-alfredo-pasta', size: 'Single serving' },
+      { slug: 'chicken-alfredo-pasta', size: 'Chicken Alfredo' },
+      { slug: 'oven-baked-sandwiches', size: 'Italian' },
     ],
     feeds: 2,
   },
@@ -50,7 +50,7 @@ const BASKETS: DealBasket[] = [
     dealPrice: 8.99,
     basket: [
       { slug: 'classic-cheese-pizza', size: 'Medium' },
-      { slug: 'cinnamon-twists', size: 'Regular' },
+      { slug: 'cinnamon-bread-bites', size: '16 pieces' },
     ],
     feeds: 2,
   },
@@ -59,8 +59,8 @@ const BASKETS: DealBasket[] = [
     dealPrice: 29.99,
     basket: [
       { slug: 'classic-cheese-pizza', size: 'Large', qty: 2 },
-      { slug: 'garlic-parmesan-breadsticks', size: 'Regular' },
-      { slug: 'two-liter-soda', size: '2 litre' },
+      { slug: 'bread-bites', size: 'Garlic' },
+      { slug: 'two-liter-soda', size: 'Coke' },
     ],
     feeds: 5,
     note: 'Specialty pizzas usually add a surcharge of a dollar or two each inside a bundle.',
@@ -70,17 +70,17 @@ const BASKETS: DealBasket[] = [
     dealPrice: 49.99,
     basket: [
       { slug: 'classic-cheese-pizza', size: 'Large', qty: 4 },
-      { slug: 'garlic-parmesan-breadsticks', size: 'Regular' },
-      { slug: 'cheesy-bread', size: 'Regular' },
+      { slug: 'bread-bites', size: 'Garlic' },
+      { slug: 'stuffed-cheesy-bread', size: 'Classic' },
     ],
     feeds: 10,
   },
   {
     couponId: 'cpn-sides-addon',
     dealPrice: 5.99,
-    basket: [{ slug: 'chicken-wings', size: 'Regular' }],
+    basket: [{ slug: 'chicken-wings', size: 'Plain' }],
     feeds: 2,
-    note: 'Pick the dearest side in the slot — on a $5.99 lava cake the add-on saves nothing.',
+    note: 'Pick the dearest side in the slot — Bread Bites already cost $5.99, so the add-on saves nothing on them.',
   },
 ];
 
@@ -92,7 +92,9 @@ export type DealValue = {
   savingPct: number;
   perPerson: number;
   feeds: number;
-  lines: { title: string; size: string; qty: number; price: number; slug: string }[];
+  lines: { title: string; size: string; qty: number; price: number; slug: string; verified: boolean }[];
+  /** True when every menu price in the basket was checked (the deal price is always an estimate). */
+  menuVerified: boolean;
   note?: string;
 };
 
@@ -110,7 +112,7 @@ export function getDealValues(): DealValue[] {
       const size = item?.sizes.find((s) => s.name === line.size);
       if (!item || !size) return [];
       const qty = line.qty ?? 1;
-      return [{ title: item.title, size: line.size, qty, price: size.price * qty, slug: item.slug }];
+      return [{ title: item.title, size: line.size, qty, price: size.price * qty, slug: item.slug, verified: Boolean(size.verified) }];
     });
     if (lines.length !== b.basket.length) return [];
 
@@ -128,6 +130,7 @@ export function getDealValues(): DealValue[] {
         perPerson: round2(dealPrice / b.feeds),
         feeds: b.feeds,
         lines,
+        menuVerified: lines.every((l) => l.verified),
         note: b.note,
       },
     ];

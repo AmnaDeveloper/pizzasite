@@ -1,0 +1,71 @@
+{
+  "_about": "Prices copied from the official Domino's carryout cart, before tax. Nothing in this file is estimated or derived — only what the cart showed. Calories are as printed in the cart, with the serving basis the cart gave.",
+  "store": "Domino's, 628 N High St, Columbus, OH 43215",
+  "checkedOn": "2026-10-25",
+  "method": "Carryout cart on dominos.com, one of each item, prices before tax; no order placed",
+  "items": [
+    { "section": "Pizza", "name": "Large (14\") Hand Tossed Pizza (cheese)", "price": 13.99, "calories": "290 per slice (1/8 of pizza)" },
+    { "section": "Specialty Pizza", "name": "ExtravaganZZa", "size": "Large (14\") Hand Tossed", "price": 19.99, "calories": "370 per slice (1/8 of pizza)" },
+    { "section": "Specialty Pizza", "name": "MeatZZa", "size": "Large (14\") Hand Tossed", "price": 19.99, "calories": "360 per slice (1/8 of pizza)" },
+    { "section": "Specialty Pizza", "name": "Philly Cheese Steak", "size": "Large (14\") Hand Tossed", "price": 19.99, "calories": "310 per slice (1/8 of pizza)" },
+    { "section": "Specialty Pizza", "name": "Pacific Veggie", "size": "Large (14\") Hand Tossed", "price": 19.99, "calories": "310 per slice (1/8 of pizza)" },
+    { "section": "Specialty Pizza", "name": "Honolulu Hawaiian", "size": "Large (14\") Hand Tossed", "price": 19.99, "calories": "340 per slice (1/8 of pizza)" },
+    { "section": "Specialty Pizza", "name": "The People's Pizza - Deluxe", "size": "Large (14\") Hand Tossed", "price": 19.99, "calories": "340 per slice (1/8 of pizza)" },
+    { "section": "Specialty Pizza", "name": "Memphis BBQ Chicken", "size": "Large (14\") Hand Tossed", "price": 19.99, "calories": "350 per slice (1/8 of pizza)" },
+    { "section": "Specialty Pizza", "name": "Spicy Chicken Bacon Ranch", "size": "Large (14\") Hand Tossed", "price": 19.99, "calories": "410 per slice (1/8 of pizza)" },
+    { "section": "Specialty Pizza", "name": "Wisconsin 6-Cheese Pizza", "size": "Large (14\") Hand Tossed", "price": 19.99, "calories": "330 per slice (1/8 of pizza)" },
+    { "section": "Specialty Pizza", "name": "Spinach & Feta", "size": "Large (14\") Hand Tossed", "price": 19.99, "calories": "330 per slice (1/8 of pizza)" },
+
+    { "section": "Breads", "name": "16-Piece Garlic Bread Bites", "price": 5.99, "calories": "210 per 4 pieces" },
+    { "section": "Breads", "name": "16-Piece Parmesan Bread Bites", "price": 5.99, "calories": "210 per 4 pieces" },
+    { "section": "Breads", "name": "16-Piece Cinnamon Bread Bites (with icing)", "price": 5.99, "calories": "230 per 4 pieces; icing 220 per container", "note": "Cart showed 2 for $11.98" },
+    { "section": "Breads", "name": "Stuffed Cheesy Bread", "price": 8.49, "calories": "160 per piece" },
+    { "section": "Breads", "name": "Pepperoni Stuffed Cheesy Bread", "price": 8.49, "calories": "170 per piece" },
+    { "section": "Breads", "name": "Bacon & Jalapeno Stuffed Cheesy Bread", "price": 8.49, "calories": "170 per piece" },
+    { "section": "Breads", "name": "Spinach & Feta Stuffed Cheesy Bread", "price": 8.49, "calories": "160 per piece" },
+
+    { "section": "Chicken", "name": "8-piece Plain Wings", "price": 10.99, "calories": "250 per 4 pieces" },
+    { "section": "Chicken", "name": "8-piece Hot Buffalo Wings", "price": 10.99, "calories": "260 per 4 pieces" },
+    { "section": "Chicken", "name": "8-piece Honey BBQ Wings", "price": 10.99, "calories": "310 per 4 pieces" },
+    { "section": "Chicken", "name": "8-piece Sweet Mango Habanero Wings", "price": 10.99, "calories": "310 per 4 pieces" },
+    { "section": "Chicken", "name": "Loaded Chicken – Classic Hot Buffalo", "price": 8.99, "calories": "200 (cart: per 8 pieces)" },
+    { "section": "Chicken", "name": "Loaded Chicken – Crispy Bacon & Tomato", "price": 8.99, "calories": "270 (cart: per 8 pieces)" },
+    { "section": "Chicken", "name": "Loaded Chicken – Sweet BBQ Bacon", "price": 8.99, "calories": "230 (cart: per 8 pieces)" },
+    { "section": "Chicken", "name": "Loaded Chicken – Spicy Jalapeno - Pineapple", "price": 8.99, "calories": "200 (cart: per 8 pieces)" },
+
+    { "section": "Pasta", "name": "Chicken Alfredo Pasta", "price": 8.49, "calories": "590 per dish" },
+    { "section": "Pasta", "name": "5-Cheese Mac & Cheese", "price": 8.49, "calories": "830 per dish" },
+    { "section": "Pasta", "name": "Spicy Buffalo 5-Cheese Mac & Cheese", "price": 8.49, "calories": "840 per dish" },
+
+    { "section": "Sandwiches", "name": "Italian Sandwich", "price": 8.99, "calories": "420 per 1/2 sandwich" },
+    { "section": "Sandwiches", "name": "Philly Cheese Steak", "price": 8.99, "calories": "370 per 1/2 sandwich" },
+    { "section": "Sandwiches", "name": "Chicken Parm Sandwich", "price": 8.99, "calories": "410 per 1/2 sandwich" },
+    { "section": "Sandwiches", "name": "Chicken Bacon Ranch Sandwich", "price": 8.99, "calories": "470 per 1/2 sandwich" },
+    { "section": "Sandwiches", "name": "Buffalo Chicken Sandwich", "price": 8.99, "calories": "420 per 1/2 sandwich" },
+
+    { "section": "Salads", "name": "Classic Garden (with ranch dressing)", "price": 8.99, "calories": "70 per 1.5 cups; ranch 220 per packet" },
+
+    { "section": "Desserts", "name": "Build Your Own Lava Cake Flight (3 cakes)", "price": 9.99, "calories": "360 per cake" },
+    { "section": "Desserts", "name": "Domino's Marbled Cookie Brownie", "price": 8.99, "calories": "200 per piece" },
+
+    { "section": "Drinks", "name": "2-Liter Coke", "price": 4.49, "calories": "140 per 12 fl oz" },
+    { "section": "Drinks", "name": "2-Liter Diet Coke", "price": 4.49, "calories": "0 per 12 fl oz" },
+    { "section": "Drinks", "name": "2-Liter Cherry Coke", "price": 4.49, "calories": "150 per 12 fl oz" },
+    { "section": "Drinks", "name": "2-Liter Sprite", "price": 4.49, "calories": "140 per 12 fl oz" },
+    { "section": "Drinks", "name": "2-Liter Fanta Orange", "price": 4.49, "calories": "160 per 12 fl oz" },
+    { "section": "Drinks", "name": "20oz Dasani Bottled Water", "price": 3.49, "calories": "0 per bottle" },
+    { "section": "Drinks", "name": "Gold Peak Sweet Tea", "price": 3.49, "calories": "190 per bottle" },
+
+    { "section": "Extras", "name": "Dipping cups (Marinara, Ranch, Garlic, Blue Cheese, Hot Buffalo, Icing, Nacho, Slice Sauce, Sweet Mango Habanero)", "price": 0.99 },
+    { "section": "Extras", "name": "Salad dressing packets (Balsamic, Caesar)", "price": 0.99 },
+    { "section": "Extras", "name": "Grated Parmesan / Red Pepper Flakes", "price": 0.99 }
+  ],
+  "notChecked": [
+    "Cheese pizza Small, Medium (Hand Tossed); X-Large (New York Style — Hand Tossed has no X-Large)",
+    "1-topping Large (e.g. pepperoni) — needed for the per-topping price",
+    "Crunchy Thin, Handmade Pan (plain), Parmesan Stuffed, Gluten Free — plain cheese",
+    "Specialty pizzas in Small / Medium / X-Large",
+    "Boneless Chicken (cart did not price it)",
+    "The Medium Handmade Pan in the cart had 7 extra toppings ($27.74) — not used, not a plain price"
+  ]
+}

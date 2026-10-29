@@ -31,6 +31,7 @@ import PostCard from '@/components/PostCard';
 import AdSlot from '@/components/AdSlot';
 import JsonLd from '@/components/JsonLd';
 import PriceNote from '@/components/PriceNote';
+import PriceTag from '@/components/PriceTag';
 import { absoluteUrl, generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
 import { getDealValues, percentageVersusBundle } from '@/lib/deal-values';
@@ -112,11 +113,11 @@ const BEST_BY_SITUATION = [
 const COUPON_FAQS = [
   {
     question: `Does ${BRAND.name} have a $7.99 deal?`,
-    answer: `A flat-rate carryout offer on a large pizza, commonly around $7.99 with any toppings, is the offer type to look for. In our worked example it saves ${carryout ? money(carryout.saving) : 'about $8.50'} against a large pepperoni at menu price, before you count the delivery fee and tip you also avoid. Participation is decided store by store, so check your own store's deals page after entering your address.`,
+    answer: `A flat-rate carryout offer on a large pizza, around $7.99 with any toppings by our estimate, is the offer type to look for. Against a large specialty pizza at $19.99 — the price we checked at a Columbus, Ohio store — that is a saving of ${carryout ? money(carryout.saving) : 'about $12'}, before you count the delivery fee and tip you also avoid. Participation is decided store by store, so check your own store's deals page after entering your address.`,
   },
   {
     question: `What is the ${BRAND.name} Mix & Match deal?`,
-    answer: `You pick two or more items from a qualifying list — a medium pizza, a pasta, a sandwich, a side — and each one drops to a flat price, commonly around $6.99 each. In our example, a medium pepperoni plus a chicken alfredo pasta costs ${mixMatch ? money(mixMatch.menuPrice) : 'about $22.48'} at menu price and ${mixMatch ? money(mixMatch.dealPrice) : '$13.98'} on the deal. It only applies when every item is on the qualifying list.`,
+    answer: `You pick two or more items from a qualifying list — a medium pizza, a pasta, a sandwich, a side — and each one drops to a flat price, around $6.99 each by our estimate. In our example, a chicken alfredo pasta ($8.49) and an Italian sandwich ($8.99) — both checked prices — cost ${mixMatch ? money(mixMatch.menuPrice) : '$17.48'} at menu price and about ${mixMatch ? money(mixMatch.dealPrice) : '$13.98'} on the deal. It only applies when every item is on the qualifying list.`,
   },
   {
     question: `How do I get ${BRAND.name} coupons that actually work?`,
@@ -501,7 +502,7 @@ export default function CouponsPage() {
                   <th scope="col" className="px-4 py-3.5 font-bold">Deal</th>
                   <th scope="col" className="px-4 py-3.5 font-bold">What’s in the basket</th>
                   <th scope="col" className="px-3 py-3.5 text-right font-bold">Menu price</th>
-                  <th scope="col" className="px-3 py-3.5 text-right font-bold">Deal price</th>
+                  <th scope="col" className="px-3 py-3.5 text-right font-bold">Deal price (est.)</th>
                   <th scope="col" className="px-3 py-3.5 text-right font-bold">You save</th>
                   <th scope="col" className="px-4 py-3.5 text-right font-bold">Per person</th>
                 </tr>
@@ -535,8 +536,8 @@ export default function CouponsPage() {
                         </span>
                       ))}
                     </td>
-                    <td className="px-3 py-4 text-right tabular-nums text-ink-muted line-through decoration-ink-muted/50">
-                      {money(d.menuPrice)}
+                    <td className="px-3 py-4 text-right text-ink-muted">
+                      <PriceTag price={d.menuPrice} verified={d.menuVerified} className="line-through decoration-ink-muted/50" />
                     </td>
                     <td className="px-3 py-4 text-right font-bold tabular-nums text-ink">
                       {money(d.dealPrice)}
@@ -720,7 +721,7 @@ export default function CouponsPage() {
                 t: 'The qualifying item list is narrow',
                 b: (
                   <>
-                    A bundle that accepts only two-topping medium pizzas and plain breadsticks
+                    A bundle that accepts only two-topping medium pizzas and plain bread bites
                     is a much smaller discount than one that accepts anything on the menu.
                     Read the list before you read the headline number — the headline is chosen
                     by a marketing team, the list is where the actual offer lives.

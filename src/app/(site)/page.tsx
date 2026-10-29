@@ -14,6 +14,7 @@ import SizeValueChart, { sizeValueRows } from '@/components/SizeValueChart';
 import { generatePageSEO } from '@/lib/seo-config';
 import { faqSchema, priceListSchema } from '@/lib/seo/schema';
 import PriceNote from '@/components/PriceNote';
+import PriceTag from '@/components/PriceTag';
 import MenuPriceTable from '@/components/MenuPriceTable';
 import {
   getAllPosts,
@@ -38,10 +39,10 @@ const money = (n: number) => `${CURRENCY_SYMBOL}${n.toFixed(2)}`;
 
 /*
  * The size-value numbers are computed once here so the section, the FAQ and
- * the "pay less" steps all quote the same figures. Pepperoni is used because
- * it is the item the large-vs-medium guide works through.
+ * the "pay less" steps all quote the same figures. The cheese pizza is used
+ * because its large is a checked price (the other sizes are estimates).
  */
-const VALUE_ITEM = getMenuItem('pepperoni-pizza');
+const VALUE_ITEM = getMenuItem('classic-cheese-pizza');
 const VALUE_ROWS = VALUE_ITEM ? sizeValueRows(VALUE_ITEM) : [];
 const smallRow = VALUE_ROWS.find((r) => r.size === 'Small');
 const largeRow = VALUE_ROWS.find((r) => r.size === 'Large');
@@ -61,7 +62,7 @@ const HOME_FAQS = [
   {
     question: `How much is a large pizza at ${BRAND.name}?`,
     answer:
-      'A large cheese pizza is around $14.99 at menu price by our estimate, and a large pepperoni around $16.49. On a flat-rate carryout offer the same large pizza commonly drops to about $7.99, which is why the offer you order under matters more than the item you choose. These are estimates — franchise stores set their own prices, so confirm the total at official checkout.',
+      'A large (14-inch) hand-tossed cheese pizza was $13.99, and every large specialty pizza $19.99, at the Columbus, Ohio store we checked on 25 October 2026, before tax. A flat-rate carryout deal, where a store runs one, can bring a large down to about $7.99 by our estimate — which is why the offer you order under matters more than the item you choose. Franchise stores set their own prices, so confirm the total at checkout.',
   },
   {
     question: `What is the cheapest way to order ${BRAND.name}?`,
@@ -72,7 +73,7 @@ const HOME_FAQS = [
     question: `Which ${BRAND.name} pizza size is the best value?`,
     answer:
       smallRow && xlRow && largeRow
-        ? `The extra large. Using our example pepperoni prices, a 10-inch small works out at about ${smallRow.centsPerSqIn.toFixed(1)} cents per square inch, a 14-inch large at ${largeRow.centsPerSqIn.toFixed(1)} cents and a 16-inch extra large at ${xlRow.centsPerSqIn.toFixed(1)} cents — roughly ${SMALL_TO_XL_SAVING}% cheaper per bite than the small. Every step up the size ladder lowers the unit cost, so size up before adding a second pizza.`
+        ? `The extra large. Using our cheese pizza prices (the large checked, the other sizes estimated), a 10-inch small works out at about ${smallRow.centsPerSqIn.toFixed(1)} cents per square inch, a 14-inch large at ${largeRow.centsPerSqIn.toFixed(1)} cents and a 16-inch extra large at ${xlRow.centsPerSqIn.toFixed(1)} cents — roughly ${SMALL_TO_XL_SAVING}% cheaper per bite than the small. Every step up the size ladder lowers the unit cost, so size up before adding a second pizza.`
         : 'The biggest size you will actually finish. Every step up the size ladder lowers the price per square inch, so size up before adding a second pizza.',
   },
   {
@@ -339,9 +340,11 @@ export default function HomePage() {
                   href={`/menus-prices/${row.slug}`}
                   className="group flex h-full items-baseline gap-3 rounded-card border border-line bg-surface px-5 py-4 transition-colors hover:border-navy"
                 >
-                  <span className="text-[1.6rem] font-extrabold leading-none tabular-nums text-brand">
-                    {money(row.price)}
-                  </span>
+                  <PriceTag
+                    price={row.price}
+                    verified={row.verified}
+                    className="text-[1.6rem] font-extrabold leading-none text-brand"
+                  />
                   <span className="text-[13px] font-semibold leading-snug text-ink-muted group-hover:text-navy">
                     {row.label}
                   </span>

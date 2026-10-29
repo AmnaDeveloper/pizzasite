@@ -27,6 +27,8 @@ import {
   cheapestRoute,
   generatedFaqs,
   isPizza,
+  refSize,
+  proseName,
   isPlural,
   displayName,
   isBuildYourOwn,
@@ -52,7 +54,8 @@ import {
 import { authors } from '@/data/authors';
 import { BRAND, NOT_AFFILIATED_SHORT, SITE_URL } from '@/lib/site-config';
 import { currentMonthYear, formatLongDate, toIsoDate } from '@/lib/utils/date';
-import { PRICE_ADJ, priceSourceSentence } from '@/lib/price-source';
+import { priceSourceSentence } from '@/lib/price-source';
+import PriceTag from '@/components/PriceTag';
 
 /**
  * Date the item pages' content last genuinely changed. Shown on the page and
@@ -78,7 +81,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const item = getMenuItem(slug);
   if (!item) return { title: 'Item not found' };
 
-  const name = displayName(item).toLowerCase();
+  const name = proseName(item);
   return generatePageSEO({
     title: seoTitle(item, currentMonthYear()),
     description: seoDescription(item),
@@ -108,7 +111,7 @@ export default async function MenuItemPage({ params }: Props) {
 
   const url = absoluteUrl(`/menus-prices/${item.slug}`);
   const pizza = isPizza(item);
-  const name = displayName(item).toLowerCase();
+  const name = proseName(item);
   const byo = isBuildYourOwn(item);
   const ladder = toppingLadder(item);
   const versus = specialtyVersusBuild(item);
@@ -140,14 +143,13 @@ export default async function MenuItemPage({ params }: Props) {
     ? ''
     : cheaperCount === 0
       ? `At ${money(current.large)} for a large it is the ${tiedWith.length ? 'joint-' : ''}cheapest pizza on the menu${
-          tiedWith.length ? `, level with the ${tiedWith.map((t) => t.title.toLowerCase()).join(' and ')}` : ''
+          tiedWith.length ? `, level with the ${tiedWith.map((t) => t.title).join(' and ')}` : ''
         } — the reference price every topping and specialty premium is measured against.`
       : `At ${money(current.large)} for a large, ${cheaperCount} of the ${ranking.length} pizzas cost less. It is ${money(
           current.large - cheapest.large,
         )} more than the cheapest large on the menu.`;
-  const large = sizeOf(item, 'Large');
+  const large = isPizza(item) ? refSize(item) : undefined;
   const lowPrice = Math.min(...item.sizes.map((s) => s.price));
-  const highPrice = Math.max(...item.sizes.map((s) => s.price));
 
   // Generated head-query FAQs first, then the item's own editorial FAQs.
   const faqs = [
@@ -292,18 +294,31 @@ export default async function MenuItemPage({ params }: Props) {
             <dl className="mt-auto grid grid-cols-3 gap-2 pt-5 text-center">
               <div className="rounded-md bg-white/10 px-2 py-3">
                 <dt className="text-[11px] font-bold uppercase tracking-wide text-white/80">
-                  {pizza ? 'Large' : 'From'}
+                  {pizza && large ? large.name : 'Price'}
                 </dt>
                 <dd className="mt-1 text-xl font-black tabular-nums">
-                  {money(pizza && large ? large.price : lowPrice)}
+                  {(() => {
+                    const shown = pizza && large ? large : item.sizes.find((sz) => sz.price === lowPrice)!;
+                    return (
+                      <>
+                        {money(shown.price)}
+                        <span className="block text-[11px] font-bold uppercase tracking-wide text-white/80">
+                          {shown.verified ? '✓ checked' : 'estimate'}
+                        </span>
+                      </>
+                    );
+                  })()}
                 </dd>
               </div>
               <div className="rounded-md bg-white/10 px-2 py-3">
                 <dt className="text-[11px] font-bold uppercase tracking-wide text-white/80">
-                  {route ? 'On a deal' : 'Up to'}
+                  {route ? 'On a deal' : 'Options'}
                 </dt>
                 <dd className="mt-1 text-xl font-black tabular-nums">
-                  {money(route ? route.dealPrice : highPrice)}
+                  {route ? money(route.dealPrice) : item.sizes.length}
+                  {route ? (
+                    <span className="block text-[11px] font-bold uppercase tracking-wide text-white/80">estimate</span>
+                  ) : null}
                 </dd>
               </div>
               <div className="rounded-md bg-white/10 px-2 py-3">
@@ -341,16 +356,16 @@ export default async function MenuItemPage({ params }: Props) {
           <div className="table-scroll mt-5 overflow-hidden rounded-card border border-line">
             <table className="w-full text-[15px]">
               <caption className="sr-only">
-                {PRICE_ADJ} {BRAND.name} prices by size for the {name}
+                {BRAND.name} prices by size for the {name}, checked and estimated
               </caption>
               <thead>
                 <tr className="bg-navy text-left text-[11px] uppercase tracking-wide text-white">
-                  <th scope="col" className="px-4 py-3 font-bold">Size</th>
+                  <th scope="col" className="px-4 py-3 font-bold">{pizza ? 'Size' : 'Option'}</th>
                   <th scope="col" className="px-4 py-3 font-bold">Detail</th>
                   {pizza ? (
                     <th scope="col" className="px-3 py-3 text-right font-bold">Slices</th>
                   ) : null}
-                  <th scope="col" className="px-4 py-3 text-right font-bold">{PRICE_ADJ} price</th>
+                  <th scope="col" className="px-4 py-3 text-right font-bold">Price</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
@@ -367,8 +382,8 @@ export default async function MenuItemPage({ params }: Props) {
                         {size.slices ?? '—'}
                       </td>
                     ) : null}
-                    <td className="px-4 py-3.5 text-right text-[16px] font-extrabold tabular-nums text-brand">
-                      {money(size.price)}
+                    <td className="px-4 py-3.5 text-right text-[16px] font-extrabold text-brand">
+                      <PriceTag price={size.price} verified={size.verified} />
                     </td>
                   </tr>
                 ))}
@@ -441,7 +456,7 @@ export default async function MenuItemPage({ params }: Props) {
                 </p>
                 <p className="mt-1.5 text-[15px] leading-relaxed text-ink-muted">{route.how}</p>
                 <p className="mt-2 text-[13px] text-ink-muted">
-                  {PRICE_ADJ} deal price — participation is store by store.{' '}
+                  Estimated deal price — participation is store by store.{' '}
                   <Link href={`/coupons#${route.couponId}`} className="font-semibold text-navy underline underline-offset-2">
                     How this deal works
                   </Link>
@@ -605,7 +620,7 @@ export default async function MenuItemPage({ params }: Props) {
             <div className="table-scroll mt-2 overflow-hidden rounded-card border border-line md:mt-5">
               <table className="w-full min-w-[36rem] text-[15px]">
                 <caption className="sr-only">
-                  {PRICE_ADJ} price of a {BRAND.name} {name} by size and number of toppings
+                  Price of a {BRAND.name} {name} by size and number of toppings (base price checked where marked; topping charge estimated)
                 </caption>
                 <thead>
                   <tr className="bg-navy text-left text-[11px] uppercase tracking-wide text-white">
@@ -629,11 +644,9 @@ export default async function MenuItemPage({ params }: Props) {
                       {row.prices.map((p, i) => (
                         <td
                           key={i}
-                          className={`px-3 py-3 text-right tabular-nums ${
-                            i === 0 ? 'font-extrabold text-brand' : 'text-ink'
-                          }`}
+                          className={`px-3 py-3 text-right ${i === 0 ? 'font-extrabold text-brand' : 'text-ink'}`}
                         >
-                          {money(p)}
+                          <PriceTag price={p} verified={i === 0 && Boolean(sizeOf(item, row.size)?.verified)} />
                         </td>
                       ))}
                     </tr>
@@ -683,11 +696,11 @@ export default async function MenuItemPage({ params }: Props) {
                     </div>
                     <p className="text-[14px] text-ink-muted">
                       <span className="block text-[11px] font-bold uppercase tracking-wide">Specialty</span>
-                      <span className="text-[16px] font-bold tabular-nums text-ink">{money(v.specialty)}</span>
+                      <PriceTag price={v.specialty} verified={v.specialtyVerified} className="text-[16px] font-bold text-ink" />
                     </p>
                     <p className="text-[14px] text-ink-muted">
                       <span className="block text-[11px] font-bold uppercase tracking-wide">Built yourself</span>
-                      <span className="text-[16px] font-bold tabular-nums text-ink">{money(v.built)}</span>
+                      <PriceTag price={v.built} className="text-[16px] font-bold text-ink" />
                     </p>
                     <p
                       className={`col-span-2 rounded-md px-3 py-2 text-[13px] font-bold sm:col-span-1 ${
@@ -746,8 +759,8 @@ export default async function MenuItemPage({ params }: Props) {
                       </span>
                       <span className="mt-3 grid grid-cols-2 gap-2 text-[13px] text-ink-muted">
                         <span>
-                          <span className="block text-[11px] font-bold uppercase tracking-wide">Large</span>
-                          <span className="text-[18px] font-extrabold tabular-nums text-brand">{money(c.large)}</span>
+                          <span className="block text-[11px] font-bold uppercase tracking-wide">{c.refName}</span>
+                          <PriceTag price={c.large} verified={c.largeVerified} className="text-[18px] font-extrabold text-brand" />
                         </span>
                         <span>
                           <span className="block text-[11px] font-bold uppercase tracking-wide">Cal / slice</span>
@@ -763,7 +776,7 @@ export default async function MenuItemPage({ params }: Props) {
               })}
             </ul>
             <p className="mt-3 text-[14px] leading-relaxed text-ink-muted">
-              Calories are per slice of a large with no toppings.{' '}
+              Calories are per slice of the size shown, with no toppings.{' '}
               <Link
                 href="/posts/hand-tossed-vs-thin-crust-vs-pan"
                 className="font-semibold text-navy underline underline-offset-2"
@@ -782,19 +795,19 @@ export default async function MenuItemPage({ params }: Props) {
               How many {name}s to order for a group
             </h2>
             <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
-              Plan on three slices per adult when pizza is the whole meal. A large is cut
-              into {large.slices} slices, so this is how many larges you need — and what
+              Plan on three slices per adult when pizza is the whole meal. A {large.name.toLowerCase()} is cut
+              into {large.slices} slices, so this is how many you need — and what
               they cost at menu price versus on the carryout deal.
             </p>
             <div className="table-scroll mt-5 overflow-hidden rounded-card border border-line">
               <table className="w-full min-w-[30rem] text-[15px]">
                 <caption className="sr-only">
-                  Number of large {name}s and cost by group size
+                  Number of {large.name.toLowerCase()} {name}s and cost by group size
                 </caption>
                 <thead>
                   <tr className="bg-navy text-left text-[11px] uppercase tracking-wide text-white">
                     <th scope="col" className="px-4 py-3 font-bold">People</th>
-                    <th scope="col" className="px-3 py-3 text-right font-bold">Large pizzas</th>
+                    <th scope="col" className="px-3 py-3 text-right font-bold">{large.name} pizzas</th>
                     <th scope="col" className="px-3 py-3 text-right font-bold">Slices</th>
                     <th scope="col" className="px-3 py-3 text-right font-bold">Menu price</th>
                     {route ? (
@@ -873,12 +886,12 @@ export default async function MenuItemPage({ params }: Props) {
                       <span className="mr-2 text-[12px] font-bold text-ink-muted">{i + 1}.</span>
                       {r.title}
                     </span>
-                    <span className="font-bold tabular-nums">{money(r.large)}</span>
+                    <PriceTag price={r.large} verified={r.verified} className="font-bold" />
                   </Link>
                 </li>
               ))}
             </ol>
-            <p className="mt-2 text-[13px] text-ink-muted">Large ({DIAMETER.Large}″) {PRICE_ADJ.toLowerCase()} prices.</p>
+            <p className="mt-2 text-[13px] text-ink-muted">Large ({DIAMETER.Large}″) prices; ✓ = checked at a Columbus, Ohio store, est. = estimate.</p>
           </section>
         ) : null}
 

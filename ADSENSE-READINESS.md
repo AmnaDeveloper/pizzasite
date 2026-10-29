@@ -36,6 +36,7 @@ The audit measures what a script can. It cannot judge whether content is **true*
 |---|---|---|---|
 | 2026-10-25 | 92 | 51/55 | First run. Thin `/posts` (52 unique words) and `/menus-prices`; home and menu hub disclaimer-heavy |
 | 2026-10-25 | 100 | 55/55 | After phases 1, 3, 4, 5 |
+| 2026-10-29 | 100 | 55/55 | Real menu and 38 checked prices; every price labelled checked or est. |
 
 A 100 here means the measurable checks pass — it does **not** mean approval. Phase 2 (real prices) and phase 6 (indexing & age) remain.
 
@@ -45,7 +46,7 @@ A 100 here means the measurable checks pass — it does **not** mean approval. P
 |---|---|---|---|
 | 0 | Audit module (`scripts/adsense-audit.mjs`, `npm run audit:adsense`) | Claude | ✅ Done |
 | 1 | **Honesty pass** — one `PRICE_SOURCE` setting drives every sentence about where prices come from; remove "store sample", "we priced", "last checked", "reader reports we verify", "drivers we've talked to" | Claude | ✅ Done |
-| 2 | **Real prices** — check one real store's menu on dominos.com (enter a ZIP, no order needed), fill `data/price-check.csv`, import, set `PRICE_SOURCE.verified = true` with store + date | **Owner** (≈30–45 min) + Claude import | ⏳ |
+| 2 | **Real prices** — 38 prices checked at Domino's, 628 N High St, Columbus OH, 25 Oct 2026 (`data/verified-prices-2026-10-25.json`); menu rebuilt around the real items; remaining sizes and deal prices labelled "est.". To finish: check the other pizza sizes, crusts, one topping and the deals page, then `npm run prices:import` | Owner + Claude | 🟡 Mostly done |
 | 3 | **Fewer disclaimers** — keep the header notice, one price note per page and the footer; drop per-card "example" tags | Claude | ✅ Done |
 | 4 | **Strengthen thin hubs** — `/posts`, `/menus-prices` | Claude | ✅ Done |
 | 5 | **Articles** — remove first-person experience claims nobody can back up; keep the practical advice | Claude | ✅ Done |

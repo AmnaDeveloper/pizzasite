@@ -152,21 +152,23 @@ export function getHeadlinePrices(): {
   label: string;
   price: number;
   slug: string;
+  verified: boolean;
 }[] {
   const pick = (slug: string, sizeName: string, label: string) => {
     const item = getMenuItem(slug);
     const size = item?.sizes.find((s) => s.name === sizeName);
-    return item && size ? { label, price: size.price, slug: item.slug } : null;
+    return item && size ? { label, price: size.price, slug: item.slug, verified: Boolean(size.verified) } : null;
   };
 
+  // Only checked prices lead the homepage.
   return [
     pick('classic-cheese-pizza', 'Large', 'Large cheese pizza'),
-    pick('pepperoni-pizza', 'Large', 'Large pepperoni pizza'),
-    pick('pepperoni-pizza', 'Medium', 'Medium pepperoni pizza'),
-    pick('meat-lovers-pizza', 'Large', 'Large meat lover’s pizza'),
-    pick('garlic-parmesan-breadsticks', 'Regular', 'Breadsticks (8 pieces)'),
-    pick('chicken-wings', 'Regular', 'Chicken wings (8 pieces)'),
-    pick('chocolate-lava-cake', 'Two cakes', 'Chocolate lava cakes (2)'),
-    pick('two-liter-soda', '2 litre', 'Two-litre soda bottle'),
-  ].filter((r): r is { label: string; price: number; slug: string } => Boolean(r));
+    pick('extravaganzza', 'Large', 'Large specialty pizza'),
+    pick('chicken-wings', 'Plain', '8-piece wings'),
+    pick('bread-bites', 'Garlic', '16 bread bites'),
+    pick('stuffed-cheesy-bread', 'Classic', 'Stuffed cheesy bread'),
+    pick('chicken-alfredo-pasta', 'Chicken Alfredo', 'Chicken alfredo pasta'),
+    pick('lava-cake-flight', 'Flight of 3', 'Lava cake flight (3)'),
+    pick('two-liter-soda', 'Coke', '2-liter Coke'),
+  ].filter((r): r is { label: string; price: number; slug: string; verified: boolean } => Boolean(r));
 }

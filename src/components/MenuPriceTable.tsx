@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import type { MenuCategory, MenuItem } from '@/data/types';
-import { CURRENCY_SYMBOL } from '@/lib/site-config';
+import PriceTag from './PriceTag';
 
 const PIZZA_SIZES = ['Small', 'Medium', 'Large', 'Extra Large'] as const;
 
-function price(item: MenuItem, sizeName: string): string | null {
-  const size = item.sizes.find((s) => s.name === sizeName);
-  return size ? `${CURRENCY_SYMBOL}${size.price.toFixed(2)}` : null;
+function sizeOf(item: MenuItem, sizeName: string) {
+  return item.sizes.find((s) => s.name === sizeName) ?? null;
 }
 
 /**
@@ -105,30 +104,39 @@ export default function MenuPriceTable({
 
                   {isPizza ? (
                     PIZZA_SIZES.map((size) => {
-                      const value = price(item, size);
+                      const s = sizeOf(item, size);
                       return (
                         <td
                           key={size}
-                          className={`px-3 py-3 text-right tabular-nums ${
-                            value ? 'font-extrabold text-brand' : 'text-line'
-                          }`}
+                          className={`px-3 py-3 text-right ${s ? 'font-extrabold text-brand' : 'text-line'}`}
                         >
-                          {value ?? '—'}
+                          {s ? <PriceTag price={s.price} verified={s.verified} /> : '—'}
                         </td>
                       );
                     })
                   ) : (
                     <td className="px-4 py-3 text-[14px] text-ink-muted">
-                      {item.sizes.map((size, si) => (
-                        <span key={size.name} className="whitespace-nowrap">
-                          {si > 0 ? <span className="px-2 text-line">·</span> : null}
-                          {size.name}{' '}
-                          <span className="font-extrabold tabular-nums text-brand">
-                            {CURRENCY_SYMBOL}
-                            {size.price.toFixed(2)}
-                          </span>
+                      {/* Same price for every option (e.g. five soda flavours): one line. */}
+                      {item.sizes.length > 1 &&
+                      item.sizes.every((s) => s.price === item.sizes[0].price && s.verified === item.sizes[0].verified) ? (
+                        <span>
+                          {item.sizes.length} options{' '}
+                          <PriceTag
+                            price={item.sizes[0].price}
+                            verified={item.sizes[0].verified}
+                            className="font-extrabold text-brand"
+                          />
+                          <span className="block text-[12px]">{item.sizes.map((s) => s.name).join(', ')}</span>
                         </span>
-                      ))}
+                      ) : (
+                        item.sizes.map((size, si) => (
+                          <span key={size.name} className="whitespace-nowrap">
+                            {si > 0 ? <span className="px-2 text-line">·</span> : null}
+                            {size.name}{' '}
+                            <PriceTag price={size.price} verified={size.verified} className="font-extrabold text-brand" />
+                          </span>
+                        ))
+                      )}
                     </td>
                   )}
 

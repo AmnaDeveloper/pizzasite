@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Flame } from 'lucide-react';
 import type { MenuItem } from '@/data/types';
-import { CURRENCY_SYMBOL } from '@/lib/site-config';
+import PriceTag from './PriceTag';
 
 /**
  * The shared card shape. MenuItemCard and PostCard are deliberately built to
@@ -44,10 +44,18 @@ export default function MenuItemCard({
         </p>
 
         <div className="mt-4 flex items-center justify-between gap-3 border-t border-line pt-3">
-          <p className="text-[17px] font-extrabold text-brand">
-            {CURRENCY_SYMBOL}
-            {item.price.toFixed(2)}
-          </p>
+          {(() => {
+            // Lead with a checked price where there is one, then the cheapest.
+            const shown = item.sizes.find((s) => s.verified) ?? item.sizes.find((s) => s.price === item.price) ?? item.sizes[0];
+            return (
+              <p className="text-[17px] font-extrabold text-brand">
+                {item.sizes.length > 1 ? (
+                  <span className="mr-1 text-[12px] font-semibold text-ink-muted">{shown.name}</span>
+                ) : null}
+                <PriceTag price={shown.price} verified={shown.verified} />
+              </p>
+            );
+          })()}
           <p className="inline-flex items-center gap-1 text-[13px] font-semibold text-ink-muted">
             <Flame className="h-3.5 w-3.5 text-brand" aria-hidden="true" />
             {item.calories} cal

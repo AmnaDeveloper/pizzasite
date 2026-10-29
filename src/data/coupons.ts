@@ -57,7 +57,7 @@ export const coupons: Coupon[] = [
     discount: '$29.99',
     title: 'Family bundle: two large pizzas plus two sides',
     desc:
-      'Aimed at four to six people. Two large pizzas, a bread side and a two-litre drink for one price. Works out cheapest per head when everyone will actually eat two or three slices.',
+      'Aimed at four to six people. Two large pizzas, a bread side and a 2-liter drink for one price. Works out cheapest per head when everyone will actually eat two or three slices.',
     expiry: 'Ongoing offer type',
     tags: ['family', 'bundle', 'group'],
     featured: true,
@@ -110,7 +110,7 @@ export const coupons: Coupon[] = [
     discount: '$5.99 add-on',
     title: 'Discounted side when you buy a pizza',
     desc:
-      'An add-on rate on breadsticks, wings or a dessert once a pizza is already in the basket. Cheaper than the standalone side, more expensive than skipping it.',
+      'An add-on rate on bread bites, wings or a dessert once a pizza is already in the basket. Cheaper than the standalone side, more expensive than skipping it.',
     expiry: 'Ongoing offer type',
     tags: ['sides', 'add-on'],
     howTo:

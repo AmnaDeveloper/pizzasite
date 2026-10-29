@@ -1,33 +1,33 @@
 /**
- * Every phrase that describes where the prices come from is built here from
- * PRICE_SOURCE, so the site can never claim more than is true. See the note
- * on PRICE_SOURCE in site-config.ts.
+ * Every phrase that describes where a price comes from is built here, so the
+ * site never claims more than is true. A price is "checked" only when its size
+ * has `verified: true` in menu-items.json (copied from PRICE_SOURCE.store on
+ * PRICE_SOURCE.checkedOn); everything else is an estimate.
  */
 import { BRAND, PRICE_SOURCE } from './site-config';
 import { formatLongDate } from './utils/date';
 
-export const pricesVerified = PRICE_SOURCE.verified && Boolean(PRICE_SOURCE.store && PRICE_SOURCE.checkedOn);
+export const checkedDate = formatLongDate(PRICE_SOURCE.checkedOn);
 
-const checkedOn = () => formatLongDate(PRICE_SOURCE.checkedOn);
-
-/** Ends a price sentence: "…is about $14.99 by our estimate." */
-export function priceBasis(): string {
-  return pricesVerified ? `at ${PRICE_SOURCE.store} (checked ${checkedOn()})` : 'by our estimate';
+/** Ends a price sentence: "…is $13.99 at Domino's in our check of a Columbus, Ohio store on October 25, 2026." */
+export function priceBasis(verified = false): string {
+  return verified ? `in our check of ${PRICE_SOURCE.storeShort} on ${checkedDate}` : 'by our estimate';
 }
 
-/** Adjective for labels and table headings: "Estimated price" / "Checked price". */
-export const PRICE_ADJ = pricesVerified ? 'Checked' : 'Estimated';
+/** Short label next to a price. */
+export function priceLabel(verified = false): string {
+  return verified ? 'checked' : 'est.';
+}
 
 /** One or two sentences explaining the prices, for intros and FAQs. */
 export function priceSourceSentence(): string {
-  return pricesVerified
-    ? `Prices were copied from the menu of ${PRICE_SOURCE.store} on ${checkedOn()}. ${BRAND.name} stores are mostly franchises that set their own prices, so your store may charge a little more or less — confirm the total at checkout.`
-    : `Prices on this site are our estimates of typical ${BRAND.name} pricing. They have not been checked against a particular store, and ${BRAND.name} stores are mostly franchises that set their own prices — so treat them as a guide for comparing items, and confirm the real total at checkout.`;
+  return `Prices marked “checked” were copied from the carryout menu of ${PRICE_SOURCE.store} on ${checkedDate}, before tax. Prices marked “est.” are our estimates for sizes and items we have not checked yet. ${BRAND.name} stores are mostly franchises that set their own prices, so your store may differ — confirm the total at checkout.`;
 }
 
 /** The short caveat shown next to price tables (PriceNote). */
 export function priceNoteText(): string {
-  return pricesVerified
-    ? `Prices checked at ${PRICE_SOURCE.store} on ${checkedOn()}. Your store may differ — confirm at checkout.`
-    : 'Estimated prices, not checked against a store. Your store’s prices will differ — confirm at checkout.';
+  return `“Checked” prices: ${PRICE_SOURCE.store}, ${checkedDate}, before tax. “Est.” prices are estimates. Your store may differ — confirm at checkout.`;
 }
+
+/** Kept for labels that describe a whole table of mixed prices. */
+export const PRICE_ADJ = 'Checked & estimated';
