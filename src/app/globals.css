@@ -195,6 +195,154 @@ h6 {
   margin-top: 0.5rem;
 }
 
+/* Article design blocks, used in posts.json HTML: answer box, contents, day cards, steps, tip. */
+.prose-guide .answer-box {
+  background: var(--color-navy);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+}
+.prose-guide .answer-box p {
+  color: #fff;
+}
+.prose-guide .answer-box p + p {
+  margin-top: 0.75rem;
+}
+.prose-guide .answer-box strong {
+  color: #fff;
+  font-weight: 800;
+}
+.prose-guide .answer-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.prose-guide .answer-main {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+.prose-guide .answer-note {
+  border-top: 1px solid rgb(255 255 255 / 0.25);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding-top: 0.75rem;
+}
+.prose-guide .toc {
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  padding: 1.1rem 1.25rem;
+}
+.prose-guide .toc-title {
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+.prose-guide .toc ol {
+  font-size: 0.975rem;
+  margin-top: 0.5rem;
+}
+.prose-guide .toc li + li {
+  margin-top: 0.25rem;
+}
+.prose-guide .quote-source {
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
+}
+.prose-guide .day-grid {
+  display: grid;
+  gap: 0.875rem;
+}
+@media (min-width: 640px) {
+  .prose-guide .day-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.prose-guide .day-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  padding: 1rem;
+}
+.prose-guide .day-card-alert {
+  background: var(--color-brand-soft);
+  border-color: var(--color-brand);
+}
+.prose-guide .day-date {
+  color: var(--color-ink-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.prose-guide .day-name {
+  color: var(--color-ink);
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-top: 0.15rem;
+}
+.prose-guide .day-status {
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 0.5rem;
+}
+.prose-guide .status-likely {
+  color: var(--color-navy-dark);
+}
+.prose-guide .status-unlikely {
+  color: var(--color-brand-dark);
+}
+.prose-guide .day-text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+.prose-guide ol.steps {
+  counter-reset: step;
+  list-style: none;
+  padding-left: 0;
+}
+.prose-guide ol.steps > li {
+  counter-increment: step;
+  padding-left: 2.75rem;
+  position: relative;
+}
+.prose-guide ol.steps > li + li {
+  margin-top: 1rem;
+}
+.prose-guide ol.steps > li::before {
+  align-items: center;
+  background: var(--color-navy);
+  border-radius: 9999px;
+  color: #fff;
+  content: counter(step);
+  display: flex;
+  font-size: 0.875rem;
+  font-weight: 800;
+  height: 1.9rem;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0.05rem;
+  width: 1.9rem;
+}
+.prose-guide .tip {
+  background: var(--color-navy-soft);
+  border-radius: var(--radius-card);
+  padding: 1rem 1.25rem;
+}
+.prose-guide .sources {
+  border-top: 1px solid var(--color-line);
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+}
+
 /* Horizontal scroll container for wide tables inside articles. */
 .table-scroll {
   overflow-x: auto;

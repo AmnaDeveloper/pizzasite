@@ -298,7 +298,11 @@ export default function HoursPage() {
           <p>
             On any of these days, the store page on {BRAND.officialAppNote} is more
             reliable than a search-engine listing, which is often not updated for
-            one-off holiday hours.
+            one-off holiday hours. For Christmas specifically, see our guide to{' '}
+            <Link href="/posts/dominos-christmas-availability">
+              {BRAND.name} Christmas availability
+            </Link>
+            .
           </p>
         </div>
       </section>
