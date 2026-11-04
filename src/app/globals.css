@@ -227,24 +227,6 @@ h6 {
   line-height: 1.5;
   padding-top: 0.75rem;
 }
-.prose-guide .toc {
-  background: var(--color-surface-alt);
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-card);
-  padding: 1.1rem 1.25rem;
-}
-.prose-guide .toc-title {
-  color: var(--color-ink);
-  font-size: 0.95rem;
-  font-weight: 800;
-}
-.prose-guide .toc ol {
-  font-size: 0.975rem;
-  margin-top: 0.5rem;
-}
-.prose-guide .toc li + li {
-  margin-top: 0.25rem;
-}
 .prose-guide .quote-source {
   font-size: 0.85rem;
   margin-top: 0.4rem;
@@ -341,6 +323,64 @@ h6 {
   line-height: 1.6;
   margin-top: 2.5rem;
   padding-top: 1rem;
+}
+
+/* Article pages: roomier type and modern tables. */
+.article-body {
+  font-size: 1.125rem;
+}
+.article-body > *:first-child {
+  margin-top: 0;
+}
+.article-body h2 {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-top: 3.25rem;
+  scroll-margin-top: 7.5rem;
+}
+.article-body h3 {
+  font-size: 1.3rem;
+  margin-top: 2.25rem;
+}
+.article-body > * + * {
+  margin-top: 1.35rem;
+}
+.article-body ul li::marker {
+  color: var(--color-brand);
+}
+.article-body .table-scroll {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+}
+.article-body table {
+  font-size: 1rem;
+}
+.article-body th,
+.article-body td {
+  border: 0;
+  border-top: 1px solid var(--color-line);
+  padding: 0.85rem 1rem;
+}
+.article-body thead th {
+  background: var(--color-navy);
+  border-top: 0;
+  color: #fff;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.article-body tbody tr:nth-child(even) {
+  background: var(--color-surface-alt);
+}
+.article-body td:first-child {
+  white-space: nowrap;
+}
+.article-body td:last-child {
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 /* Horizontal scroll container for wide tables inside articles. */
