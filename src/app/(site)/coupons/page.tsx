@@ -44,7 +44,7 @@ import type { Post } from '@/data/types';
 import { PRICE_ADJ } from '@/lib/price-source';
 
 /** Date this page's content last genuinely changed — update it with the content. */
-const PAGE_UPDATED = '2026-10-02';
+const PAGE_UPDATED = '2026-11-05';
 const PAGE_PUBLISHED = '2026-09-17';
 
 const money = (n: number) => `${CURRENCY_SYMBOL}${n.toFixed(2)}`;
@@ -113,7 +113,7 @@ const BEST_BY_SITUATION = [
 const COUPON_FAQS = [
   {
     question: `Does ${BRAND.name} have a $7.99 deal?`,
-    answer: `A flat-rate carryout offer on a large pizza, around $7.99 with any toppings by our estimate, is the offer type to look for. Against a large specialty pizza at $19.99 — the price we checked at a Columbus, Ohio store — that is a saving of ${carryout ? money(carryout.saving) : 'about $12'}, before you count the delivery fee and tip you also avoid. Participation is decided store by store, so check your own store's deals page after entering your address.`,
+    answer: `Domino’s has shown a weeklong carryout offer of $7.99 on a large 1-topping pizza, and some stores charge more. Against a large cheese pizza at $13.99 — the price we checked at a Columbus, Ohio store — that saves at least ${carryout ? money(carryout.saving) : '$6.00'}, before you count the delivery fee and tip you also avoid. Participation is decided store by store, so check your own store's deals page after entering your address.`,
   },
   {
     question: `What is the ${BRAND.name} Mix & Match deal?`,
@@ -131,7 +131,7 @@ const COUPON_FAQS = [
   },
   {
     question: `Which ${BRAND.name} deal saves the most money?`,
-    answer: `By percentage, the flat-rate carryout large — about ${carryout?.savingPct ?? 52}% off menu price in our example. By cost per person, the party pack — about ${party ? money(party.perPerson) : '$5.00'} a head for ten people. For a family of four to six, the two-pizza bundle works out at about ${family ? money(family.perPerson) : '$6.00'} per person.`,
+    answer: `By percentage, the flat-rate carryout large — about ${carryout?.savingPct ?? 43}% off menu price in our example. By cost per person, the party pack — about ${party ? money(party.perPerson) : '$5.00'} a head for ten people. For a family of four to six, the two-pizza bundle works out at about ${family ? money(family.perPerson) : '$6.00'} per person.`,
   },
   {
     question: `Can I combine two ${BRAND.name} deals on one order?`,
@@ -328,7 +328,7 @@ export default function CouponsPage() {
                 <div className="mt-1.5 flex items-end justify-between gap-3">
                   <div>
                     <p className="text-[15px] font-extrabold leading-snug">Carryout large pizza</p>
-                    <p className="text-[13px] text-ink-muted">any toppings</p>
+                    <p className="text-[13px] text-ink-muted">1 topping</p>
                   </div>
                   <p className="text-[2rem] font-black leading-none tabular-nums text-brand">
                     {money(carryout.dealPrice)}
@@ -654,6 +654,7 @@ export default function CouponsPage() {
                 icon: Store,
                 t: 'Your store’s deals page',
                 b: `Enter your address on ${BRAND.officialAppNote}, then open Deals. This is the only complete list for your store — franchisees opt into promotions one by one, so a national ad means nothing if your store isn’t on it.`,
+                link: { href: '/posts/dominos-happy-hour', label: `Is there a ${BRAND.name} happy hour?` },
               },
               {
                 icon: ShoppingBasket,

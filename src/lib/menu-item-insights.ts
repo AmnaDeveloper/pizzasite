@@ -131,7 +131,8 @@ export type CheapestRoute = {
 
 /**
  * The deal type that most often beats menu price for this kind of item.
- * Pizzas: the flat-rate carryout large ("any toppings"). Pasta/sandwiches:
+ * Pizzas: the flat-rate carryout large, which covers one topping, so it is not
+ * offered as a route to the specialty pizzas. Pasta/sandwiches:
  * Mix & Match. Sides, chicken and desserts: the add-on side. Drinks: none.
  */
 export function cheapestRoute(item: MenuItem): CheapestRoute | null {
@@ -155,6 +156,8 @@ export function cheapestRoute(item: MenuItem): CheapestRoute | null {
     };
   };
 
+  const multiTopping = item.category === 'Specialty Pizza' && item.slug !== 'pepperoni-pizza';
+  if (multiTopping) return null;
   if (isPizza(item) && sizeOf(item, 'Large')) {
     return pick(
       'cpn-carryout-deal',
@@ -408,7 +411,7 @@ export function buildYourOwnFaqs(item: MenuItem): Faq[] {
   if (ladder) {
     faqs.push({
       question: `How much is a large build-your-own ${proseName(item)} with toppings?`,
-      answer: `${money(ladder.prices[0])} with no toppings${refSize(item).verified ? ` (checked at ${'a Columbus, Ohio store'})` : ''}; with our estimated topping charge, about ${money(ladder.prices[1])} with one, ${money(ladder.prices[2])} with two and ${money(ladder.prices[3])} with three. Inside a deal the topping count often stops mattering — a carryout large is a flat price with any toppings.`,
+      answer: `${money(ladder.prices[0])} with no toppings${refSize(item).verified ? ` (checked at ${'a Columbus, Ohio store'})` : ''}; with our estimated topping charge, about ${money(ladder.prices[1])} with one, ${money(ladder.prices[2])} with two and ${money(ladder.prices[3])} with three. Deals usually cover a set number of toppings — the carryout large covers one, and extras cost more.`,
     });
   }
   if (versus.length) {

@@ -62,7 +62,7 @@ const HOME_FAQS = [
   {
     question: `How much is a large pizza at ${BRAND.name}?`,
     answer:
-      'A large (14-inch) hand-tossed cheese pizza was $13.99, and every large specialty pizza $19.99, at the Columbus, Ohio store we checked on 25 October 2026, before tax. A flat-rate carryout deal, where a store runs one, can bring a large down to about $7.99 by our estimate — which is why the offer you order under matters more than the item you choose. Franchise stores set their own prices, so confirm the total at checkout.',
+      'A large (14-inch) hand-tossed cheese pizza was $13.99, and every large specialty pizza $19.99, at the Columbus, Ohio store we checked on 25 October 2026, before tax. A flat-rate carryout deal, where a store runs one, can bring a large 1-topping pizza down to about $7.99 — which is why the offer you order under matters more than the item you choose. Franchise stores set their own prices, so confirm the total at checkout.',
   },
   {
     question: `What is the cheapest way to order ${BRAND.name}?`,

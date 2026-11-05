@@ -31,7 +31,7 @@ export const SITE_TITLE_TEMPLATE = `%s | ${SITE_NAME}`;
 
 export const SITE_DESCRIPTION =
   "An independent, reader-supported guide to Domino's menu prices, coupon codes, " +
-  'rewards and delivery. We track example prices, explain how the deals actually ' +
+  'rewards and delivery. We list prices checked at one store and labelled estimates, explain how the deals actually ' +
   'work and show you which order saves the most money.';
 
 /** The brand this guide writes *about*. We are not affiliated with it. */
@@ -122,7 +122,7 @@ export const NOT_AFFILIATED_DISCLAIMER =
 
 /** Short version for tight spaces (header bar, card footers). */
 export const NOT_AFFILIATED_SHORT =
-  `Independent guide — not affiliated with ${BRAND.name}. Example prices only.`;
+  `Independent guide — not affiliated with ${BRAND.name}. Prices are from one store or estimated; yours may differ.`;
 
 /**
  * WHERE THE PRICES COME FROM — the single source of truth for every sentence

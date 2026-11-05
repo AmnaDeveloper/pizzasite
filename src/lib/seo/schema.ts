@@ -100,8 +100,6 @@ export function articleSchema(post: Post, author: Author | undefined): Json {
     image: {
       '@type': 'ImageObject',
       url: absoluteUrl(post.image),
-      width: 1200,
-      height: 630,
     },
     author: author
       ? {
@@ -176,7 +174,7 @@ export function priceListSchema(opts: {
           '@type': 'Offer',
           price: item.price.toFixed(2),
           priceCurrency: CURRENCY,
-          description: 'Example price for reference. Verify at official checkout.',
+          description: 'Reference price, which varies by store. Verify at official checkout.',
         },
       },
     })),

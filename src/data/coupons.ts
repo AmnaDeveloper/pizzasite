@@ -28,9 +28,9 @@ export const coupons: Coupon[] = [
     id: 'cpn-carryout-deal',
     bestFor: 'One large pizza you can collect',
     discount: '$7.99',
-    title: 'Carryout large pizza, any toppings',
+    title: 'Carryout large pizza, 1 topping',
     desc:
-      'A flat price on a large pizza when you collect it yourself. Because there is no driver, no delivery fee and no tip involved, this is almost always the cheapest way to buy a single large pizza.',
+      'A flat price on a large 1-topping pizza when you collect it yourself. Extra toppings cost more. Because there is no driver, no delivery fee and no tip involved, this is almost always the cheapest way to buy a single large pizza.',
     expiry: 'Ongoing offer type',
     tags: ['carryout', 'single pizza', 'cheapest'],
     featured: true,

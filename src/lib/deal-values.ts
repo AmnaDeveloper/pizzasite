@@ -32,9 +32,9 @@ const BASKETS: DealBasket[] = [
   {
     couponId: 'cpn-carryout-deal',
     dealPrice: 7.99,
-    basket: [{ slug: 'extravaganzza', size: 'Large' }],
+    basket: [{ slug: 'classic-cheese-pizza', size: 'Large' }],
     feeds: 3,
-    note: 'Carryout also removes the delivery fee and tip, which is not counted here.',
+    note: 'Compared with a large cheese pizza before the included topping, so the real saving is a little higher. Carryout also removes the delivery fee and tip, which is not counted here.',
   },
   {
     couponId: 'cpn-mix-match',
