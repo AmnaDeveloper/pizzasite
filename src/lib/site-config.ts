@@ -3,7 +3,7 @@
  *
  * Change values here and every page, meta tag, sitemap entry and JSON-LD block
  * updates automatically. Nothing else in the codebase should hardcode a URL,
- * a site name, a colour or a third-party ID.
+ * a site name, a color or a third-party ID.
  *
  * ── BEFORE YOU DEPLOY ─────────────────────────────────────────────────────────
  * 1. Set SITE_URL to your real domain (no trailing slash).
@@ -30,8 +30,8 @@ export const SITE_TITLE_DEFAULT = `${SITE_NAME} — Domino's Menu Prices, Coupon
 export const SITE_TITLE_TEMPLATE = `%s | ${SITE_NAME}`;
 
 export const SITE_DESCRIPTION =
-  "An independent, reader-supported guide to Domino's menu prices, coupon codes, " +
-  'rewards and delivery. We list prices checked at one store and labelled estimates, explain how the deals actually ' +
+  "An independent, ad-supported guide to Domino's menu prices, deals, " +
+  'rewards and delivery. We list prices checked at one store and labeled estimates, explain how the deals actually ' +
   'work and show you which order saves the most money.';
 
 /** The brand this guide writes *about*. We are not affiliated with it. */
@@ -45,11 +45,11 @@ export const BRAND = {
 } as const;
 
 /**
- * STRICT TWO-COLOUR PALETTE.
+ * STRICT TWO-COLOR PALETTE.
  *
- * The entire site uses exactly two hues — brand red (#E31837) and brand blue
- * (#006491) — plus white. Every other value below is a shade or tint of one of
- * those two. There is deliberately no green, no amber and no neutral grey:
+ * The entire site uses exactly two hues — brand orange (#C2410C) and brand green
+ * (#1b5e3b) — plus white. Every other value below is a shade or tint of one of
+ * those two. There is deliberately no green, no amber and no neutral gray:
  * even the body text, borders and page backgrounds are desaturated shades of
  * the blue, so nothing on the page introduces a third hue.
  *
@@ -57,27 +57,27 @@ export const BRAND = {
  * If you change a value, re-check the contrast before shipping it.
  *
  * The palette follows the brand's familiar red-and-blue look so the guide
- * feels visually at home next to it. Colours are not trademarks, but the
+ * feels visually at home next to it. Colors are not trademarks, but the
  * closer the look, the louder the disclaimer has to be — see
  * NOT_AFFILIATED_DISCLAIMER, which is rendered on every single page.
  */
 export const COLORS = {
   // ── Hue 1: red ────────────────────────────────────────────────────────────
-  primary: '#E31837', // CTAs, prices, ratings, active nav
-  primaryDark: '#B31229', // hover / pressed states, text on light red
-  primarySoft: '#FCE9EC', // tinted panels behind red content
+  primary: '#C2410C', // CTAs, prices, ratings, active nav
+  primaryDark: '#9A3412', // hover / pressed states, text on light red
+  primarySoft: '#FFF1E8', // tinted panels behind red content
 
   // ── Hue 2: blue ───────────────────────────────────────────────────────────
-  secondary: '#006491', // headings, links, info panels
-  secondaryDark: '#004E71', // hover states, text on light blue
-  secondarySoft: '#E4F0F5', // tinted panels behind blue content
+  secondary: '#1b5e3b', // headings, links, info panels
+  secondaryDark: '#134429', // hover states, text on light blue
+  secondarySoft: '#E6F2EA', // tinted panels behind blue content
 
   // ── Neutrals, all derived from hue 2 ──────────────────────────────────────
-  ink: '#062F42', // body text — a very dark shade of the blue
-  inkMuted: '#446B7D', // secondary text — a desaturated shade of the blue
-  line: '#D6E4EB', // borders and dividers — a light tint of the blue
+  ink: '#1C2B22', // body text — a very dark shade of the blue
+  inkMuted: '#4B5E52', // secondary text — a desaturated shade of the blue
+  line: '#DDE5DF', // borders and dividers — a light tint of the blue
   surface: '#FFFFFF',
-  surfaceAlt: '#F2F7F9', // alternating sections — the faintest blue tint
+  surfaceAlt: '#F4F7F5', // alternating sections — the faintest green tint
 } as const;
 
 /** Third-party IDs. Empty string = script is not rendered at all. */
@@ -116,8 +116,8 @@ export const SOCIAL_LINKS: Record<string, string> = {};
 export const NOT_AFFILIATED_DISCLAIMER =
   `${SITE_NAME} is an independent guide. We are not affiliated with, endorsed by, ` +
   `sponsored by or connected to ${BRAND.name} or any of its subsidiaries. All ` +
-  `trademarks and brand names belong to their respective owners. Prices shown are ` +
-  `examples for reference only — they change by store, date and offer, so always ` +
+  `trademarks and brand names belong to their respective owners. Prices are from one ` +
+  `store check or labeled estimates — they change by store, date and offer, so always ` +
   `verify the final total at official checkout before you order.`;
 
 /** Short version for tight spaces (header bar, card footers). */

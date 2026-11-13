@@ -23,8 +23,8 @@ const COLUMNS: { title: string; links: readonly { href: string; label: string }[
  *   2. red   — the one-line "we are not them" statement and the copyright
  *   3. light — the full unaffiliated disclaimer, required on every page
  *
- * Contrast is checked for each band: white on #006491 is 6.50:1, white on
- * #E31837 is 4.72:1, and the muted ink on the light strip is 4.87:1 — all clear
+ * Contrast is checked for each band: white on #1B5E3B is 7.75:1, white on
+ * #C2410C is 5.18:1, and the muted ink on the light strip is 6.44:1 — all clear
  * of AA. Link text is held at white/80 (4.77:1) rather than lower.
  */
 export default function Footer() {
@@ -44,7 +44,7 @@ export default function Footer() {
 
               <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-white/80">
                 An independent, unofficial guide to {BRAND.name} menu prices, coupons,
-                rewards and delivery in the United States. We estimate prices, show the
+                rewards and delivery in the United States. We check or estimate prices, show the
                 arithmetic, and explain how the deals actually work.
               </p>
 

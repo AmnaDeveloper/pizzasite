@@ -17,6 +17,10 @@ import {
   SITE_NAME,
 } from '@/lib/site-config';
 import { priceSourceSentence } from '@/lib/price-source';
+import { PAGE_DATES } from '@/lib/page-dates';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/about'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -63,7 +67,7 @@ const PRINCIPLES = [
   {
     icon: Target,
     title: 'Show the arithmetic',
-    body: 'If we claim carryout saves you nine dollars, the page shows where the nine dollars comes from. A claim we cannot break down into its parts does not get published.',
+    body: 'If we claim carryout saves you thirteen dollars, the page shows where the thirteen dollars comes from. A claim we cannot break down into its parts does not get published.',
   },
   {
     icon: Wallet,
@@ -72,8 +76,8 @@ const PRINCIPLES = [
   },
   {
     icon: RefreshCw,
-    title: 'Dated, and re-checked',
-    body: 'Every page carries a visible last-updated date. Prices move, deals rotate, and a guide without a date is a guide you cannot evaluate.',
+    title: 'Dated honestly',
+    body: 'Every page shows the date its content last changed, and every checked price shows the day it was checked. Prices move and deals rotate, so a figure without a date is one you cannot evaluate.',
   },
 ];
 
@@ -96,7 +100,7 @@ export default function AboutPage() {
             how to pay less for it. Not affiliated with any pizza company, not paid by one,
             and not interested in pretending a deal is better than it is.
           </p>
-          <LastUpdated className="mt-4" />
+          <LastUpdated date={PAGE_UPDATED} className="mt-4" />
         </header>
 
         <div className="prose-guide mt-9 max-w-3xl">
@@ -112,17 +116,13 @@ export default function AboutPage() {
             those decisions and show the arithmetic behind each one, so you can see for
             yourself why one way of ordering the same food costs less than another.
           </p>
-          <p>
-            None of that is hidden, exactly. It is just not explained anywhere, because the
-            people who could explain it have no reason to. That gap is what this site is
-            for.
-          </p>
 
           <h2>What we publish</h2>
           <p>
-            Three things, essentially. Estimated prices for every item on the menu,
-            with sizes, calories and allergens. Explanations of how each deal structure
-            works — what qualifies, what is excluded, and which item to put in the slot.
+            Three things, essentially. Prices for 20 core items on the menu — checked at one
+            real store where we could, labeled as estimates where we could not — with sizes,
+            calories. Explanations of the deals we could confirm — what
+            qualifies, what each one saves, and which item to put in the slot.
             And long-form guides on the decisions that change what you pay: crust choice,
             pizza size, tipping, rewards, when carryout stops being worth the drive.
           </p>
@@ -140,9 +140,9 @@ export default function AboutPage() {
             but they are not a quotation for your store.
           </p>
           <p>
-            That is why every price on this site carries the same caveat, and why we would
-            rather repeat it too often than let someone assume we are quoting their local
-            store.
+            That is why every price on this site is marked either “checked”, with the store
+            and date, or “est.”, so you never have to guess which kind of number you are
+            looking at.
           </p>
 
           <h2>How we make money</h2>

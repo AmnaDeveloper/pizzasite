@@ -19,8 +19,12 @@ import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
 import { getPost } from '@/lib/content';
 import { BRAND, CURRENCY_SYMBOL, NOT_AFFILIATED_SHORT } from '@/lib/site-config';
-import { currentMonthYear } from '@/lib/utils/date';
+import { monthYearOf } from '@/lib/utils/date';
+import { PAGE_DATES } from '@/lib/page-dates';
 import type { Post } from '@/data/types';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/delivery-near-me'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -31,7 +35,7 @@ const DELIVERY_FAQS = [
   {
     question: 'How do I find out if pizza delivery is available at my address?',
     answer:
-      'Enter your full street address into the official store finder rather than a postcode. Zone boundaries frequently run through the middle of a postcode, so a postcode search returns a best guess while a full address returns the actual answer, including whether your street is carryout only.',
+      'Enter your full street address into the official store finder rather than a ZIP code. Zone boundaries frequently run through the middle of a ZIP code, so a ZIP code search returns a best guess while a full address returns the actual answer, including whether your street is carryout only.',
   },
   {
     question: 'How far will a pizza chain deliver?',
@@ -41,7 +45,7 @@ const DELIVERY_FAQS = [
   {
     question: 'How long does pizza delivery usually take?',
     answer:
-      'Commonly twenty-five to forty-five minutes, with the wide part of that range determined by how deep the order queue is rather than how far the driver travels. On a Friday evening peak, adding ten to fifteen minutes to any quoted estimate is realistic.',
+      'Your store quotes an estimate when you order, and that quote is the best number you will get. We have not timed deliveries ourselves. What stretches the wait is mostly how many orders are ahead of yours rather than how far the driver travels, so expect the quote to run long on a Friday or Saturday evening.',
   },
   {
     question: 'Is there a minimum order for delivery?',
@@ -51,7 +55,7 @@ const DELIVERY_FAQS = [
   {
     question: 'Is delivery or carryout cheaper?',
     answer:
-      'Carryout, by commonly eight to twelve dollars on a single large pizza. That figure combines the delivery fee, the tip and the lower flat price that carryout-only offers apply to the pizza itself. The saving narrows in percentage terms on a large multi-item order.',
+      'Carryout, by roughly thirteen to eighteen dollars on a large 1-topping pizza. That combines the delivery fee, the tip and the $7.99 carryout deal, which is not available for delivery. The saving narrows in percentage terms on a large multi-item order.',
   },
   {
     question: 'Does the delivery fee go to the driver?',
@@ -76,9 +80,9 @@ export const metadata: Metadata = generatePageSEO({
 });
 
 const COST_ROWS = [
-  { label: 'Large pizza, carryout flat-rate offer', value: '7.99', note: 'No fee, no tip' },
-  { label: 'Same pizza on the best delivery offer', value: '9.99', note: 'Before fees' },
-  { label: 'Delivery fee', value: '3.99', note: 'Store charge, not the driver' },
+  { label: 'Large 1-topping pizza, $7.99 carryout deal', value: '7.99', note: 'No fee, no tip' },
+  { label: 'Same pizza delivered, at menu price', value: '15.49', note: 'Our estimate: $13.99 checked for cheese, plus one topping' },
+  { label: 'Delivery fee', value: '3.99', note: 'Set by each store, commonly $3–6; not paid to the driver' },
   { label: 'Tip', value: '3.00', note: 'Goes to the driver' },
 ];
 
@@ -104,7 +108,7 @@ export default function DeliveryNearMePage() {
         <div className="mx-auto max-w-6xl px-4 py-14">
           <p className="inline-flex items-center gap-1.5 rounded-full bg-brand px-3 py-1 text-xs font-bold uppercase tracking-wide">
             <Truck className="h-3.5 w-3.5" aria-hidden="true" />
-            Updated {currentMonthYear()}
+            Updated {monthYearOf(PAGE_UPDATED)}
           </p>
           <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-5xl">
             Pizza delivery near me: how zones, timing and cost actually work
@@ -152,27 +156,20 @@ export default function DeliveryNearMePage() {
         </h2>
         <div className="prose-guide mt-4">
           <p>
-            A delivery zone is a map of what one store can reach quickly enough for the food
-            to still be worth eating. That makes it a map of <em>driving time</em>, and
-            driving time is shaped by geography, not geometry.
+            For delivery, your address belongs to one store’s zone, and zones can follow
+            <em> driving time</em> rather than distance — so the store nearest on a map is not
+            always the one that brings your pizza.
           </p>
           <p>
-            The consequence is zones that look arbitrary until you drive them. A store two
-            miles away across a freeway may not serve you while one three miles away on your
-            side does. In Jacksonville the river does the same job; in Seattle it is the
-            hills and the water; in San Diego, canyons split neighbourhoods that share a
-            border on the map.
+            That assignment matters for your wallet as well as your wait. Store owners opt
+            into promotions individually, so the store you are assigned decides which deals
+            you see. If a nationally advertised deal is not on your store page, your store is
+            not running it — and no coupon code will change that.
           </p>
           <p>
-            This matters for your wallet as well as your wait. Store assignment decides
-            which offers you see, because franchisees opt into promotions individually. If a
-            nationally advertised deal is not on your store page, your store is not running
-            it — and no coupon code will change that.
-          </p>
-          <p>
-            One practical note: in suburban areas it is quite common for two stores to serve
-            the same address, and their deal lists genuinely differ. Checking both takes
-            thirty seconds and occasionally saves a few dollars.
+            Carryout is different: you can pick any store you are willing to drive to. If a
+            second store is close, switch to carryout and compare its deals page with your
+            delivery store’s before you build the order.
           </p>
         </div>
         <Link
@@ -198,25 +195,24 @@ export default function DeliveryNearMePage() {
           </h2>
           <div className="prose-guide mt-4">
             <p>
-              Almost everyone assumes the wait is about distance. It is mostly about queue
-              depth. A store on a Friday at half past six has fifteen orders ahead of yours
-              and a fixed number of ovens; the drive is often the shortest part of the
-              process.
+              It is natural to assume the wait is about distance. Often it is more about queue
+              depth: at a dinner-time peak a store may have many orders ahead of yours and a
+              fixed number of ovens, and the drive can be the shortest part of the process.
             </p>
-            <p>The four things that genuinely move the number:</p>
+            <p>The four things that move the number:</p>
             <ul>
               <li>
-                <strong>How many orders are ahead of you.</strong> The single biggest
-                factor, and the one the tracker never shows.
+                <strong>How many orders are ahead of you.</strong> Usually the biggest
+                factor at peak times, and not something you can see before you order.
               </li>
               <li>
-                <strong>How many stops are on the driver’s run.</strong> Drivers carry
-                several orders per trip. If yours is third, it has been in the car through
-                two other deliveries.
+                <strong>How many stops are on the driver’s run.</strong> A driver may
+                carry more than one order per trip. If yours is the third stop, it has been in
+                the car through two other deliveries.
               </li>
               <li>
-                <strong>Where you sit in the zone.</strong> An address at the edge is a
-                twenty-five minute round trip rather than an eight minute one.
+                <strong>Where you sit in the zone.</strong> An address at the edge of the
+                zone means a longer round trip for the driver than one near the store.
               </li>
               <li>
                 <strong>Weather and staffing.</strong> Snow, storms and a short-handed
@@ -224,10 +220,9 @@ export default function DeliveryNearMePage() {
               </li>
             </ul>
             <p>
-              Practical version: twenty-five to forty-five minutes is the normal range, and
-              on a weekend peak adding ten to fifteen minutes to whatever you are quoted is
-              realistic. Ordering at 5:15pm instead of 6:30pm gets you the same food faster
-              and in better condition for the same money.
+              Practical version: treat the time quoted at checkout as a best case on a Friday
+              or Saturday evening. Ordering before the dinner rush rather than in the middle of
+              it is the simplest way to get the same food sooner for the same money.
             </p>
           </div>
         </div>
@@ -245,8 +240,8 @@ export default function DeliveryNearMePage() {
         </h2>
         <p className="mt-3 text-[16px] leading-relaxed text-ink-muted">
           The gap between carryout and delivery is not just the fee. It is three separate
-          charges pointing the same way — and the largest of them is the one people never
-          count.
+          charges pointing the same way — and the largest of them is the easiest one to
+          forget.
         </p>
 
         <div className="mt-5 overflow-hidden rounded-card border border-line">
@@ -260,7 +255,7 @@ export default function DeliveryNearMePage() {
                   Line
                 </th>
                 <th scope="col" className="px-4 py-3 text-right font-bold">
-                  Example
+                  Amount
                 </th>
                 <th scope="col" className="px-4 py-3 font-bold">
                   Note
@@ -287,12 +282,10 @@ export default function DeliveryNearMePage() {
 
         <div className="prose-guide mt-6">
           <p>
-            Read down that table and the single pizza that costs eight dollars collected
-            costs about seventeen delivered — a gap of roughly nine dollars, which is
-            typical of the eight-to-twelve range we see across stores. Note that a quarter
-            of that gap is the pizza price itself, even after applying the best delivery
-            offer: flat-rate carryout deals simply do not exist in delivery mode, and most
-            people never see them because the site defaults to delivery.
+            Read down that table and a large 1-topping pizza that costs $7.99 picked up
+            comes to about $22.48 delivered — a gap of roughly $14.50. More than half of it
+            is the pizza price itself: the $7.99 deal does not exist in delivery mode, so it
+            only shows up once you choose carryout.
           </p>
           <p>
             None of which means you should never pay for delivery. It means the decision is
@@ -331,7 +324,7 @@ export default function DeliveryNearMePage() {
                     >
                       Rewards points
                     </Link>{' '}
-                    do not attach to guest orders and cannot be added afterwards.
+                    are not earned on guest orders, so sign in before you pay.
                   </>
                 ),
               },
@@ -341,7 +334,7 @@ export default function DeliveryNearMePage() {
               },
               {
                 id: 'instructions',
-                body: 'Put the gate code, buzzer and unit number in the instructions field — the last fifty feet is where deliveries fail, not the drive.',
+                body: 'Put the gate code, buzzer and unit number in the instructions field, so the driver is not left waiting outside a locked gate or building.',
               },
               {
                 id: 'total',

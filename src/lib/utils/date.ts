@@ -20,6 +20,12 @@ export function currentMonthYear(date: Date = new Date()): string {
   return `${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
 }
 
+/** "November 2026" for a stored date — use the date the page really changed, never today. */
+export function monthYearOf(input: string): string {
+  const d = new Date(input);
+  return `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+
 export function currentYear(date: Date = new Date()): number {
   return date.getFullYear();
 }

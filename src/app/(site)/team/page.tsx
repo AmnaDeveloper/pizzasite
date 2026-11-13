@@ -9,7 +9,11 @@ import { generatePageSEO, absoluteUrl } from '@/lib/seo-config';
 import { breadcrumbSchema } from '@/lib/seo/schema';
 import { authors } from '@/data/authors';
 import { getPostsByAuthor } from '@/lib/content';
+import { PAGE_DATES } from '@/lib/page-dates';
 import { SITE_NAME, SITE_URL } from '@/lib/site-config';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/team'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -62,7 +66,7 @@ export default function TeamPage() {
             editorial direction; Maha writes and reviews the guides day to day. Every guide
             is argued over between the two of us before it publishes.
           </p>
-          <LastUpdated className="mt-4" />
+          <LastUpdated date={PAGE_UPDATED} className="mt-4" />
         </header>
 
         <div className="mt-10 space-y-12">
@@ -111,15 +115,14 @@ export default function TeamPage() {
           <div className="prose-guide mt-4">
             <p>
               Every guide on this site is written by a named person, dated, and reviewed by
-              at least one other member of the team before it publishes. Where a claim is
-              operational — how dispatch works, how a promotion is applied at the till — it
-              is checked against how the job is actually done rather than against a
-              corporate FAQ.
+              the other before it publishes. Where a guide relies on someone else’s
+              reporting — a deal roundup, a news story, Domino’s own statements — it names
+              the source on the page.
             </p>
             <p>
-              Nutrition and allergen content is checked against each chain’s own
-              published data before it goes live. Where a chain does not publish a figure,
-              we say so rather than estimating and presenting the estimate as fact.
+              Prices and calories come from one real check of the official Domino’s cart at
+              a store in Columbus, Ohio. Where we have not checked a figure, we estimate it
+              and label it as an estimate on the page, rather than presenting it as fact.
             </p>
             <p>
               Nothing on this site is sponsored, and no advertiser sees an article before it

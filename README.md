@@ -47,8 +47,8 @@ Before you deploy, change at minimum:
 
 ### Colours — strict two-hue palette
 
-The site uses **exactly two hues** and white: brand red `#E31837` and brand blue
-`#006491`. Every other token is a shade or tint of one of them — including the
+The site uses **exactly two hues** and white: brand orange `#C2410C` and brand green
+`#1b5e3b`. Every other token is a shade or tint of one of them — including the
 "neutrals", which are desaturated blues rather than greys, so no third hue ever
 reaches the page. There is deliberately no green success colour and no amber
 rating colour.
@@ -59,17 +59,17 @@ both together.**
 
 | Utility | Value | Hue |
 | --- | --- | --- |
-| `brand` | `#E31837` | red |
-| `brand-dark` | `#B31229` | red |
-| `brand-soft` | `#FCE9EC` | red tint |
-| `navy` | `#006491` | blue |
-| `navy-dark` | `#004E71` | blue |
-| `navy-soft` | `#E4F0F5` | blue tint |
-| `ink` (body text) | `#062F42` | blue shade |
-| `prose` (article text) | `#123A4C` | blue shade |
-| `ink-muted` | `#446B7D` | blue shade |
-| `line` (borders) | `#D6E4EB` | blue tint |
-| `surface-alt` | `#F2F7F9` | blue tint |
+| `brand` | `#C2410C` | orange |
+| `brand-dark` | `#9A3412` | orange |
+| `brand-soft` | `#FFF1E8` | orange tint |
+| `navy` | `#1b5e3b` | green |
+| `navy-dark` | `#134429` | green |
+| `navy-soft` | `#E6F2EA` | green tint |
+| `ink` (body text) | `#1C2B22` | blue shade |
+| `prose` (article text) | `#24372C` | blue shade |
+| `ink-muted` | `#4B5E52` | blue shade |
+| `line` (borders) | `#DDE5DF` | green tint |
+| `surface-alt` | `#F4F7F5` | green tint |
 | `surface` | `#FFFFFF` | — |
 
 Every text/background pair meets WCAG AA (4.5:1). If you change a value,

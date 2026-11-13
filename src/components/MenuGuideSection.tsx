@@ -14,7 +14,7 @@ export default function MenuGuideSection({
   title = 'Menu items and prices',
   intro,
   ctaHref = '/menus-prices',
-  ctaLabel = 'See the full menu guide',
+  ctaLabel = 'See the menu guide',
   headingId = 'menu-guide',
   prioritiseFirstImage = false,
 }: {

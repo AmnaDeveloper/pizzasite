@@ -5,7 +5,13 @@ import LastUpdated from '@/components/LastUpdated';
 import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema } from '@/lib/seo/schema';
-import { CONTACT_EMAIL, SITE_NAME } from '@/lib/site-config';
+import { PAGE_DATES } from '@/lib/page-dates';
+import { CLARITY_ID, CONTACT_EMAIL, GA4_ID, SITE_NAME } from '@/lib/site-config';
+
+const HAS_ANALYTICS = Boolean(GA4_ID || CLARITY_ID);
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/cookies'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -20,14 +26,14 @@ export const metadata: Metadata = generatePageSEO({
   path: '/cookies',
 });
 
-const COOKIE_TABLE = [
+const ALL_COOKIE_ROWS = [
   {
-    category: 'Strictly necessary',
-    setBy: 'This site',
+    category: 'Security',
+    setBy: 'Our hosting and security provider',
     purpose:
-      'Keeps the site working: security, load balancing, and remembering choices such as a dismissed notice.',
-    duration: 'Session to 12 months',
-    optional: 'No — the site cannot function without these',
+      'May be set to protect the site against bots and automated abuse. This site does not set cookies of its own.',
+    duration: 'Up to 30 minutes',
+    optional: 'No — set only when needed for security'
   },
   {
     category: 'Analytics',
@@ -49,11 +55,18 @@ const COOKIE_TABLE = [
     category: 'Advertising',
     setBy: 'Google AdSense and partners',
     purpose:
-      'Selects which adverts to show, limits how often you see the same one, and measures whether an advert was viewed or clicked.',
+      'Selects which ads to show, limits how often you see the same one, and measures whether an ad was viewed or clicked.',
     duration: 'Up to 24 months',
     optional: 'Yes',
   },
 ];
+
+/** List only the services this build actually loads. */
+const COOKIE_TABLE = ALL_COOKIE_ROWS.filter(
+  (row) =>
+    (row.setBy !== 'Google Analytics' || Boolean(GA4_ID)) &&
+    (row.setBy !== 'Microsoft Clarity' || Boolean(CLARITY_ID)),
+);
 
 export default function CookiePolicyPage() {
   return (
@@ -68,7 +81,7 @@ export default function CookiePolicyPage() {
         <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-ink">
           Cookie Policy
         </h1>
-        <LastUpdated className="mt-4" />
+        <LastUpdated date={PAGE_UPDATED} className="mt-4" />
 
         <div className="prose-guide mt-8">
           <p>
@@ -80,9 +93,9 @@ export default function CookiePolicyPage() {
           <h2>What a cookie is</h2>
           <p>
             A cookie is a small text file that a website asks your browser to store on your
-            device. It lets a site recognise your browser on a later page or a later visit.
-            Some are set by us; most on this site are set by third parties whose services we
-            use, principally Google.
+            device. It lets a site recognize your browser on a later page or a later visit.
+            This site does not set cookies of its own; the ones you may see here are set by
+            the services we use, principally Google.
           </p>
           <p>
             Similar technologies — local storage, pixels and software development kits — do
@@ -90,10 +103,10 @@ export default function CookiePolicyPage() {
           </p>
 
           <h2>Why we use them</h2>
-          <p>Three reasons, and no others:</p>
+          <p>This site does not set cookies of its own. The services it uses may set them for these reasons, and no others:</p>
           <ul>
-            <li>To keep the site working and secure.</li>
-            <li>To understand, in aggregate, which guides people find useful.</li>
+            <li>To keep the site secure.</li>
+            {HAS_ANALYTICS ? <li>To understand, in aggregate, which guides people find useful.</li> : null}
             <li>
               To serve the display advertising that pays for the site, since we do not
               charge readers and do not take commission on orders.
@@ -149,19 +162,19 @@ export default function CookiePolicyPage() {
 
           <h2>Advertising cookies specifically</h2>
           <p>
-            Google, as a third-party vendor, uses cookies to serve adverts on this site.
+            Google, as a third-party vendor, uses cookies to serve ads on this site.
             Google’s use of advertising cookies enables it and its partners to serve
-            adverts based on your visits to this site and other sites on the internet. Other
-            third-party vendors and ad networks may also serve adverts here and may set
+            ads based on your visits to this site and other sites on the internet. Other
+            third-party vendors and ad networks may also serve ads here and may set
             their own cookies.
           </p>
           <p>
-            These cookies are used to choose which advert to show, to avoid showing you the
-            same advert repeatedly, and to measure whether an advert was seen or clicked.
+            These cookies are used to choose which ad to show, to avoid showing you the
+            same ad repeatedly, and to measure whether an ad was seen or clicked.
           </p>
 
           <h2>How to control cookies</h2>
-          <h3>Opt out of personalised advertising</h3>
+          <h3>Opt out of personalized advertising</h3>
           <ul>
             <li>
               <a
@@ -171,7 +184,7 @@ export default function CookiePolicyPage() {
               >
                 Google Ads Settings
               </a>{' '}
-              — controls personalisation for Google advertising.
+              — controls personalization for Google advertising.
             </li>
             <li>
               <a
@@ -193,36 +206,40 @@ export default function CookiePolicyPage() {
             </li>
           </ul>
           <p>
-            Opting out does not remove advertising from the site. It makes the adverts you
+            Opting out does not remove advertising from the site. It makes the ads you
             see less relevant to you, which is a trade some people are happy to make.
           </p>
 
-          <h3>Opt out of analytics</h3>
-          <p>
-            You can prevent Google Analytics from collecting your data with{' '}
-            <a
-              href="https://tools.google.com/dlpage/gaoptout"
-              rel="noopener noreferrer nofollow"
-              target="_blank"
-            >
-              Google’s opt-out browser add-on
-            </a>
-            .
-          </p>
+          {GA4_ID ? (
+            <>
+              <h3>Opt out of analytics</h3>
+              <p>
+                You can prevent Google Analytics from picking up your data with{' '}
+                <a
+                  href="https://tools.google.com/dlpage/gaoptout"
+                  rel="noopener noreferrer nofollow"
+                  target="_blank"
+                >
+                  Google’s opt-out browser add-on
+                </a>
+                .
+              </p>
+            </>
+          ) : null}
 
           <h3>Control cookies in your browser</h3>
           <p>
             Every major browser lets you view, block and delete cookies, usually under
             Settings, then Privacy. You can block third-party cookies entirely, which stops
             most advertising and analytics cookies on any site, or delete existing cookies
-            to start fresh. Blocking strictly necessary cookies may stop parts of this site
-            working.
+            to start fresh. Blocking cookies does not stop you reading this site.
           </p>
 
           <h3>Consent in the EEA, UK and Switzerland</h3>
           <p>
-            Visitors in these regions are shown a consent notice before non-essential
-            cookies are set, and can change or withdraw that choice at any time.
+            Visitors in these regions are asked for consent through Google’s consent
+            message before personalized ads are shown, and can change or withdraw that
+            choice at any time.
           </p>
 
           <h2>Changes</h2>

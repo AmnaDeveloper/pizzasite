@@ -72,7 +72,7 @@ export interface MenuSize {
   /**
    * True only when this exact price was copied from a real store's menu
    * (PRICE_SOURCE in site-config says which store and when). Everything else
-   * is an estimate and is labelled "est." on the page.
+   * is an estimate and is labeled "est." on the page.
    */
   verified?: boolean;
   slices?: number;
@@ -146,7 +146,7 @@ export interface Location {
   hours: LocationHours[];
   population: string;
   storeCountNote: string;
-  /** Neighbourhoods used for internal linking and unique on-page copy. */
+  /** Neighborhoods used for internal linking and unique on-page copy. */
   neighborhoods: string[];
   latitude: number;
   longitude: number;

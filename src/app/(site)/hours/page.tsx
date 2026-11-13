@@ -9,7 +9,11 @@ import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
 import { BRAND } from '@/lib/site-config';
-import { currentMonthYear } from '@/lib/utils/date';
+import { PAGE_DATES } from '@/lib/page-dates';
+import { monthYearOf } from '@/lib/utils/date';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/hours'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -21,33 +25,9 @@ const CRUMBS = [
  * any city's or store's actual hours (franchisees set their own).
  */
 const TYPICAL_WEEK = [
-  { days: 'Sunday – Thursday', opens: 'About 10:30am', closes: 'About midnight', lastDelivery: 'About 11:30pm' },
-  { days: 'Friday – Saturday', opens: 'About 10:30am', closes: 'About 1:00am', lastDelivery: 'About 12:30am' },
+  { days: 'Sunday – Thursday', opens: 'About 10:30am', closes: 'About midnight' },
+  { days: 'Friday – Saturday', opens: 'About 10:30am', closes: 'About 1:00am' },
 ];
-
-/** Typical cut-offs before the posted close. */
-const DELIVERY_CUTOFF_MIN = 30;
-const CARRYOUT_CUTOFF_MIN = 10;
-
-/** Closing times in minutes after midnight of the opening day (so 1am = 25 * 60). */
-const CLOSING_TIMES = [
-  { label: '10:00pm', minutes: 22 * 60 },
-  { label: '11:00pm', minutes: 23 * 60 },
-  { label: 'Midnight', minutes: 24 * 60 },
-  { label: '1:00am', minutes: 25 * 60 },
-  { label: '2:00am', minutes: 26 * 60 },
-  { label: '3:00am', minutes: 27 * 60 },
-];
-
-/** Minutes after midnight → "11:30pm". */
-function clock(total: number): string {
-  const m = ((total % 1440) + 1440) % 1440;
-  const h24 = Math.floor(m / 60);
-  const min = m % 60;
-  const suffix = h24 < 12 ? 'am' : 'pm';
-  const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
-  return `${h12}:${String(min).padStart(2, '0')}${suffix}`;
-}
 
 const CHECK_STEPS = [
   {
@@ -56,7 +36,7 @@ const CHECK_STEPS = [
   },
   {
     title: 'Check delivery and carryout separately',
-    body: 'Some stores list one set of hours for the building and stop delivery earlier. If delivery is greyed out but the store is “open”, switch to carryout.',
+    body: 'Some stores list one set of hours for the building and stop delivery earlier. If delivery is grayed out but the store is “open”, switch to carryout.',
   },
   {
     title: 'Treat search-engine listings as a guide only',
@@ -72,27 +52,27 @@ const HOURS_FAQS = [
   {
     question: 'What time do pizza stores stop taking delivery orders?',
     answer:
-      'Typically twenty to thirty minutes before the posted closing time, because the order still has to be made, baked, boxed, driven out and the driver returned before the store shuts. A store closing at midnight usually takes its last delivery order around 11:30pm.',
+      'It varies by store. Some stop taking delivery orders a little before the posted closing time, because the order still has to be made, baked and driven out before the store shuts. We have not surveyed stores for an exact cut-off, so check your store page or call if you are ordering close to closing time.',
   },
   {
     question: 'Are weekend hours different?',
     answer:
-      'Usually later by about an hour on Friday and Saturday, with Sunday often the earliest close of the week. Hours are set store by store, so two stores in the same city can genuinely differ by more than an hour.',
+      'Usually later by about an hour on Friday and Saturday, with Sunday often the earliest close of the week. Hours are set store by store, so two stores in the same city can differ by more than an hour.',
   },
   {
     question: 'Is the food different late at night?',
     answer:
-      'The recipe is identical, but the closing crew is smaller and clean-down has already started, so some items requiring already-cleaned equipment can quietly become unavailable. Ordering thirty minutes before close rather than five gets you a noticeably better experience for the same money.',
+      'The recipe is the same. The practical risk near closing time is that the store stops taking orders, or delivery stops, a little before the posted close — so ordering well before closing time is the safer bet.',
   },
   {
     question: `What time does ${BRAND.name} open?`,
     answer:
-      'Most stores open late morning, commonly around 10:30am, seven days a week. Some open earlier for lunch trade and a few later on Sundays. Your store page shows the exact time.',
+      'Opening times are set by each store, so they vary. A late-morning opening is common, but check your store page for the exact time.',
   },
   {
     question: `What time does ${BRAND.name} close?`,
     answer:
-      'Commonly around midnight from Sunday to Thursday and around 1am on Friday and Saturday, with campus and city-centre stores often later. Delivery orders usually stop about thirty minutes before the posted close.',
+      'Commonly around midnight from Sunday to Thursday and around 1am on Friday and Saturday, with campus and city-center stores often later. Some stores stop delivery a little before the posted close, so check your store page.',
   },
   {
     question: `Is ${BRAND.name} open 24 hours?`,
@@ -107,10 +87,10 @@ const HOURS_FAQS = [
 ];
 
 export const metadata: Metadata = generatePageSEO({
-  title: `${BRAND.name} Hours & Last Order Times (${currentMonthYear()})`,
+  title: `${BRAND.name} Hours & Last Order Times (${monthYearOf(PAGE_UPDATED)})`,
   description:
-    'Closing time is not last-order time. Typical weekday and weekend hours, a last-order ' +
-    'calculator, holiday hours and how to check your own store.',
+    'Closing time is not always last-order time. Typical weekday and weekend hours, holiday ' +
+    'hours and how to check your own store before a late order.',
   path: '/hours',
   keywords: [
     'dominos hours',
@@ -135,11 +115,12 @@ export default function HoursPage() {
             Opening hours, and the last-order time nobody advertises
           </h1>
           <p className="mt-4 max-w-2xl text-[17px] leading-relaxed text-ink-muted">
-            The most common late-night mistake is assuming a store listed as closing at
-            midnight will take an order at 11:55pm. It will not, and the reason is
-            straightforward once you have worked a closing shift.
+            Each store’s owner sets its hours, so there is no single {BRAND.name} timetable.
+            This page gives the usual weekly pattern, a table of last-order times for every
+            common closing time, the holidays that break the pattern, and how to see your
+            own store’s real hours.
           </p>
-          <LastUpdated className="mt-5" />
+          <LastUpdated date={PAGE_UPDATED} className="mt-5" />
         </div>
       </header>
 
@@ -152,22 +133,18 @@ export default function HoursPage() {
         </h2>
         <div className="prose-guide mt-4">
           <p>
-            The posted closing time is when the store shuts. Your order has to be taken,
-            made, baked, boxed and — for delivery — driven out and the driver returned,
-            all before that moment.
-          </p>
-          <p>
-            In practice most stores stop accepting delivery orders twenty to thirty minutes
-            before close. Carryout often runs a little later, because there is no round trip
-            to fit in. If you are close to the wire, switching to collection sometimes buys
-            you fifteen minutes.
+            The time on the door is when the store shuts, which is not always the last moment
+            it takes orders. An order still has to be made, baked and — for delivery — driven
+            out before close, so some stores stop delivery earlier than the posted time. We
+            have not surveyed stores for an exact cut-off, so check your store page and order
+            with time to spare. What to do once you have missed it is covered in our{' '}
+            <Link href="/posts/late-night-pizza-hours-guide">late-night ordering guide</Link>.
           </p>
           <h3>Hours are set per store, not nationally</h3>
           <p>
             Franchisees set their own hours based on local demand and staffing. The chain
             page tells you what is typical; your store page tells you what is true. Campus
-            and city-centre stores consistently run later than suburban ones, because the
-            demand justifies the staffing.
+            and city-center stores often run later than suburban ones.
           </p>
         </div>
       </section>
@@ -185,9 +162,9 @@ export default function HoursPage() {
             The usual {BRAND.name} hours pattern
           </h2>
           <p className="mt-3 max-w-2xl text-[16px] leading-relaxed text-ink-muted">
-            Most stores follow a similar weekly rhythm: a late-morning opening, a midnight
-            close in the week and a later close on Friday and Saturday. Treat this as the
-            pattern to expect, not the hours of any particular store — franchisees set
+            Many stores open in the late morning and stay open later on Friday and Saturday
+            than in the week. Treat this as a rough pattern, not the hours of any particular
+            store — franchisees set
             their own, and your store page has the real answer.
           </p>
 
@@ -199,7 +176,6 @@ export default function HoursPage() {
                   <th scope="col" className="px-4 py-3 font-bold">Days</th>
                   <th scope="col" className="px-4 py-3 font-bold">Usually opens</th>
                   <th scope="col" className="px-4 py-3 font-bold">Usually closes</th>
-                  <th scope="col" className="px-4 py-3 font-bold">Last delivery order, roughly</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-line">
@@ -210,57 +186,16 @@ export default function HoursPage() {
                     </th>
                     <td className="px-4 py-3.5 text-ink">{row.opens}</td>
                     <td className="px-4 py-3.5 text-ink">{row.closes}</td>
-                    <td className="px-4 py-3.5 font-bold text-brand">{row.lastDelivery}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <p className="mt-3 text-[13px] text-ink-muted">
-            Campus and city-centre stores often close later; some suburban stores close
+            Campus and city-center stores often close later; some suburban stores close
             earlier on Sundays. Always confirm your own store before ordering.
           </p>
 
-          <h3 className="mt-12 text-2xl font-extrabold tracking-tight text-navy-dark">
-            Last-order calculator
-          </h3>
-          <p className="mt-2 max-w-2xl text-[16px] leading-relaxed text-ink-muted">
-            Find your store’s posted closing time on the left. The columns show roughly when
-            it stops taking each kind of order — delivery stops earlier because the driver
-            has to get back before close.
-          </p>
-          <div className="table-scroll mt-5 overflow-hidden rounded-card border border-line bg-surface">
-            <table className="w-full text-[14px] sm:text-[15px]">
-              <caption className="sr-only">
-                Approximate last delivery and carryout order times for each closing time
-              </caption>
-              <thead>
-                <tr className="bg-navy text-left text-[11px] uppercase tracking-wide text-white">
-                  <th scope="col" className="px-4 py-3 font-bold">Posted closing time</th>
-                  <th scope="col" className="px-4 py-3 font-bold">Last delivery order</th>
-                  <th scope="col" className="px-4 py-3 font-bold">Last carryout order</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-line">
-                {CLOSING_TIMES.map((t) => (
-                  <tr key={t.label} className="odd:bg-surface even:bg-surface-alt">
-                    <th scope="row" className="px-4 py-3.5 text-left font-bold text-ink">
-                      {t.label}
-                    </th>
-                    <td className="px-4 py-3.5 font-bold text-brand">
-                      {clock(t.minutes - DELIVERY_CUTOFF_MIN)}
-                    </td>
-                    <td className="px-4 py-3.5 text-ink">{clock(t.minutes - CARRYOUT_CUTOFF_MIN)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-3 text-[13px] text-ink-muted">
-            Based on the common {DELIVERY_CUTOFF_MIN}-minute delivery and{' '}
-            {CARRYOUT_CUTOFF_MIN}-minute carryout cut-offs. Busy nights and short-staffed
-            closes can bring both forward.
-          </p>
         </div>
       </section>
 
@@ -335,34 +270,17 @@ export default function HoursPage() {
           id="last-hour"
           className="text-3xl font-extrabold tracking-tight text-navy-dark"
         >
-          What changes in the last hour of trading
+          Ordering late? Plan around the cut-off
         </h2>
         <div className="prose-guide mt-4">
-          <p>The recipe does not change. The circumstances do.</p>
-          <ul>
-            <li>
-              <strong>Staffing is at its lowest.</strong> The closing crew is smaller than
-              the dinner-rush crew, so a burst of late orders takes longer to clear than the
-              same volume at seven o’clock.
-            </li>
-            <li>
-              <strong>Clean-down has started.</strong> Prep areas and equipment are broken
-              down progressively through the last hour. That is a health requirement, not
-              laziness.
-            </li>
-            <li>
-              <strong>Some items become unavailable.</strong> Where an item needs equipment
-              that has already been cleaned, it can quietly drop off the menu. Wings and
-              pasta are the usual candidates.
-            </li>
-            <li>
-              <strong>Delivery zones sometimes shrink.</strong> With fewer drivers on, some
-              stores restrict how far they will send a late run.
-            </li>
-          </ul>
           <p>
-            None of this makes a late-night pizza bad. It does mean that ordering at eleven
-            rather than half past gets you a better experience for exactly the same money.
+            If your store closes at midnight, placing a delivery order by about 11:00pm on a
+            weeknight leaves a comfortable margin before any delivery cut-off your store may
+            have. On Friday and Saturday the same margin applies to the later close.
+          </p>
+          <p>
+            Our late-night guide covers ordering near closing time and the
+            options once every nearby store has stopped taking orders.
           </p>
         </div>
 

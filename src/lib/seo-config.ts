@@ -7,7 +7,6 @@ import {
   SITE_URL,
   GOOGLE_SITE_VERIFICATION,
 } from './site-config';
-import { currentMonthYear } from './utils/date';
 
 export type PageSEOInput = {
   /** Page title WITHOUT the site name — the template appends it. */
@@ -137,10 +136,3 @@ export const rootMetadata: Metadata = {
   },
 };
 
-/**
- * Appends the live month + year to a title so index pages read as current
- * ("Menu Prices — March 2026") without anyone editing content each month.
- */
-export function withFreshness(title: string): string {
-  return `${title} (${currentMonthYear()})`;
-}

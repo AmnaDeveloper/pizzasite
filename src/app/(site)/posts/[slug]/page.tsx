@@ -20,7 +20,7 @@ import { CURRENCY_SYMBOL, NOT_AFFILIATED_SHORT } from '@/lib/site-config';
 import { formatLongDate, toIsoDate, withCurrentMonthYear } from '@/lib/utils/date';
 
 const SIDEBAR_LINKS = [
-  { href: '/menus-prices', label: 'Full menu with prices' },
+  { href: '/menus-prices', label: 'Menu & prices' },
   { href: '/coupons', label: 'Coupons & deals compared' },
   { href: '/hours', label: 'Hours & last orders' },
 ];

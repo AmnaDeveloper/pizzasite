@@ -23,9 +23,9 @@ export const authors: Author[] = [
     name: 'Maha Iqbal',
     role: 'Content Lead',
     bio:
-      'Maha leads day-to-day content on the site — the deal breakdowns, delivery and ordering guides, and the menu, nutrition and allergen pages. She writes each guide from scratch rather than reusing what other sites already say, and works the arithmetic through on the page so readers can check it.',
+      'Maha leads day-to-day content on the site — the deal breakdowns, delivery and ordering guides, and the menu, price and calorie pages. She writes each guide from scratch rather than reusing what other sites already say, and works the arithmetic through on the page so readers can check it.',
     credentials:
-      'Reviews and edits every guide before it goes live, and labels calorie, allergen and price figures as estimates wherever they have not been confirmed.',
+      'Reviews and edits every guide before it goes live, and labels calorie and price figures as estimates wherever they have not been confirmed.',
     avatar: '/images/authors/maha-iqbal.png',
     avatarAlt: 'Avatar tile for Maha Iqbal, Content Lead',
   },

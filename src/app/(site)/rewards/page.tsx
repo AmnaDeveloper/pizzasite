@@ -10,7 +10,11 @@ import AdSlot from '@/components/AdSlot';
 import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
+import { PAGE_DATES } from '@/lib/page-dates';
 import { BRAND, CURRENCY_SYMBOL } from '@/lib/site-config';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/rewards'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -24,42 +28,42 @@ const REWARDS_FAQS = [
   {
     question: `How do ${BRAND.name} rewards points work?`,
     answer:
-      'You earn a fixed number of points for each qualifying order above a modest minimum spend, and at a threshold — commonly around sixty points, reached in six orders — you can redeem them for a free pizza. Points sit on your account rather than in your basket, which is why a redemption generally applies on top of a deal price instead of competing with it.',
+      'You earn 10 points on each signed-in order of $5 or more, for one order per calendar day. At 60 points — six orders — you can redeem a free medium 2-topping pizza; smaller rewards unlock at 20 and 40 points. Only one reward can be redeemed per order.',
   },
   {
     question: 'Do rewards points depend on how much I spend?',
     answer:
-      'At most pizza chains, no. Points are awarded per qualifying order above a modest minimum, which means a fifteen-dollar order and a sixty-dollar order typically earn exactly the same. That single design choice makes frequent small orders far more efficient than occasional large ones.',
+      'No. Every qualifying order earns the same 10 points, so a fifteen-dollar order and a sixty-dollar order earn exactly the same. That makes frequent small orders far more efficient than occasional large ones — as long as they fall on different days, because only one order a day earns points.',
   },
   {
     question: 'How many orders do I need for a free pizza?',
     answer:
-      'Typically six qualifying orders. Since a redemption is usually worth around thirteen dollars at menu price, each order is generating roughly two dollars of value — an effective discount of about thirteen percent on a fifteen-dollar order, and only about three percent on a sixty-dollar one.',
+      'Six qualifying orders. A medium 2-topping pizza is about $14.99 at our estimated menu price, so each order generates roughly $2.50 of value — about 17% back on a fifteen-dollar order, and about 4% on a sixty-dollar one.',
   },
   {
     question: 'Do carryout orders earn points?',
     answer:
-      'Yes at most chains, at the same rate as delivery. People routinely assume otherwise and lose points on exactly the orders they should be placing, since carryout is also the cheapest way to order.',
+      'Yes. The 10 points are earned on any signed-in order of $5 or more, carryout included. Since carryout is also the cheapest way to order, it is the best combination available.',
   },
   {
     question: 'Do points expire?',
     answer:
-      'Usually after a period of account inactivity rather than on a fixed date from when each point was earned. A single qualifying order normally resets the clock on your whole balance, so an occasional order protects everything you have already built up.',
+      'Yes, after 180 days with no account activity — no points earned or redeemed. Any qualifying order resets that window for your whole balance, so an occasional order protects everything you have built up.',
   },
   {
     question: 'Can I use a reward and a deal on the same order?',
     answer:
-      'Usually yes, and this is the only reliable stacking in chain pizza. The redemption comes off your account rather than out of the basket, so it generally applies on top of a bundle price rather than competing with it.',
+      'We could not confirm this from Domino’s published terms, and it may vary. Add the deal first, then try to redeem in the cart: the total shows straight away whether both applied. Only one reward can be redeemed per order either way.',
   },
   {
     question: 'Do orders through a third-party delivery app earn points?',
     answer:
-      'Generally not, because the transaction never touches the chain account system. That is a real hidden cost of ordering through an aggregator, on top of the marked-up menu prices those platforms usually carry.',
+      'Not as a rule, because the order is placed on the delivery app’s account rather than your Domino’s account. Check before you assume otherwise, and remember those apps often carry their own fees on top.',
   },
   {
-    question: 'Is a rewards programme actually worth joining?',
+    question: 'Is a rewards program actually worth joining?',
     answer:
-      'For a regular orderer, yes — signing up costs nothing and the effective discount is meaningful. The honest caveat is behavioural: these schemes exist to increase how often you order, and they work. If a points balance is nudging you into ordering more often than you otherwise would, the programme is making money from you rather than the other way round.',
+      'For a regular orderer, yes — signing up costs nothing and roughly $2.50 back per order adds up. The honest caveat is behavioral: these schemes exist to increase how often you order, and they work. If a points balance is nudging you into ordering more often than you otherwise would, the program is making money from you rather than the other way round.',
   },
 ];
 
@@ -67,8 +71,8 @@ const REWARDS_FAQS = [
 export const metadata: Metadata = generatePageSEO({
   title: `${BRAND.name} Rewards: What Points Are Worth`,
   description:
-    'How pizza loyalty points really work: earned per order, not per dollar. What a free pizza ' +
-    'costs you in orders, and five mistakes that waste points.',
+    'How Domino’s Rewards points work: 10 per order, not per dollar. What a free pizza ' +
+    'costs you in orders, when points expire, and mistakes that waste them.',
   path: '/rewards',
   keywords: [
     'dominos rewards',
@@ -83,39 +87,39 @@ export const metadata: Metadata = generatePageSEO({
 const VALUE_ROWS = [
   { orders: '1 order', points: '10 points', redeem: '—', value: '—' },
   { orders: '3 orders', points: '30 points', redeem: 'Halfway there', value: '—' },
-  { orders: '6 orders', points: '60 points', redeem: 'Free medium pizza', value: '~$13.49' },
-  { orders: '12 orders', points: '120 points', redeem: 'Two free pizzas', value: '~$26.98' },
+  { orders: '6 orders', points: '60 points', redeem: 'Free medium 2-topping pizza', value: '~$14.99 est.' },
+  { orders: '12 orders', points: '120 points', redeem: 'Two free pizzas', value: '~$29.98 est.' },
 ];
 
 /** Rewards in context: the other levers on the same order, ranked honestly. */
 const LEVERS = [
   {
     lever: 'Switch to carryout',
-    saving: '$8 – $12',
-    effort: 'Collect it yourself',
+    saving: '$13 – $18',
+    effort: 'Pick it up yourself',
     href: '/delivery-near-me',
   },
   {
     lever: 'Order from a bundle, not the menu',
-    saving: '$4 – $8',
+    saving: '$2 – $8',
     effort: '90 seconds of comparing',
     href: '/coupons',
   },
   {
     lever: 'Buy drinks elsewhere',
-    saving: '$3 – $6',
+    saving: '$2 – $5',
     effort: 'One extra stop',
     href: '/drinks',
   },
   {
     lever: 'Rewards points',
-    saving: '~$2 per order',
+    saving: '~$2.50 per order',
     effort: 'Sign in before ordering',
     href: '/rewards',
   },
 ];
 
-const OPTIMISE = [
+const Optimize = [
   {
     icon: Gift,
     title: 'Sign in every single time',
@@ -124,40 +128,40 @@ const OPTIMISE = [
   {
     icon: Gift,
     title: 'Remember carryout earns too',
-    body: 'At most chains it earns at the same rate as delivery. Since carryout is also the cheapest way to order, it is the best combination available: lowest price and full points on the same transaction.',
+    body: 'Carryout orders of $5 or more earn the same 10 points as delivery. Since carryout is also the cheapest way to order, it is the best combination available: lowest price and full points on the same transaction.',
   },
   {
     icon: Gift,
-    title: 'Redeem on top of a deal',
-    body: 'The redemption comes off your account, not out of the basket, so it generally applies alongside a bundle price. Redeeming on a full-price order wastes the only stacking the system allows.',
+    title: 'Space your orders across days',
+    body: 'Only one order per calendar day earns points. Two orders on the same day — lunch and dinner, say — earn 10 points, not 20.',
   },
   {
     icon: Gift,
-    title: 'Redeem for the priciest qualifying item',
-    body: 'If the reward is any medium pizza, take a specialty one rather than a plain cheese. Same points, more pizza — the same logic that applies to any flat-rate offer.',
+    title: 'Use both toppings on the free pizza',
+    body: 'The 60-point reward is a medium pizza with up to two toppings. A plain cheese uses the same points and gives you less, so pick the two toppings you would have paid for.',
   },
 ];
 
 const MISTAKES = [
   {
     title: 'Checking out as a guest',
-    body: 'Points do not attach to guest orders and most schemes will not add them retrospectively. Every guest checkout is roughly two dollars of value thrown away for the sake of skipping a ten-second sign-in.',
+    body: 'Points do not attach to guest orders, and you should not count on them being added afterwards. Every guest checkout is roughly $2.50 of value thrown away for the sake of skipping a ten-second sign-in.',
   },
   {
     title: 'Falling under the order minimum',
-    body: 'There is a spend threshold below which an order earns nothing at all. An order a dollar under the line earns exactly zero points, not a reduced number.',
+    body: 'An order has to be $5 or more to earn anything. An order a few cents under the line earns zero points, not a reduced number.',
   },
   {
     title: 'Running two accounts in one household',
-    body: 'Two people ordering under separate accounts earn at half the rate of one shared account. Consolidating is the single easiest improvement available.',
+    body: 'Two people ordering under separate accounts split the points, so each takes twice as long to reach 60. One shared account reaches the free pizza sooner — just keep the orders on different days.',
   },
   {
-    title: 'Redeeming on a full-price order',
-    body: 'Because the redemption comes off your account, it stacks with a bundle price. Using it on an order that had no other discount wastes the only stacking the system allows.',
+    title: 'Letting the balance expire',
+    body: 'Points lapse after 180 days with no activity. If you order only a few times a year, one small qualifying order before the window closes keeps the whole balance alive.',
   },
   {
     title: 'Ordering through an aggregator app',
-    body: 'Third-party delivery platforms generally do not pass loyalty credit back to the chain. You pay marked-up prices and earn nothing for it.',
+    body: 'An order placed on a third-party delivery app is not placed on your Domino’s account, so do not expect it to earn points.',
   },
 ];
 
@@ -177,10 +181,10 @@ export default function RewardsPage() {
           </h1>
           <p className="mt-4 max-w-2xl text-[17px] leading-relaxed text-ink-muted">
             Pizza loyalty schemes are unusual, and the way they are unusual inverts the
-            normal logic of rewards programmes. Understanding one design choice tells you
+            normal logic of rewards programs. Understanding one design choice tells you
             everything about how to use them well.
           </p>
-          <LastUpdated className="mt-5" />
+          <LastUpdated date={PAGE_UPDATED} className="mt-5" />
           <div className="relative mt-7 aspect-[21/9] overflow-hidden rounded-card border border-line">
             <Image
               src="/images/rewards-hero.jpg"
@@ -208,16 +212,15 @@ export default function RewardsPage() {
         <div className="prose-guide mt-5 max-w-3xl">
           <p>
             Airlines, supermarkets and credit cards award points in proportion to spending:
-            spend twice as much, earn twice as much. Pizza chains generally do not work that
-            way. They award a fixed number of points for each qualifying order above a
-            modest minimum, which means a fifteen-dollar order and a sixty-dollar order earn
+            spend twice as much, earn twice as much. Domino’s Rewards does not work that
+            way. It awards 10 points for each signed-in order of $5 or more, which means a fifteen-dollar order and a sixty-dollar order earn
             the same.
           </p>
           <p>
-            Everything useful about optimising these programmes follows from that single
+            Everything useful about optimizing these programs follows from that single
             fact. The scheme rewards <strong>frequency</strong>, not spending. If you were
             going to place one sixty-dollar order and could reasonably split it into two
-            thirty-dollar orders on different days, you earn twice the points for exactly
+            thirty-dollar orders on different days (only one order a day earns), you earn twice the points for exactly
             the same total spend.
           </p>
           <p>
@@ -241,8 +244,8 @@ export default function RewardsPage() {
             What a free pizza actually costs you
           </h2>
           <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
-            Working from a typical structure — ten points per qualifying order, sixty points
-            for a free medium pizza — here is what the balance is worth as it builds.
+            At ten points per qualifying order and sixty points for a free medium 2-topping
+            pizza, here is what the balance is worth as it builds.
           </p>
 
           <div className="table-scroll mt-6 overflow-hidden rounded-card border border-line">
@@ -291,11 +294,12 @@ export default function RewardsPage() {
 
           <div className="prose-guide mt-6 max-w-3xl text-[15px]">
             <p>
-              Six orders earning a pizza worth around {CURRENCY_SYMBOL}13.49 means each
-              order generates roughly {CURRENCY_SYMBOL}2.25 of value. What that is worth as
-              a percentage depends entirely on your order size: on a fifteen-dollar order it
-              is an effective discount of about fifteen percent, and on a sixty-dollar
-              family order about four percent.
+              Six orders earning a medium 2-topping pizza worth about {CURRENCY_SYMBOL}14.99
+              (our estimate: the checked large cheese price scaled down, plus two toppings)
+              means each order generates roughly {CURRENCY_SYMBOL}2.50 of value. What that
+              is worth as a percentage depends entirely on your order size: on a
+              fifteen-dollar order it is about 17% back, and on a sixty-dollar family order
+              about 4%.
             </p>
             <p>
               That is the number worth carrying around. It is real money, it costs nothing
@@ -375,11 +379,11 @@ export default function RewardsPage() {
               joining — it takes ten seconds and the points accumulate whether you think
               about them or not. It is an argument against treating a points balance as a
               money-saving strategy. If you are signed in but still paying delivery fees on
-              a store four minutes from your house, you are optimising the smallest number
+              a store four minutes from your house, you are optimizing the smallest number
               on the page.
             </p>
             <p>
-              The combination that actually works is boring: collect it yourself, order from
+              The combination that actually works is boring: pick it up yourself, order from
               a bundle, skip the drinks, and be signed in while you do all three. Our{' '}
               <Link href="/posts/how-to-save-money-on-pizza-delivery">
                 full money-saving guide
@@ -392,18 +396,18 @@ export default function RewardsPage() {
 
       <AdSlot slotId="rewards-mid" className="py-8" />
 
-      {/* ── Optimise ─────────────────────────────────────────────────────── */}
-      <section aria-labelledby="optimise" className={SECTION}>
+      {/* ── Optimize ─────────────────────────────────────────────────────── */}
+      <section aria-labelledby="optimize" className={SECTION}>
         <div className={INNER}>
           <h2
-            id="optimise"
+            id="optimize"
             className="flex items-center gap-3 text-[1.75rem] font-extrabold leading-tight tracking-tight text-navy-dark sm:text-[2rem]"
           >
             <TrendingUp className="h-7 w-7 shrink-0 text-brand" aria-hidden="true" />
             Four ways to get more from the same spend
           </h2>
           <div className="mt-7 grid gap-5 sm:grid-cols-2">
-            {OPTIMISE.map((tip) => (
+            {Optimize.map((tip) => (
               <article
                 key={tip.title}
                 className="rounded-card border border-line bg-surface p-5"
@@ -460,19 +464,20 @@ export default function RewardsPage() {
           <div className="prose-guide mt-5 max-w-3xl">
             <p>
               Yes, with a caveat. Signing up costs nothing and the effective discount for a
-              regular orderer is meaningful — around ten to fifteen percent for someone who
-              orders modest amounts frequently.
+              regular orderer is meaningful. Six $20 orders earn 60 points, and a free medium
+              2-topping pizza is worth about $14.99 at our estimated menu price — about 12% back.
+              On smaller orders the percentage is higher; on large ones it is lower.
             </p>
             <p>
-              The caveat is behavioural. These schemes exist to increase order frequency,
+              The caveat is behavioral. These schemes exist to increase order frequency,
               and they work. If the existence of a points balance is nudging you into
-              ordering pizza more often than you otherwise would, the programme is making
+              ordering pizza more often than you otherwise would, the program is making
               money from you rather than the other way round. That is not a reason to avoid
               it — it is a reason to be honest with yourself about which is happening.
             </p>
             <p>
               One practical test: if you find yourself placing an order you did not want in
-              order to reach a threshold, the maths has already failed. Spending fifteen
+              order to reach a threshold, the math has already failed. Spending fifteen
               dollars to unlock two dollars of value is not a saving, however satisfying the
               progress bar looks.
             </p>
@@ -480,17 +485,11 @@ export default function RewardsPage() {
 
           <div className="mt-7 flex flex-wrap gap-3">
             <Link
-              href="/posts/pizza-rewards-program-explained"
+              href="/coupons"
               className="inline-flex items-center gap-2 rounded-md bg-brand px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-dark"
             >
-              The full rewards guide
+              Deal types worth using alongside rewards
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-            <Link
-              href="/coupons"
-              className="inline-flex items-center gap-2 rounded-md border border-navy px-5 py-3 text-sm font-bold text-navy transition-colors hover:bg-navy hover:text-white"
-            >
-              Deal types that stack with rewards
             </Link>
             <Link
               href="/menus-prices"

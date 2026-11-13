@@ -5,7 +5,11 @@ import LastUpdated from '@/components/LastUpdated';
 import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema } from '@/lib/seo/schema';
+import { PAGE_DATES } from '@/lib/page-dates';
 import { CONTACT_EMAIL, SITE_NAME } from '@/lib/site-config';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/accessibility'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -33,7 +37,7 @@ export default function AccessibilityPage() {
         <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-ink">
           Accessibility Statement
         </h1>
-        <LastUpdated className="mt-4" />
+        <LastUpdated date={PAGE_UPDATED} className="mt-4" />
 
         <div className="prose-guide mt-8">
           <p>
@@ -47,14 +51,14 @@ export default function AccessibilityPage() {
           <p>
             We target conformance with the Web Content Accessibility Guidelines (WCAG) 2.1
             at Level AA. We treat that as a working standard to build against rather than a
-            badge to claim, and we test against it as pages change.
+            badge to claim. We have not had the site independently audited.
           </p>
 
           <h2>What is built in</h2>
           <ul>
             <li>
               <strong>Keyboard navigation.</strong> Every interactive element — links,
-              buttons, the mobile menu, the FAQ accordions, the deal filters and the contact
+              buttons, the mobile menu, the FAQ accordions and the contact
               form — is reachable and operable by keyboard alone.
             </li>
             <li>
@@ -72,11 +76,11 @@ export default function AccessibilityPage() {
               screen reader can navigate by structure.
             </li>
             <li>
-              <strong>Colour contrast.</strong> Body text and interactive elements are
+              <strong>Color contrast.</strong> Body text and interactive elements are
               chosen to meet the AA contrast ratio against their backgrounds.
             </li>
             <li>
-              <strong>Colour is never the only signal.</strong> Anything indicated by colour
+              <strong>Color is never the only signal.</strong> Anything indicated by color
               is also indicated by text, an icon or a shape.
             </li>
             <li>
@@ -89,7 +93,7 @@ export default function AccessibilityPage() {
             </li>
             <li>
               <strong>Forms.</strong> Every field has a visible, associated label, required
-              fields are marked in text as well as colour, and status messages are announced
+              fields are marked in text as well as color, and status messages are announced
               to assistive technology.
             </li>
             <li>
@@ -103,10 +107,10 @@ export default function AccessibilityPage() {
           <p>We would rather list these than pretend they do not exist.</p>
           <ul>
             <li>
-              <strong>Third-party advertising.</strong> Adverts on this site are served by
+              <strong>Third-party advertising.</strong> Ads on this site are served by
               third parties and their internal markup is outside our control. Some ad
-              creatives may not meet the standards we apply to our own content. We control
-              where ads sit and reserve space so they do not shift the page, but we cannot
+              creatives may not meet the standards we apply to our own content. Ads are placed
+              automatically by Google, so they can move content as they load, and we cannot
               rewrite what is inside them.
             </li>
             <li>
@@ -116,19 +120,17 @@ export default function AccessibilityPage() {
               navigable, but the scrolling itself is an inconvenience.
             </li>
             <li>
-              <strong>Illustration alt text.</strong> Our images are abstract decorative
-              artwork rather than photographs of food. Their alternative text describes them
-              honestly as illustrations, which means it conveys less than a photograph
-              caption would.
+              <strong>Illustrative photos.</strong> Food photos on this site are
+              illustrative, not pictures of Domino’s products; on menu pages a caption
+              under each photo says so. They show the kind of item, not exactly what you will receive.
             </li>
           </ul>
 
           <h2>How we test</h2>
           <p>
-            We test with keyboard-only navigation, with browser zoom at 200%, with automated
-            accessibility checks during development, and with a screen reader on the
-            templates that most pages are built from. Automated tools catch a minority of
-            real problems, which is why reports from readers matter more than any score.
+            We check pages with keyboard-only navigation and with browser zoom at 200%. Those
+            checks catch only some problems, which is why reports from readers matter more
+            than anything we can test ourselves.
           </p>
 
           <h2>Tell us when something does not work</h2>

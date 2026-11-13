@@ -25,7 +25,7 @@ type DealBasket = {
 
 /*
  * Baskets mirror what each coupon description says the offer covers. Where a
- * deal lets you choose (Mix & Match, add-on side), the basket uses an item
+ * deal lets you choose (Mix & Match), the basket uses an item
  * people commonly pick, and the note says so.
  */
 const BASKETS: DealBasket[] = [
@@ -34,7 +34,7 @@ const BASKETS: DealBasket[] = [
     dealPrice: 7.99,
     basket: [{ slug: 'classic-cheese-pizza', size: 'Large' }],
     feeds: 3,
-    note: 'Compared with a large cheese pizza before the included topping, so the real saving is a little higher. Carryout also removes the delivery fee and tip, which is not counted here.',
+    note: 'Compared with a large cheese pizza before the included topping, so the real saving is a little higher. On an 8-piece wings order ($10.99) the same deal saves $3.00. Carryout also removes the delivery fee and tip, which is not counted here.',
   },
   {
     couponId: 'cpn-mix-match',
@@ -46,41 +46,14 @@ const BASKETS: DealBasket[] = [
     feeds: 2,
   },
   {
-    couponId: 'cpn-late-night',
-    dealPrice: 8.99,
+    couponId: 'cpn-perfect-combo',
+    dealPrice: 19.99,
     basket: [
-      { slug: 'classic-cheese-pizza', size: 'Medium' },
-      { slug: 'cinnamon-bread-bites', size: '16 pieces' },
+      { slug: 'classic-cheese-pizza', size: 'Medium', qty: 2 },
+      { slug: 'bread-bites', size: 'Parmesan' },
     ],
-    feeds: 2,
-  },
-  {
-    couponId: 'cpn-family-bundle',
-    dealPrice: 29.99,
-    basket: [
-      { slug: 'classic-cheese-pizza', size: 'Large', qty: 2 },
-      { slug: 'bread-bites', size: 'Garlic' },
-      { slug: 'two-liter-soda', size: 'Coke' },
-    ],
-    feeds: 5,
-    note: 'Specialty pizzas usually add a surcharge of a dollar or two each inside a bundle.',
-  },
-  {
-    couponId: 'cpn-group-order',
-    dealPrice: 49.99,
-    basket: [
-      { slug: 'classic-cheese-pizza', size: 'Large', qty: 4 },
-      { slug: 'bread-bites', size: 'Garlic' },
-      { slug: 'stuffed-cheesy-bread', size: 'Classic' },
-    ],
-    feeds: 10,
-  },
-  {
-    couponId: 'cpn-sides-addon',
-    dealPrice: 5.99,
-    basket: [{ slug: 'chicken-wings', size: 'Plain' }],
-    feeds: 2,
-    note: 'Pick the dearest side in the slot — Bread Bites already cost $5.99, so the add-on saves nothing on them.',
+    feeds: 4,
+    note: 'Leaves out the Cinnamon Twists and the toppings, which we have not priced, so the real saving is higher. The medium price is our estimate.',
   },
 ];
 
@@ -135,15 +108,4 @@ export function getDealValues(): DealValue[] {
       },
     ];
   });
-}
-
-/**
- * What a percentage-off offer does to the family-bundle basket at menu price.
- * Used to show where a percentage discount overtakes a bundle.
- */
-export function percentageVersusBundle(pct: number) {
-  const family = getDealValues().find((d) => d.coupon.id === 'cpn-family-bundle');
-  if (!family) return null;
-  const afterPct = round2(family.menuPrice * (1 - pct / 100));
-  return { menuPrice: family.menuPrice, afterPct, bundle: family.dealPrice };
 }

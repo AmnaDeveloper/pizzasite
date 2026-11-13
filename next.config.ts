@@ -103,6 +103,7 @@ const nextConfig: NextConfig = {
       { source: '/promo-codes', destination: '/coupons', statusCode: 301 },
       { source: '/near-me', destination: '/delivery-near-me', statusCode: 301 },
       { source: '/pizza-near-me', destination: '/delivery-near-me', statusCode: 301 },
+      { source: '/posts/pizza-rewards-program-explained', destination: '/rewards', statusCode: 301 },
       { source: '/opening-hours', destination: '/hours', statusCode: 301 },
       { source: '/store-hours', destination: '/hours', statusCode: 301 },
       { source: '/locator', destination: '/store-locator', statusCode: 301 },

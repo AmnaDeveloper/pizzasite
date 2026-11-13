@@ -32,8 +32,12 @@ import type { MenuCategory } from '@/data/types';
 import { authors } from '@/data/authors';
 import { coupons } from '@/data/coupons';
 import { BRAND, CURRENCY_SYMBOL, SITE_NAME } from '@/lib/site-config';
-import { currentMonthYear } from '@/lib/utils/date';
-import { priceSourceSentence, PRICE_ADJ } from '@/lib/price-source';
+import { monthYearOf } from '@/lib/utils/date';
+import { PAGE_DATES } from '@/lib/page-dates';
+import { priceSourceSentence, PRICE_ADJ, checkedDate } from '@/lib/price-source';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/'];
 
 const money = (n: number) => `${CURRENCY_SYMBOL}${n.toFixed(2)}`;
 
@@ -67,29 +71,29 @@ const HOME_FAQS = [
   {
     question: `What is the cheapest way to order ${BRAND.name}?`,
     answer:
-      'Collect it yourself. Carryout removes the delivery fee and the tip, and it unlocks flat-rate offers that do not exist in delivery mode. Together that is commonly eight to twelve dollars on a single-pizza order. The next biggest saving is ordering from a bundle rather than the standard menu, then dropping the drinks, which carry roughly double supermarket prices.',
+      'Collect it yourself. Carryout removes the delivery fee and the tip, and it unlocks flat-rate offers that do not exist in delivery mode. Together that is roughly thirteen to eighteen dollars on a large 1-topping pizza. The next biggest saving is ordering from a bundle rather than the standard menu, then dropping the drinks, which cost up to double what a supermarket charges.',
   },
   {
     question: `Which ${BRAND.name} pizza size is the best value?`,
     answer:
       smallRow && xlRow && largeRow
-        ? `The extra large. Using our cheese pizza prices (the large checked, the other sizes estimated), a 10-inch small works out at about ${smallRow.centsPerSqIn.toFixed(1)} cents per square inch, a 14-inch large at ${largeRow.centsPerSqIn.toFixed(1)} cents and a 16-inch extra large at ${xlRow.centsPerSqIn.toFixed(1)} cents — roughly ${SMALL_TO_XL_SAVING}% cheaper per bite than the small. Every step up the size ladder lowers the unit cost, so size up before adding a second pizza.`
+        ? `The extra large. Using our cheese pizza prices (the large checked, the other sizes estimated), a 10-inch small works out at about ${smallRow.centsPerSqIn.toFixed(1)} cents per square inch, a 14-inch large at ${largeRow.centsPerSqIn.toFixed(1)} cents and a 16-inch extra large at ${xlRow.centsPerSqIn.toFixed(1)} cents — roughly ${SMALL_TO_XL_SAVING}% cheaper per bite than the small. The extra large comes only in the thin, foldable New York Style crust. Every step up the size ladder lowers the unit cost, so size up before adding a second pizza.`
         : 'The biggest size you will actually finish. Every step up the size ladder lowers the price per square inch, so size up before adding a second pizza.',
   },
   {
     question: `Are ${BRAND.name} prices the same at every location?`,
     answer:
-      'No. Most stores are run by independent franchisees who set their own menu prices, hours, delivery zones and promotional participation. Two stores a few miles apart can charge different amounts for the same pizza and show different deals. That is why every price on this site is labelled as an example rather than a quotation.',
+      'No. Most stores are run by independent franchisees who set their own menu prices, hours, delivery zones and promotional participation. Two stores a few miles apart can charge different amounts for the same pizza and show different deals. That is why every price on this site is labeled either as checked at one named store or as an estimate.',
   },
   {
     question: 'Is carryout actually cheaper than delivery?',
     answer:
-      'Yes, and by more than most people expect. The gap is three separate charges pointing the same way: the delivery fee, the tip, and the higher price the pizza itself carries in delivery mode. On one large pizza that adds up to roughly nine dollars in our worked example. The saving shrinks in percentage terms on a large multi-item order.',
+      'Yes, and by more than most people expect. The gap is three separate charges pointing the same way: the delivery fee, the tip, and the carryout-only deal price you give up by choosing delivery. On a large 1-topping pizza that adds up to roughly thirteen to eighteen dollars. The saving shrinks in percentage terms on a large multi-item order.',
   },
   {
     question: `Do ${BRAND.name} coupon codes still work?`,
     answer:
-      'Typed codes have largely been replaced by deal tiles that apply automatically once your basket qualifies. Codes still exist for targeted and email promotions, but most of what circulates on coupon aggregator sites is expired. The reliable place to look is your own store deals page after entering your address, because franchisees opt into promotions individually.',
+      'Most everyday discounts now appear as deal tiles on the store deals page rather than as typed codes. Codes still exist for targeted and email promotions, but codes listed on coupon sites are often expired or tied to another store. The reliable place to look is your own store deals page after entering your address, because franchisees opt into promotions individually.',
   },
   {
     question: 'How many people does a large pizza feed?',
@@ -108,7 +112,7 @@ const HOME_FAQS = [
   {
     question: 'How often is the site updated?',
     answer:
-      'Prices are reviewed on a rolling schedule and every page carries a visible last-updated date. Deal structures change less often than the promotions built on top of them, which is why our guides explain the structures rather than chasing individual offers.',
+      'Every page shows the date its content last changed. Checked prices come from one check of a Columbus, Ohio store’s official online menu on 25 October 2026, and the date shown with them tells you how old they are. Deal structures change less often than the promotions built on top of them, which is why our guides explain the structures rather than chasing individual offers.',
   },
   {
     question: 'Do you make money from this site?',
@@ -126,14 +130,14 @@ const SAVING_STEPS = [
   {
     icon: Car,
     title: 'Switch to carryout before you build the order',
-    body: 'No delivery fee, no tip, and access to flat-rate carryout offers that never show in delivery mode. Commonly $8–12 off a single-pizza order.',
+    body: 'No delivery fee, no tip, and access to flat-rate carryout offers that never show in delivery mode. On a large 1-topping pizza that is roughly $13–18 less than having it delivered.',
     href: '/posts/carryout-vs-delivery-which-is-cheaper',
     link: 'Carryout vs delivery, worked out',
   },
   {
     icon: Layers,
     title: 'Start from a deal tile, not the menu',
-    body: 'Mix & Match and bundle prices only apply when you build from the deal. Starting from the menu charges per-topping rates the deal would have covered.',
+    body: 'Open the deals page first and build your order inside the deal you want. Building from the menu and hoping a deal applies afterwards is how people end up paying full menu price.',
     href: '/posts/mix-and-match-deal-explained',
     link: 'The Mix & Match deal explained',
   },
@@ -142,20 +146,20 @@ const SAVING_STEPS = [
     title: 'Size up before you add a second pizza',
     body: `A large is about ${MEDIUM_TO_LARGE_MORE_FOOD}% more pizza than a medium for a few dollars more. Adding a second medium costs a whole pizza.`,
     href: '/posts/large-vs-medium-pizza-value',
-    link: 'Large vs medium: the maths',
+    link: 'Large vs medium: the math',
   },
   {
     icon: ReceiptText,
     title: 'Drop the drinks and check the fees line',
-    body: 'Bottled drinks carry roughly double supermarket prices, and the delivery fee is not a tip — read the itemised total before you pay.',
+    body: 'Bottled drinks cost up to double what a supermarket charges, and the delivery fee is not a tip — read the itemised total before you pay.',
     href: '/posts/delivery-fee-vs-tip-what-goes-to-driver',
     link: 'Where the delivery fee goes',
   },
   {
     icon: Star,
     title: 'Sign in every time, even for carryout',
-    body: 'Loyalty points only attach to signed-in orders and are rarely added retroactively. Six qualifying orders is typically one free pizza.',
-    href: '/posts/pizza-rewards-program-explained',
+    body: 'Loyalty points are only earned on signed-in orders, so sign in before you pay. Six qualifying orders is typically one free pizza.',
+    href: '/rewards',
     link: 'What rewards points are worth',
   },
 ];
@@ -163,7 +167,7 @@ const SAVING_STEPS = [
 const JUMP_LINKS = [
   { href: '#prices', label: 'Price list' },
   { href: '#best-value', label: 'Best-value size' },
-  { href: '#menu-guide', label: 'Popular items' },
+  { href: '#menu-guide', label: 'Menu guide' },
   { href: '#pay-less', label: 'How to pay less' },
   { href: '#deals', label: 'Deal types' },
   { href: '#guides', label: 'Guides' },
@@ -176,7 +180,7 @@ const JUMP_LINKS = [
  * has to leave room for it — roughly 45 characters is the ceiling.
  */
 export const metadata: Metadata = generatePageSEO({
-  title: `${BRAND.name} Menu Prices & Coupons (${currentMonthYear()})`,
+  title: `${BRAND.name} Menu Prices & Coupons (${monthYearOf(PAGE_UPDATED)})`,
   description:
     `${BRAND.name} menu prices for every pizza size, sides, wings and drinks — plus ` +
     'which deals and sizes actually save you money. Independent guide.',
@@ -299,8 +303,8 @@ export default function HomePage() {
           <SectionHeading
             id="prices"
             eyebrow="Prices at a glance"
-            title={`${BRAND.name} menu prices for ${currentMonthYear()}`}
-            intro={priceSourceSentence()}
+            title={`${BRAND.name} menu prices for ${monthYearOf(PAGE_UPDATED)}`}
+            intro={`Checked prices come from one Columbus, Ohio store on ${checkedDate}; the rest are labelled estimates. Your store may differ.`}
           />
 
           {/* Key facts — the answer-first summary Google can lift as a snippet. */}
@@ -360,8 +364,8 @@ export default function HomePage() {
           </h3>
           <p className="mt-2.5 max-w-3xl text-[15px] leading-relaxed text-ink-muted">
             Sizes are 10″ small, 12″ medium, 14″ large and 16″
-            extra large. Calories are per slice of a large. Pan crust stops at large
-            because the pans come in fixed sizes.
+            extra large. Calories are per slice of a large, except Handmade Pan,
+            which is sold in medium only, so its figure is per slice of a medium.
           </p>
           <div className="mt-5">
             <MenuPriceTable
@@ -424,14 +428,15 @@ export default function HomePage() {
                   <p className="mt-2 text-[14px] leading-relaxed text-ink-muted">
                     Need more pizza? Size up first, and add a second pizza only once
                     you’ve run out of sizes — unless a deal prices two mediums close
-                    to one large, which flips the maths.
+                    to one large, which flips the math.
                   </p>
                 </div>
               </div>
             </div>
             <p className="mt-4 text-[13px] leading-relaxed text-ink-muted">
               Based on {PRICE_ADJ.toLowerCase()} {VALUE_ITEM.title.toLowerCase()} prices,
-              hand-tossed crust. Other pizzas follow the same pattern.
+              hand-tossed crust up to large; the 16″ extra large is sold as New York Style
+              only. Other pizzas follow the same pattern.
             </p>
           </div>
         </section>
@@ -441,8 +446,8 @@ export default function HomePage() {
       <MenuGuideSection
         items={popularItems}
         eyebrow="Menu & prices"
-        title={`Most-ordered ${BRAND.name} items and what they cost`}
-        intro="Prices by size, calories and allergens on every item — plus an honest note on whether it is worth ordering at menu price or only inside a deal."
+        title={`The core ${BRAND.name} menu and what it costs`}
+        intro="Prices by size and calories on every item — plus an honest note on whether it is worth ordering at menu price or only inside a deal."
         ctaHref="/menus-prices"
         ctaLabel={`All ${menuItems.length} items`}
         prioritiseFirstImage
@@ -502,7 +507,7 @@ export default function HomePage() {
             id="deals"
             eyebrow="Coupons & deals"
             title={`${BRAND.name} deal types worth knowing`}
-            intro="Promotions rotate constantly. The structures underneath them barely change from year to year, and once you can recognise which one you are looking at, judging it takes about ten seconds."
+            intro="Promotions rotate constantly. The structures underneath them barely change from year to year, and once you can recognize which one you are looking at, judging it takes about ten seconds."
             ctaHref="/coupons"
             ctaLabel={`All ${coupons.length} deal types`}
           />
@@ -609,7 +614,7 @@ export default function HomePage() {
                 The team
               </p>
               <p className="mt-2.5 text-[1.35rem] font-extrabold leading-tight tracking-tight text-navy-dark">
-                Who checks every price and guide
+                Who writes and checks the guides
               </p>
               <ul className="mt-6 space-y-4">
                 {authors.map((a) => (
@@ -693,7 +698,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <LastUpdated className="mt-6" />
+          <LastUpdated date={PAGE_UPDATED} className="mt-6" />
         </div>
       </section>
     </>

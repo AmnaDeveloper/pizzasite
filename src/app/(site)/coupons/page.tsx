@@ -6,12 +6,9 @@ import {
   Calculator,
   CalendarCheck,
   Gift,
-  House,
   Info,
   ListChecks,
   Mail,
-  PartyPopper,
-  Percent,
   Repeat,
   Search,
   ShieldCheck,
@@ -20,7 +17,6 @@ import {
   Store,
   Ticket,
   TriangleAlert,
-  Truck,
   User,
   Users,
 } from 'lucide-react';
@@ -34,17 +30,18 @@ import PriceNote from '@/components/PriceNote';
 import PriceTag from '@/components/PriceTag';
 import { absoluteUrl, generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
-import { getDealValues, percentageVersusBundle } from '@/lib/deal-values';
+import { getDealValues } from '@/lib/deal-values';
 import { authors } from '@/data/authors';
 import { coupons } from '@/data/coupons';
 import { BRAND, CURRENCY_SYMBOL, SITE_NAME, SITE_URL } from '@/lib/site-config';
-import { currentMonthYear, formatLongDate, toIsoDate } from '@/lib/utils/date';
+import { monthYearOf, formatLongDate, toIsoDate } from '@/lib/utils/date';
 import { getPost } from '@/lib/content';
 import type { Post } from '@/data/types';
+import { PAGE_DATES } from '@/lib/page-dates';
 import { PRICE_ADJ } from '@/lib/price-source';
 
-/** Date this page's content last genuinely changed — update it with the content. */
-const PAGE_UPDATED = '2026-11-05';
+/** Date this page's content last changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/coupons'];
 const PAGE_PUBLISHED = '2026-09-17';
 
 const money = (n: number) => `${CURRENCY_SYMBOL}${n.toFixed(2)}`;
@@ -62,9 +59,7 @@ const DEAL_VALUES = getDealValues();
 const byId = (id: string) => DEAL_VALUES.find((d) => d.coupon.id === id);
 const carryout = byId('cpn-carryout-deal');
 const mixMatch = byId('cpn-mix-match');
-const family = byId('cpn-family-bundle');
-const party = byId('cpn-group-order');
-const pctVsBundle = percentageVersusBundle(25);
+const combo = byId('cpn-perfect-combo');
 
 const SAVINGS: Record<string, CouponSaving> = Object.fromEntries(
   DEAL_VALUES.map((d) => [d.coupon.id, { saving: d.saving, savingPct: d.savingPct }]),
@@ -73,40 +68,28 @@ const SAVINGS: Record<string, CouponSaving> = Object.fromEntries(
 /** Situation → deal. The quick answer most searchers are actually after. */
 const BEST_BY_SITUATION = [
   {
-    situation: 'One or two people, you can collect',
+    situation: 'One or two people, you can pick up',
     couponId: 'cpn-carryout-deal',
     icon: User,
-    why: 'Lowest price per pizza, and no delivery fee or tip.',
+    why: 'Lowest price on a large pizza or 8 wings, and no delivery fee or tip.',
   },
   {
-    situation: 'Two people who want a pizza and something else',
+    situation: 'Two people who want different things',
     couponId: 'cpn-mix-match',
     icon: Users,
-    why: 'Each qualifying item drops to one flat price.',
+    why: 'Each qualifying item is $6.99, and it works for delivery too.',
   },
   {
-    situation: 'One pizza, delivered',
-    couponId: 'cpn-large-3-topping',
-    icon: Truck,
-    why: 'Fixed price on a large; fee and tip are still added.',
-  },
-  {
-    situation: 'Family of four to six',
-    couponId: 'cpn-family-bundle',
-    icon: House,
-    why: 'Two large pizzas, a side and a drink for one price.',
-  },
-  {
-    situation: 'Party of eight to twelve',
-    couponId: 'cpn-group-order',
-    icon: PartyPopper,
-    why: 'Lowest cost per person of any offer type.',
-  },
-  {
-    situation: 'Big order that no bundle fits',
-    couponId: 'cpn-online-only',
+    situation: 'Three or four people',
+    couponId: 'cpn-perfect-combo',
     icon: ShoppingBasket,
-    why: 'A percentage off grows with the basket.',
+    why: 'Two medium pizzas plus two sides for one price.',
+  },
+  {
+    situation: 'You order every few weeks',
+    couponId: 'cpn-loyalty-free',
+    icon: Gift,
+    why: 'Sign in each time and roughly every sixth order earns a free medium pizza.',
   },
 ];
 
@@ -117,12 +100,12 @@ const COUPON_FAQS = [
   },
   {
     question: `What is the ${BRAND.name} Mix & Match deal?`,
-    answer: `You pick two or more items from a qualifying list — a medium pizza, a pasta, a sandwich, a side — and each one drops to a flat price, around $6.99 each by our estimate. In our example, a chicken alfredo pasta ($8.49) and an Italian sandwich ($8.99) — both checked prices — cost ${mixMatch ? money(mixMatch.menuPrice) : '$17.48'} at menu price and about ${mixMatch ? money(mixMatch.dealPrice) : '$13.98'} on the deal. It only applies when every item is on the qualifying list.`,
+    answer: `You pick two or more items from a qualifying list — a medium pizza, a pasta, a sandwich, a side — and each one costs $6.99, the price reported in November 2026 (some stores charge more). In our example, a chicken alfredo pasta ($8.49) and an Italian sandwich ($8.99) — both checked prices — cost ${mixMatch ? money(mixMatch.menuPrice) : '$17.48'} at menu price and about ${mixMatch ? money(mixMatch.dealPrice) : '$13.98'} on the deal. It only applies when every item is on the qualifying list.`,
   },
   {
     question: `How do I get ${BRAND.name} coupons that actually work?`,
     answer:
-      'Enter your address on the official site or app and open the deals page for your store — that list is the only reliable source, because franchise stores opt into promotions individually. Then sign up for the email list and the rewards programme, which is where targeted codes are sent. Most codes on coupon aggregator sites are expired.',
+      'Enter your address on the official site or app and open the deals page for your store — that list is the only reliable source, because franchise stores opt into promotions individually. Then sign up for the email list and the rewards program, which is where targeted codes are sent. Codes on coupon aggregator sites are often expired.',
   },
   {
     question: `Why is my ${BRAND.name} coupon code not working?`,
@@ -131,12 +114,12 @@ const COUPON_FAQS = [
   },
   {
     question: `Which ${BRAND.name} deal saves the most money?`,
-    answer: `By percentage, the flat-rate carryout large — about ${carryout?.savingPct ?? 43}% off menu price in our example. By cost per person, the party pack — about ${party ? money(party.perPerson) : '$5.00'} a head for ten people. For a family of four to six, the two-pizza bundle works out at about ${family ? money(family.perPerson) : '$6.00'} per person.`,
+    answer: `Of the savings we can work out from checked prices, the $7.99 carryout large — about ${carryout?.savingPct ?? 43}% off the menu price of a large cheese pizza at the store we checked. For three or four people, the $19.99 Perfect Combo comes to about ${combo ? money(combo.perPerson) : '$5.00'} a head. Mix & Match can save more on a single item — about $8 on a medium 2-topping pizza at our estimated $14.99 menu price — but only a dollar or two on pasta or a sandwich, and it works for delivery.`,
   },
   {
     question: `Can I combine two ${BRAND.name} deals on one order?`,
     answer:
-      'Very rarely. A percentage discount and a bundle price compete, and the checkout keeps whichever is cheaper. The one reliable exception is a loyalty redemption, which comes off your account rather than out of the basket and therefore usually applies on top of a deal price.',
+      'Usually not — the checkout applies one deal price per item. Whether a Rewards redemption can go into the same order as a deal depends on the current terms, so check in the app before you build the order.',
   },
   {
     question: `Do ${BRAND.name} deals work for delivery?`,
@@ -146,7 +129,7 @@ const COUPON_FAQS = [
   {
     question: 'Are the deals on this page live promotional codes?',
     answer:
-      'No. This page explains the offer types that run again and again, with typical prices and worked savings. We deliberately do not list codes: live offers differ by store and change constantly, and the only reliable list is your own store’s deals page on the official site or app.',
+      'No. This page lists the four Domino’s US deals we could confirm in November 2026 — from the wording on Domino’s deals page and two regularly updated deal roundups — with worked savings. We have not tested the deal prices at a checkout, and we do not list codes: live offers differ by store, and the only reliable list is your own store’s deals page.',
   },
   {
     question: 'Why does a nationally advertised deal not appear at my store?',
@@ -156,7 +139,7 @@ const COUPON_FAQS = [
   {
     question: 'How do I get the most out of a flat-price deal?',
     answer:
-      'Put the most expensive qualifying item into the slot. A fixed price buys a plain cheese pizza or a fully loaded one equally, so choose the item that extracts the most from the price rather than the one you would normally order.',
+      'Put the most expensive qualifying item into the slot. The deal price is the same whichever qualifying item you pick, so choose the one with the highest menu price — and remember that extra toppings or upgrades can still add a charge.',
   },
 ];
 
@@ -170,16 +153,16 @@ const relatedPosts = RELATED_SLUGS.map((slug) => getPost(slug)).filter((p): p is
 const JUMP_LINKS = [
   { href: '#best-deal', label: 'Best deal by situation' },
   { href: '#deal-math', label: 'What each deal saves' },
-  { href: '#deal-types', label: 'All 12 deal types' },
+  { href: '#deal-types', label: 'The deals, explained' },
   { href: '#find-codes', label: 'Finding codes that work' },
   { href: '#how-to-read', label: 'Spotting a bad deal' },
   { href: '#faq', label: 'FAQ' },
 ];
 
-const TITLE = `${BRAND.name} Coupons & Deals (${currentMonthYear()})`;
+const TITLE = `${BRAND.name} Coupons & Deals (${monthYearOf(PAGE_UPDATED)})`;
 const DESCRIPTION =
-  `Which ${BRAND.name} deal saves the most? 12 deal types compared with worked savings — ` +
-  '$7.99 carryout, Mix & Match, bundles — and how to find codes that work.';
+  `Which ${BRAND.name} deal saves the most? The $7.99 carryout deal, Mix & Match and the ` +
+  '$19.99 Perfect Combo, worked out against real menu prices.';
 
 /*
  * Title is ~40 characters so the " | Slice & Save" suffix still fits inside
@@ -250,7 +233,7 @@ export default function CouponsPage() {
           <div>
             <p className="inline-flex items-center gap-2 rounded-full bg-brand px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.1em]">
               <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-white" />
-              Updated {currentMonthYear()}
+              Updated {monthYearOf(PAGE_UPDATED)}
             </p>
             <h1 className="mt-5 text-[2.35rem] font-black leading-[1.05] tracking-tight sm:text-[3.1rem]">
               {BRAND.name}{' '}
@@ -355,20 +338,20 @@ export default function CouponsPage() {
               value: `${carryout.savingPct}%`,
               label: 'off a large pizza on the carryout deal — the best single saving',
             },
-            family && {
-              icon: House,
-              value: money(family.perPerson),
-              label: 'per person on the family bundle, for four to six people',
+            mixMatch && {
+              icon: Users,
+              value: money(mixMatch.saving),
+              label: 'off a pasta and a sandwich on Mix & Match — and it works for delivery',
             },
-            party && {
-              icon: PartyPopper,
-              value: money(party.perPerson),
-              label: 'a head on the party pack — the cheapest way to feed ten',
+            combo && {
+              icon: ShoppingBasket,
+              value: money(combo.perPerson),
+              label: 'a head on the $19.99 Perfect Combo, for four people',
             },
             {
               icon: Ticket,
               value: String(coupons.length),
-              label: 'deal types explained, with who each one suits',
+              label: `${BRAND.name} deals we could confirm, explained`,
             },
           ]
             .filter((t): t is { icon: typeof Store; value: string; label: string } => Boolean(t))
@@ -502,7 +485,7 @@ export default function CouponsPage() {
                   <th scope="col" className="px-4 py-3.5 font-bold">Deal</th>
                   <th scope="col" className="px-4 py-3.5 font-bold">What’s in the basket</th>
                   <th scope="col" className="px-3 py-3.5 text-right font-bold">Menu price</th>
-                  <th scope="col" className="px-3 py-3.5 text-right font-bold">Deal price (est.)</th>
+                  <th scope="col" className="px-3 py-3.5 text-right font-bold">Deal price (reported)</th>
                   <th scope="col" className="px-3 py-3.5 text-right font-bold">You save</th>
                   <th scope="col" className="px-4 py-3.5 text-right font-bold">Per person</th>
                 </tr>
@@ -561,25 +544,19 @@ export default function CouponsPage() {
           </div>
 
           <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {pctVsBundle ? (
-              <div className="flex gap-4 rounded-card border border-line bg-surface p-5">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy-soft text-navy">
-                  <Percent className="h-5 w-5" aria-hidden="true" />
-                </span>
-                <div>
-                  <h3 className="text-[16px] font-extrabold text-ink">
-                    When does a percentage discount beat a bundle?
-                  </h3>
-                  <p className="mt-2 text-[14px] leading-relaxed text-ink-muted">
-                    Take the family basket: {money(pctVsBundle.menuPrice)} at menu price.
-                    With 25% off it comes to {money(pctVsBundle.afterPct)} — almost exactly
-                    the {money(pctVsBundle.bundle)} bundle. So on anything <em>bigger</em>{' '}
-                    than a family meal, or with specialty pizzas that carry a bundle
-                    surcharge, price it both ways: the percentage usually wins.
-                  </p>
-                </div>
+            <div className="flex gap-4 rounded-card border border-line bg-surface p-5">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy-soft text-navy">
+                <Store className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <div>
+                <h3 className="text-[16px] font-extrabold text-ink">Pizza or wings on the carryout deal?</h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-ink-muted">
+                  The same $7.99 saves {carryout ? money(carryout.saving) : '$6.00'} on a large
+                  pizza but only $3.00 on 8 wings ($10.99 at the store we checked). If you
+                  want both, put the pizza on the deal and pay menu price for the wings.
+                </p>
               </div>
-            ) : null}
+            </div>
             <div className="flex gap-4 rounded-card border border-line bg-surface p-5">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy-soft text-navy">
                 <Star className="h-5 w-5" aria-hidden="true" />
@@ -587,10 +564,10 @@ export default function CouponsPage() {
               <div>
                 <h3 className="text-[16px] font-extrabold text-ink">Put the dearest item in the slot</h3>
                 <p className="mt-2 text-[14px] leading-relaxed text-ink-muted">
-                  A flat-price deal charges the same for a plain cheese pizza as for a
-                  loaded one, and the same for a lava cake as for wings. The saving above
-                  assumes a sensible pick — choose the cheapest qualifying item and most of
-                  it disappears.
+                  A flat-price deal charges the same for every qualifying item, so use it on
+                  the dearer ones. On Mix & Match a sandwich ($8.99) saves more than a pasta
+                  ($8.49); 16 Bread Bites already cost $5.99 on the menu, so they are cheaper
+                  outside the deal.
                 </p>
               </div>
             </div>
@@ -605,12 +582,13 @@ export default function CouponsPage() {
           Every offer type
         </p>
         <h2 id="deal-types" className={`mt-2 ${SECTION_HEADING}`}>
-          All {coupons.length} {BRAND.name} deal types, explained
+          The {coupons.length} {BRAND.name} deals worth knowing
         </h2>
         <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
-          These are the offer structures that come back again and again, with typical
-          prices. Your store’s live versions will use one of these shapes — once you
-          recognise it, you know what it’s worth.
+          These are the Domino’s US deals we could confirm in November 2026, from the
+          wording on Domino’s deals page and two regularly updated deal roundups. We have
+          not tested the deal prices at a checkout, and your store may charge more or run
+          others.
         </p>
         <div className="mt-5 flex gap-3 rounded-card border border-navy/25 bg-navy-soft p-4">
           <Info className="mt-0.5 h-5 w-5 shrink-0 text-navy-dark" aria-hidden="true" />
@@ -643,7 +621,7 @@ export default function CouponsPage() {
               How to find {BRAND.name} coupon codes that actually work
             </h2>
             <p className="mt-3 text-[16px] leading-relaxed text-ink-muted">
-              Most codes on coupon sites are expired or tied to someone else’s account.
+              Codes on coupon sites are often expired or tied to someone else’s account.
               These five places are where working offers actually turn up, in the order
               worth checking.
             </p>
@@ -668,8 +646,8 @@ export default function CouponsPage() {
               },
               {
                 icon: Gift,
-                t: 'The rewards programme',
-                b: 'Points come from signed-in orders, carryout included. A free-pizza redemption usually stacks on top of a deal price — the one discount that does.',
+                t: 'The rewards program',
+                b: 'Points come from signed-in orders of $5 or more, carryout included. Check in the app whether a reward can go into the same order as a deal.',
                 link: { href: '/rewards', label: 'How the rewards points work' },
               },
               {
@@ -714,7 +692,7 @@ export default function CouponsPage() {
             How to tell a good deal from a bad one
           </h2>
           <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
-            Four warning signs, in rough order of how often they catch people out.
+            Four warning signs to check before you trust a headline price.
           </p>
           <ul className="mt-8 grid gap-4 md:grid-cols-2">
             {[
@@ -730,12 +708,12 @@ export default function CouponsPage() {
                 ),
               },
               {
-                t: 'Specialty items carry a surcharge inside it',
+                t: 'Upgrades can cost extra inside it',
                 b: (
                   <>
-                    Common on family packs. Four pizzas with a dollar-fifty surcharge each is
-                    six dollars off the advertised saving, and it is disclosed in small type
-                    at the point where you are already choosing pizzas.
+                    Bundle prices are usually built around a plain pizza. Extra toppings,
+                    a specialty pizza or a premium crust can add a charge that appears only
+                    once you are choosing — watch the total, not the tile.
                   </>
                 ),
               },
@@ -786,8 +764,7 @@ export default function CouponsPage() {
               <p className="mt-1.5 text-[15px] leading-relaxed text-white/85">
                 Build your basket, note the total, then rebuild the same food under a
                 different offer structure and note that total too. It takes about ninety
-                seconds and finds four or five dollars often enough to be worth doing every
-                single time.
+                seconds and can turn up a few dollars.
               </p>
             </div>
           </div>

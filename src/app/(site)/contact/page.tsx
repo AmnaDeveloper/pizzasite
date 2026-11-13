@@ -8,11 +8,15 @@ import FaqAccordion from '@/components/FaqAccordion';
 import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
+import { PAGE_DATES } from '@/lib/page-dates';
 import {
   BRAND,
   CONTACT_EMAIL,
   SITE_NAME,
 } from '@/lib/site-config';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/contact'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -32,7 +36,7 @@ const CONTACT_FAQS = [
   {
     question: 'I found a price that is wrong. What should I include?',
     answer:
-      'The city, the item, the size, and the price you actually saw. That is enough for us to check it against our sample and update the page if we are out of date.',
+      'The city, the item, the size, and the price you actually saw. That is enough for us to compare it with the price on the page and update it if we are out of date.',
   },
   {
     question: 'Do you accept guest posts or sponsored articles?',
@@ -54,7 +58,7 @@ const REASONS = [
   {
     icon: AlertTriangle,
     title: 'A price looks wrong',
-    body: 'The most useful message you can send us. Include the city, the item and the price you saw, and we will check it against our sample.',
+    body: 'The most useful message you can send us. Include the city, the item and the price you saw, and we will compare it with the price on our page.',
   },
   {
     icon: MessageSquare,
@@ -86,7 +90,7 @@ export default function ContactPage() {
             Real people read this inbox. Price corrections are the most useful thing you can
             send, and they are the fastest for us to act on.
           </p>
-          <LastUpdated className="mt-4" />
+          <LastUpdated date={PAGE_UPDATED} className="mt-4" />
         </header>
 
         <div className="mt-8 flex gap-3 rounded-card border border-brand/40 bg-brand-soft p-4">

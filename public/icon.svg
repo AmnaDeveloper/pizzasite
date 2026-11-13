@@ -1,8 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Slice and Save">
-  <rect width="64" height="64" rx="14" fill="#E31837"/>
-  <path d="M32 12 L52 50 H12 Z" fill="#FCE9EC"/>
-  <path d="M32 20 L45.5 46 H18.5 Z" fill="#006491"/>
-  <circle cx="32" cy="34" r="3.2" fill="#FCE9EC"/>
-  <circle cx="26" cy="41" r="2.6" fill="#FCE9EC"/>
-  <circle cx="38" cy="41" r="2.6" fill="#FCE9EC"/>
+  <rect width="64" height="64" rx="14" fill="#C2410C"/>
+  <path d="M9 19 Q32 6 55 19 L32 57 Z" fill="#F7D9A8"/>
+  <path d="M14.5 22.5 Q32 13 49.5 22.5 L32 51 Z" fill="#FFF6E3"/>
+  <circle cx="26" cy="25" r="4.2" fill="#C2410C"/>
+  <circle cx="38.5" cy="27.5" r="3.6" fill="#C2410C"/>
+  <circle cx="31" cy="37" r="3.4" fill="#C2410C"/>
+  <circle cx="35" cy="45" r="1.6" fill="#9A3412"/>
+  <circle cx="22" cy="31" r="1.4" fill="#9A3412"/>
 </svg>

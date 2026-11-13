@@ -5,7 +5,6 @@
 import {
   BRAND,
   CONTACT_EMAIL,
-  CURRENCY,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_URL,
@@ -13,7 +12,6 @@ import {
 } from '../site-config';
 import { absoluteUrl } from '../seo-config';
 import type { Author, Faq, MenuItem, Post } from '@/data/types';
-import { priceNoteText } from '../price-source';
 
 type Json = Record<string, unknown>;
 
@@ -138,13 +136,8 @@ export function menuItemSchema(item: MenuItem): Json {
       calories: `${item.calories} calories`,
       servingSize: item.caloriesNote,
     },
-    offers: item.sizes.map((s) => ({
-      '@type': 'Offer',
-      name: `${s.name} (${s.detail})`,
-      price: s.price.toFixed(2),
-      priceCurrency: item.currency || CURRENCY,
-      description: priceNoteText(),
-    })),
+    // No Offer markup: most prices here are estimates, and this site sells
+    // nothing. Offers would hand Google an estimate as a price we stand behind.
   };
 }
 
@@ -170,12 +163,6 @@ export function priceListSchema(opts: {
         '@type': 'MenuItem',
         name: item.name,
         url: absoluteUrl(item.path),
-        offers: {
-          '@type': 'Offer',
-          price: item.price.toFixed(2),
-          priceCurrency: CURRENCY,
-          description: 'Reference price, which varies by store. Verify at official checkout.',
-        },
       },
     })),
   };

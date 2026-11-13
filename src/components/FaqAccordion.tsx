@@ -12,7 +12,7 @@ import type { Faq } from '@/data/types';
  * aria-expanded rather than <details> so the open state is controllable and the
  * styling is identical across browsers.
  *
- * White on #006491 is 6.50:1 and on the #004E71 hover state 9.02:1, both well
+ * White on #1B5E3B is 7.75:1 and on the #134429 hover state 11.13:1, both well
  * clear of AA. The focus ring is forced to white because the site-wide navy
  * ring would sit invisibly on a navy bar.
  *

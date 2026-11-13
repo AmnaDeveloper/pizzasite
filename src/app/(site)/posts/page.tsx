@@ -9,7 +9,11 @@ import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, collectionPageSchema } from '@/lib/seo/schema';
 import { getAllPosts, getPostCategories } from '@/lib/content';
 import { authors } from '@/data/authors';
-import { currentMonthYear } from '@/lib/utils/date';
+import { PAGE_DATES } from '@/lib/page-dates';
+import { monthYearOf } from '@/lib/utils/date';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/posts'];
 
 /**
  * What each category is for. Written per category so the index page explains
@@ -21,7 +25,7 @@ const CATEGORY_INTRO: Record<string, string> = {
   Comparisons:
     'Two options side by side, with the arithmetic shown: carryout against delivery once the fee and tip are counted, a large against a medium by area rather than diameter, and what each crust really changes beyond the price.',
   Rewards:
-    'Loyalty schemes that count orders rather than dollars reward a different habit from the one most people have. This explains what the points are actually worth and how to collect them without spending more.',
+    'Loyalty schemes that count orders rather than dollars reward a different habit from the one most people have. This explains what the points are actually worth and how to pick them up without spending more.',
   Ordering:
     'The practical side of getting food to the door: ordering online without paying for extras by accident, what the delivery fee is and is not, how much to tip, planning for a group, late-night cut-offs and what the tracker is telling you.',
   'Menu Explained':
@@ -55,7 +59,7 @@ const CRUMBS = [
 ];
 
 export const metadata: Metadata = generatePageSEO({
-  title: `Pizza Money-Saving Guides (${currentMonthYear()})`,
+  title: `Pizza Money-Saving Guides (${monthYearOf(PAGE_UPDATED)})`,
   description:
     'In-depth guides on pizza prices, deals, crusts, nutrition, tipping and delivery — each one ' +
     'with the arithmetic shown, so you can check it yourself.',
@@ -109,7 +113,7 @@ export default function PostsIndexPage() {
             ))}
             .
           </p>
-          <LastUpdated className="mt-5" />
+          <LastUpdated date={PAGE_UPDATED} className="mt-5" />
         </div>
       </header>
 
@@ -192,7 +196,7 @@ export default function PostsIndexPage() {
           </p>
           <p>
             Prices quoted inside the guides are estimates, the same ones used across the
-            menu pages, and are labelled that way. When something in a guide turns out to be
+            menu pages, and are labeled that way. When something in a guide turns out to be
             wrong, we correct the page and change its date rather than leaving the old
             version up. If you spot a mistake, the{' '}
             <Link href="/contact">contact page</Link> reaches both editors.

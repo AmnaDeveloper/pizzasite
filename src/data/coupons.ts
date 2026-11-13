@@ -1,173 +1,74 @@
 import type { Coupon } from './types';
 
 /**
- * ILLUSTRATIVE DEALS ONLY.
+ * The Domino's US deals we could confirm, as of November 2026.
  *
- * These entries describe the *shapes* of offers that pizza chains run so
- * readers know what to look for. Prices are typical examples, not live
- * promotions. There are deliberately no promo codes here: a code that does
- * not work at checkout wastes the reader's time, so the page points them to
- * the official deals page for live offers instead.
+ * Source: the wording on Domino's own deals page (seen through search
+ * results) plus two regularly updated deal roundups — The Krazy Coupon Lady
+ * (updated 1 Nov 2026) and EatDrinkDeals (9 Oct 2026). Deal prices were NOT
+ * tested at a checkout, so the page labels them as reported prices.
+ *
+ * Only add a deal here when it can be confirmed the same way. This file used to
+ * hold "illustrative" deal shapes (family bundles, party packs, student and
+ * lunch discounts) that Domino's US does not run; on a page titled "Domino's
+ * coupons" that read as fact and was removed on 9 Nov 2026.
  */
 export const coupons: Coupon[] = [
   {
-    id: 'cpn-mix-match',
-    bestFor: 'Two people who want variety',
-    discount: '$6.99 each',
-    title: 'Mix & Match: pick any two menu items',
-    desc:
-      'The workhorse deal of the pizza world. Choose two or more qualifying items — a medium two-topping pizza, a pasta, a sandwich, a side — and each one drops to a flat price instead of its normal menu price.',
-    expiry: 'Ongoing offer type',
-    tags: ['bundle', 'best value', 'family'],
-    featured: true,
-    howTo:
-      'Add two or more qualifying items to your basket and the discount applies automatically at checkout. If it does not, one of your items is outside the qualifying list — swap it and watch the total update.',
-    type: 'Bundle',
-  },
-  {
     id: 'cpn-carryout-deal',
-    bestFor: 'One large pizza you can collect',
+    bestFor: 'One or two people who can pick up',
     discount: '$7.99',
-    title: 'Carryout large pizza, 1 topping',
+    title: 'Carryout deal: large 1-topping pizza or 8-piece wings',
     desc:
-      'A flat price on a large 1-topping pizza when you collect it yourself. Extra toppings cost more. Because there is no driver, no delivery fee and no tip involved, this is almost always the cheapest way to buy a single large pizza.',
-    expiry: 'Ongoing offer type',
-    tags: ['carryout', 'single pizza', 'cheapest'],
+      'A flat $7.99 at participating stores for a large 1-topping pizza, an 8-piece order of wings or boneless chicken, among the reported choices. Carryout only, and some stores charge more. Extra toppings cost extra. With no driver there is also no delivery fee and no tip.',
+    expiry: 'Reported as running in November 2026',
+    tags: ['carryout', 'single pizza', 'wings'],
     featured: true,
     howTo:
-      'Select carryout before you build your order, not after. Some sites keep you in delivery mode and the carryout-only price never appears.',
+      'Choose carryout before you build the order — carryout-only prices do not show in delivery mode. Domino’s fine print says you may need to ask for the offer.',
     type: 'Carryout',
   },
   {
-    id: 'cpn-large-3-topping',
-    bestFor: 'One pizza, delivered',
-    discount: '$9.99',
-    title: 'Large three-topping pizza, delivery included',
+    id: 'cpn-mix-match',
+    bestFor: 'Two people who want different things',
+    discount: '$6.99 each',
+    title: 'Mix & Match: two or more items at $6.99 each',
     desc:
-      'A middle-ground offer for people who want delivery but not a full bundle. You get a large pizza with up to three toppings at a fixed price; fees and tip are still added on top.',
-    expiry: 'Ongoing offer type',
-    tags: ['delivery', 'single pizza'],
-    howTo:
-      'Build the pizza from the deal tile rather than the main menu. Starting from the menu often charges per-topping rates the deal would have covered.',
-    type: 'Delivery',
-  },
-  {
-    id: 'cpn-family-bundle',
-    bestFor: 'Families of four to six',
-    discount: '$29.99',
-    title: 'Family bundle: two large pizzas plus two sides',
-    desc:
-      'Aimed at four to six people. Two large pizzas, a bread side and a 2-liter drink for one price. Works out cheapest per head when everyone will actually eat two or three slices.',
-    expiry: 'Ongoing offer type',
-    tags: ['family', 'bundle', 'group'],
+      'Pick two or more items from the qualifying list — a medium 2-topping pizza, pasta, an oven-baked sandwich, Stuffed Cheesy Bread and more — and each one costs $6.99. Some locations charge more. Reported to work for delivery and carryout at participating stores.',
+    expiry: 'Reported as running in November 2026',
+    tags: ['bundle', 'two items', 'delivery'],
     featured: true,
     howTo:
-      'Check whether specialty pizzas cost extra inside the bundle. On most bundles they carry a surcharge of a dollar or two per pizza.',
+      'Add two or more qualifying items and the price applies in the basket. If it does not, one item is outside the qualifying list — swap it and watch the total.',
+    type: 'Bundle',
+  },
+  {
+    id: 'cpn-perfect-combo',
+    bestFor: 'Three or four people',
+    discount: '$19.99',
+    title: 'Perfect Combo: two medium pizzas, bread bites and twists',
+    desc:
+      'Two medium 1-topping pizzas, 16-piece Parmesan Bread Bites and an 8-piece order of Cinnamon Twists for $19.99. Sources differ on whether a 2-liter drink is included, so check the tile at your store.',
+    expiry: 'Reported as running in November 2026',
+    tags: ['bundle', 'group', 'family'],
+    featured: true,
+    howTo:
+      'Start from the deal tile, not the menu, so the bundle price applies. Check whether your store adds a charge for extra toppings or a specialty crust.',
     type: 'Bundle',
   },
   {
     id: 'cpn-loyalty-free',
-    bestFor: 'Anyone ordering every few weeks',
+    bestFor: 'Anyone who orders every few weeks',
     discount: 'Free pizza',
-    title: 'Loyalty points: six qualifying orders, one free pizza',
+    title: 'Domino’s Rewards: points toward a free medium pizza',
     desc:
-      'Rewards schemes at pizza chains typically hand out points per qualifying order rather than per dollar spent. Hit the threshold and you redeem for a free medium pizza.',
-    expiry: 'Ongoing programme',
+      'Signed-in orders of $5 or more earn 10 points; 60 points can be redeemed for a free medium 2-topping pizza, so roughly every sixth order. Smaller rewards unlock at lower point totals.',
+    expiry: 'Ongoing program',
     tags: ['rewards', 'loyalty', 'free'],
+    featured: true,
     howTo:
-      'Order while signed in every single time, including carryout. Points do not attach to guest checkouts, and most schemes will not add them retroactively.',
+      'Sign in before you order, carryout included. Guest orders do not earn points.',
     type: 'Loyalty',
-  },
-  {
-    id: 'cpn-weekday-lunch',
-    bestFor: 'Weekday lunch orders',
-    discount: '20% off',
-    title: 'Weekday lunch discount, order before 3pm',
-    desc:
-      'Percentage-off offers that run in the quiet part of the day. Because they are percentage based rather than flat, they get better the larger your order is.',
-    expiry: 'Weekdays, typically 11am–3pm',
-    tags: ['lunch', 'percentage', 'weekday'],
-    howTo:
-      'The clock that matters is order placement, not delivery. Placing at 2:55pm normally still qualifies even if the food arrives at 3:20pm.',
-    type: 'National',
-  },
-  {
-    id: 'cpn-online-only',
-    bestFor: 'Large menu-priced orders',
-    discount: '25% off',
-    title: 'Online-only discount on menu-priced items',
-    desc:
-      'Chains push people to their own apps and websites because it is cheaper than taking a phone order. The reward is a percentage off items bought at full menu price.',
-    expiry: 'Ongoing offer type',
-    tags: ['online', 'percentage', 'app'],
-    howTo:
-      'These almost never stack with a bundle. Price your basket both ways — bundle price versus menu price minus the percentage — and keep the cheaper one.',
-    type: 'National',
-  },
-  {
-    id: 'cpn-sides-addon',
-    bestFor: 'Adding one side to a pizza',
-    discount: '$5.99 add-on',
-    title: 'Discounted side when you buy a pizza',
-    desc:
-      'An add-on rate on bread bites, wings or a dessert once a pizza is already in the basket. Cheaper than the standalone side, more expensive than skipping it.',
-    expiry: 'Ongoing offer type',
-    tags: ['sides', 'add-on'],
-    howTo:
-      'Add the pizza first. The add-on price usually only unlocks once the basket contains a qualifying main item.',
-    type: 'Bundle',
-  },
-  {
-    id: 'cpn-new-customer',
-    bestFor: 'Your first ever order',
-    discount: '$5 off first order',
-    title: 'First-order discount for new accounts',
-    desc:
-      'A one-time discount for creating an account. Small, but it applies on top of a normal menu price and takes about ninety seconds to claim.',
-    expiry: 'One use per new account',
-    tags: ['new customer', 'first order'],
-    howTo:
-      'Create the account before you build the basket. Signing in halfway through checkout sometimes clears the basket and loses the offer.',
-    type: 'National',
-  },
-  {
-    id: 'cpn-late-night',
-    bestFor: 'Orders after 9pm',
-    discount: '$8.99',
-    title: 'Late-night pizza and side combo',
-    desc:
-      'Runs at the end of trading, usually after 9pm, at stores that stay open late. Designed to keep the kitchen busy during the slow hours before close.',
-    expiry: 'Late evening, participating stores',
-    tags: ['late night', 'combo'],
-    howTo:
-      'Availability is store-by-store, not national. If it is not showing on your store page, the store near you is not running it.',
-    type: 'National',
-  },
-  {
-    id: 'cpn-student',
-    bestFor: 'Verified students',
-    discount: '15% off',
-    title: 'Student discount with verified account',
-    desc:
-      'Verified student pricing through a third-party verification service. Stacks poorly with bundles but works well on a normal menu-priced order.',
-    expiry: 'While enrolment verification is valid',
-    tags: ['student', 'percentage'],
-    howTo:
-      'Verification is separate from your pizza account and can take a day. Do it before the night you actually want to order.',
-    type: 'National',
-  },
-  {
-    id: 'cpn-group-order',
-    bestFor: 'Parties of eight to twelve',
-    discount: '$49.99',
-    title: 'Party pack: four pizzas plus sides',
-    desc:
-      'Volume pricing for eight to twelve people. The per-person cost is the lowest of any offer on this page, provided you actually have eight to twelve people.',
-    expiry: 'Ongoing offer type',
-    tags: ['group', 'party', 'bundle'],
-    howTo:
-      'Order large-format bundles at least ninety minutes ahead on a Friday or Saturday. Kitchens sequence big orders around smaller ones during a rush.',
-    type: 'Bundle',
   },
 ];
 

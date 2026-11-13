@@ -8,7 +8,11 @@ import AdSlot from '@/components/AdSlot';
 import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
+import { PAGE_DATES } from '@/lib/page-dates';
 import { BRAND, NOT_AFFILIATED_SHORT } from '@/lib/site-config';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/store-locator'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -27,14 +31,14 @@ const LOCATOR_FAQS = [
       'For delivery, generally not — the zone determines it. For carryout you can usually choose any store you are willing to drive to, which occasionally matters because deal availability differs store by store.',
   },
   {
-    question: 'My new address is not recognised. What now?',
+    question: 'My new address is not recognized. What now?',
     answer:
       'Zone maps are updated periodically and new streets can lag behind construction. Call the nearest store directly — staff can often serve an address the online checker has not yet picked up.',
   },
   {
     question: 'Can I get pizza delivered to a hotel or a park?',
     answer:
-      'A hotel, yes — give the street address and room number and expect to meet the driver in the lobby. A park or beach has no street address, so a normal delivery usually is not possible; some ordering apps offer fixed drop-off points instead, or you can use a nearby address and walk over.',
+      'A hotel, yes — give the street address and room number and expect to meet the driver in the lobby. A park or beach has no street address, so a normal delivery usually is not possible; Domino’s offers fixed drop-off points called Hotspots in some areas, or you can use a nearby address and walk over.',
   },
   {
     question: 'Why is my order coming from a store further away?',
@@ -52,7 +56,7 @@ export const metadata: Metadata = generatePageSEO({
   title: `How the ${BRAND.name} Store Locator Works`,
   description:
     'Why delivery zones follow driving routes, not distance; how your assigned store decides which ' +
-    'deals you see; and what to do when your address is not recognised.',
+    'deals you see; and what to do when your address is not recognized.',
   path: '/store-locator',
   keywords: [
     'pizza store locator',
@@ -65,7 +69,7 @@ export const metadata: Metadata = generatePageSEO({
 const TRICKY_ADDRESSES = [
   {
     title: 'Apartments and gated communities',
-    body: 'Put the building, unit number and gate code in the delivery instructions, not just the street address. If the entrance is round the back, say so — drivers lose most time at the gate, not on the road.',
+    body: 'Put the building, unit number and gate code in the delivery instructions, not just the street address. If the entrance is round the back, say so — a gate or a back entrance is where a delivery most easily goes wrong.',
   },
   {
     title: 'Campuses and dorms',
@@ -73,7 +77,7 @@ const TRICKY_ADDRESSES = [
   },
   {
     title: 'Hotels',
-    body: 'Give the hotel’s street address and your room number, and expect to meet the driver in the lobby — most hotels do not let delivery drivers go up to rooms.',
+    body: 'Give the hotel’s street address and your room number, and expect to meet the driver in the lobby — many hotels do not let delivery drivers go up to rooms.',
   },
   {
     title: 'Offices and business parks',
@@ -81,7 +85,7 @@ const TRICKY_ADDRESSES = [
   },
   {
     title: 'Parks, beaches and venues',
-    body: 'Places without a street address can’t take a normal delivery. Some ordering apps offer set drop-off points for these; otherwise, pick a nearby address you can walk to.',
+    body: 'Places without a street address can’t take a normal delivery. Domino’s offers set drop-off points it calls Hotspots in some areas; otherwise, pick a nearby address you can walk to.',
   },
   {
     title: 'Brand-new streets',
@@ -91,8 +95,8 @@ const TRICKY_ADDRESSES = [
 
 const STEPS = [
   {
-    title: 'Enter the full street address, not just a postcode',
-    body: 'Zone boundaries frequently run down the middle of a postcode. A postcode-level search returns a best guess; a full address returns the actual answer, including whether your street is delivery or carryout only.',
+    title: 'Enter the full street address, not just a ZIP code',
+    body: 'Zone boundaries frequently run down the middle of a ZIP code. A ZIP code-level search returns a best guess; a full address returns the actual answer, including whether your street is delivery or carryout only.',
   },
   {
     title: 'Set delivery or carryout before you look at anything else',
@@ -100,7 +104,7 @@ const STEPS = [
   },
   {
     title: 'Check whether more than one store serves you',
-    body: 'Uncommon in dense cities, quite common in suburbs. Where two stores overlap, their deal lists genuinely differ, so it is worth thirty seconds to compare before you build a basket.',
+    body: 'Uncommon in dense cities, quite common in suburbs. Where two stores overlap, their deal lists differ, so it is worth thirty seconds to compare before you build a basket.',
   },
   {
     title: 'Read the store page, not the national page',
@@ -127,7 +131,7 @@ export default function StoreLocatorPage() {
             delivery zone contains your address — and zones follow driving routes, not
             distance. That one distinction explains most of what confuses people about it.
           </p>
-          <LastUpdated className="mt-5" />
+          <LastUpdated date={PAGE_UPDATED} className="mt-5" />
         </div>
       </header>
 
@@ -156,11 +160,8 @@ export default function StoreLocatorPage() {
             time is shaped by geography rather than by geometry.
           </p>
           <p>
-            In San Diego, canyons split neighbourhoods that share a border. In Jacksonville,
-            the river does it — a store on the far bank may as well be in another city
-            because of how the bridges route traffic. In Los Angeles it is the freeways, in
-            Seattle the hills and the water, and in Atlanta the fact that everything depends
-            on a highway network that stops working at half past five.
+            A river with few bridges, a freeway with few crossings or a canyon between two
+            neighborhoods can put a store that is close on the map a long drive away.
           </p>
           <p>
             The result is zones that look odd on a map and make perfect sense from a
@@ -216,8 +217,8 @@ export default function StoreLocatorPage() {
           Ordering to a tricky address
         </h2>
         <p className="mt-3 text-[16px] leading-relaxed text-ink-muted">
-          Most failed or late deliveries are not the store’s fault — the driver simply
-          cannot find the door. These are the addresses that cause the most trouble, and
+          A delivery can reach the right street and still go wrong at the last step:
+          the gate, the building or the door. These are the addresses that cause the most trouble, and
           what to type so the order arrives.
         </p>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -242,7 +243,7 @@ export default function StoreLocatorPage() {
             <p>
               Delivery is locked to the store whose zone covers your address. Carryout is
               not — you can collect from any store you are willing to drive to. That opens
-              up a small but real saving that most people never use.
+              up a small saving that is easy to miss.
             </p>
             <p>
               Because each franchisee chooses its own promotions, the store near your office

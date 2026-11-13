@@ -12,6 +12,10 @@ import {
   SITE_URL,
 } from '@/lib/site-config';
 import { priceSourceSentence } from '@/lib/price-source';
+import { PAGE_DATES } from '@/lib/page-dates';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/terms'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -39,7 +43,7 @@ export default function TermsPage() {
         <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-ink">
           Terms of Use
         </h1>
-        <LastUpdated className="mt-4" />
+        <LastUpdated date={PAGE_UPDATED} className="mt-4" />
 
         <div className="prose-guide mt-8">
           <p>
@@ -62,7 +66,7 @@ export default function TermsPage() {
             account.
           </p>
 
-          <h2>2. Prices and other information are estimates</h2>
+          <h2>2. Prices and other information may differ from your store</h2>
           <p>
             {priceSourceSentence()} They are not offers, quotations or guarantees.
           </p>
@@ -74,10 +78,10 @@ export default function TermsPage() {
             information at official checkout before ordering.
           </p>
           <p>
-            Nutritional and allergen information on this site is general guidance. It is not
-            medical or dietary advice, and it must not be relied on by anyone with a food
-            allergy, coeliac disease or another medical condition. Confirm current allergen
-            information directly with the restaurant.
+            Calorie and ingredient information on this site is general guidance. We do not
+            list allergens. None of it is medical or dietary advice, and it must not be relied
+            on by anyone with a food allergy, celiac disease or another medical condition.
+            Confirm current allergen information directly with the restaurant.
           </p>
 
           <h2>3. Intellectual property</h2>

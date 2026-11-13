@@ -4,7 +4,7 @@
  * STRICT TWO-COLOUR PALETTE — mirrors COLORS in src/lib/site-config.ts.
  * Change both together.
  *
- * Only two hues exist on this site: red #e31837 and blue #006491. Everything
+ * Only two hues exist on this site: red #c2410c and blue #1b5e3b. Everything
  * below is a shade or tint of one of them, including the "neutrals" — ink,
  * ink-muted, line and surface-alt are all desaturated blues, so no third hue
  * ever reaches the page.
@@ -13,25 +13,25 @@
  * `text-ink`, `border-line` etc.
  */
 @theme {
-  /* Hue 1: red */
-  --color-brand: #e31837;
-  --color-brand-dark: #b31229;
-  --color-brand-soft: #fce9ec;
+  /* Hue 1: tomato orange */
+  --color-brand: #c2410c;
+  --color-brand-dark: #9a3412;
+  --color-brand-soft: #fff1e8;
 
-  /* Hue 2: blue */
-  --color-navy: #006491;
-  --color-navy-dark: #004e71;
-  --color-navy-soft: #e4f0f5;
+  /* Hue 2: basil green */
+  --color-navy: #1b5e3b;
+  --color-navy-dark: #134429;
+  --color-navy-soft: #e6f2ea;
 
   /* Neutrals, all derived from hue 2 */
-  --color-ink: #062f42;
-  --color-ink-muted: #446b7d;
-  --color-line: #d6e4eb;
+  --color-ink: #1c2b22;
+  --color-ink-muted: #4b5e52;
+  --color-line: #dde5df;
   --color-surface: #ffffff;
-  --color-surface-alt: #f2f7f9;
+  --color-surface-alt: #f4f7f5;
 
   /* Body copy inside articles — one step lighter than ink, same hue */
-  --color-prose: #123a4c;
+  --color-prose: #24372c;
 
   /* Body text: Arial. Headings: Poppins (loaded in app/layout.tsx). */
   --font-sans: Arial, Helvetica, ui-sans-serif, system-ui, sans-serif;

@@ -5,7 +5,14 @@ import LastUpdated from '@/components/LastUpdated';
 import JsonLd from '@/components/JsonLd';
 import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema } from '@/lib/seo/schema';
-import { CONTACT_EMAIL, SITE_NAME, SITE_URL } from '@/lib/site-config';
+import { PAGE_DATES } from '@/lib/page-dates';
+import { CLARITY_ID, CONTACT_EMAIL, GA4_ID, SITE_NAME, SITE_URL } from '@/lib/site-config';
+
+/** Only describe analytics tools that this build actually loads. */
+const HAS_ANALYTICS = Boolean(GA4_ID || CLARITY_ID);
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/privacy-policy'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -15,8 +22,8 @@ const CRUMBS = [
 export const metadata: Metadata = generatePageSEO({
   title: 'Privacy Policy',
   description:
-    `How ${SITE_NAME} handles personal information: what we collect, the advertising and ` +
-    'analytics cookies we use, your choices, and how to contact us.',
+    `How ${SITE_NAME} handles personal information: what we collect, the advertising ` +
+    'cookies used, your choices, and how to contact us.',
   path: '/privacy-policy',
 });
 
@@ -33,12 +40,12 @@ export default function PrivacyPolicyPage() {
         <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-ink">
           Privacy Policy
         </h1>
-        <LastUpdated className="mt-4" />
+        <LastUpdated date={PAGE_UPDATED} className="mt-4" />
 
         <div className="prose-guide mt-8">
           <p>
             This policy explains what personal information {SITE_NAME} collects when you
-            visit {SITE_URL}, why we collect it, who else receives it, and what choices you
+            visit {SITE_URL}, why we pick it up, who else receives it, and what choices you
             have. We have tried to write it in plain English rather than in the usual legal
             fog. If anything here is unclear, email us and we will explain it.
           </p>
@@ -54,8 +61,9 @@ export default function PrivacyPolicyPage() {
             <li>We do not sell your personal information.</li>
             <li>We do not require an account, and we do not run a newsletter.</li>
             <li>
-              We use Google to serve advertising and to measure traffic. Those services set
-              cookies and receive certain device and usage data.
+              {HAS_ANALYTICS
+                ? 'We use Google to serve advertising and to measure traffic. Those services set cookies and receive certain device and usage data.'
+                : 'We use Google to serve advertising. Google sets cookies and receives certain device and usage data.'}
             </li>
             <li>
               If you email us or use the contact form, we keep your message and your email
@@ -66,41 +74,43 @@ export default function PrivacyPolicyPage() {
           <h2>Information we collect</h2>
           <h3>Information you give us</h3>
           <p>
-            If you use our contact form we collect the name, email address, subject and
+            If you use our contact form we pick up the name, email address, subject and
             message you submit. We use it to reply to you and to correct our pages, and we
             keep it for as long as it is useful for that purpose. We do not add contact-form
             addresses to any mailing list, because we do not operate one.
           </p>
           <h3>Information collected automatically</h3>
           <p>
-            Like almost every website, we and our service providers collect technical
-            information when you visit: your IP address, browser type and version, operating
-            system, device type, screen size, the pages you view, how long you spend on
-            them, and the site or search that referred you.
+            Like almost every website, our hosting and security providers receive technical
+            information when you visit, such as your IP address, browser type, the page you
+            requested and the site that referred you, and may keep it in server logs.
+            Google, as our advertising provider, collects device and usage data through its
+            own cookies, described below.
           </p>
           <p>
-            We use this to understand which guides are useful, to find broken pages, and to
-            make sure the site works on the devices people actually use.
+            We use server information to keep the site secure, find broken pages and make
+            sure the site works on the devices people actually use.
           </p>
 
           <h2>Cookies and similar technologies</h2>
           <p>
             A cookie is a small text file stored on your device by your browser. This site
-            uses three categories:
+            does not set cookies of its own. Cookies on this site come from the services we use:
           </p>
           <ul>
             <li>
-              <strong>Strictly necessary.</strong> Required for the site to function and to
-              remember choices you make, such as dismissing a notice. These cannot be
-              switched off without breaking the site.
+              <strong>Security.</strong> Our hosting and security provider may set a
+              short-lived cookie to protect the site against automated abuse.
             </li>
-            <li>
-              <strong>Analytics.</strong> Used to count visits and understand how pages are
-              used, in aggregate.
-            </li>
+            {HAS_ANALYTICS ? (
+              <li>
+                <strong>Analytics.</strong> Used to count visits and understand how pages
+                are used, in aggregate.
+              </li>
+            ) : null}
             <li>
               <strong>Advertising.</strong> Used by Google and its partners to select and
-              measure the adverts you see.
+              measure the ads you see.
             </li>
           </ul>
           <p>
@@ -116,25 +126,25 @@ export default function PrivacyPolicyPage() {
           </p>
           <ul>
             <li>
-              Google, as a third-party vendor, uses cookies to serve adverts on this site.
+              Google, as a third-party vendor, uses cookies to serve ads on this site.
             </li>
             <li>
               Google’s use of advertising cookies enables it and its partners to serve
-              adverts to you based on your visits to this site and other sites on the
+              ads to you based on your visits to this site and other sites on the
               internet.
             </li>
             <li>
-              Third-party vendors and ad networks other than Google may also serve adverts
+              Third-party vendors and ad networks other than Google may also serve ads
               on this site and may use their own cookies to do so.
             </li>
             <li>
-              These cookies may be used for ad personalisation, frequency capping (so you
-              are not shown the same advert repeatedly), and measuring whether an advert was
+              These cookies may be used for ad personalization, frequency capping (so you
+              are not shown the same ad repeatedly), and measuring whether an ad was
               seen or clicked.
             </li>
           </ul>
           <p>
-            <strong>Your choices.</strong> You can opt out of personalised advertising by
+            <strong>Your choices.</strong> You can opt out of personalized advertising by
             Google by visiting{' '}
             <a
               href="https://adssettings.google.com"
@@ -143,7 +153,7 @@ export default function PrivacyPolicyPage() {
             >
               Google Ads Settings
             </a>
-            . You can opt out of personalised advertising from many other vendors at{' '}
+            . You can opt out of personalized advertising from many other vendors at{' '}
             <a
               href="https://optout.aboutads.info"
               rel="noopener noreferrer nofollow"
@@ -159,33 +169,46 @@ export default function PrivacyPolicyPage() {
             >
               the Network Advertising Initiative
             </a>
-            . Opting out does not remove advertising — it makes the adverts you see less
+            . Opting out does not remove advertising — it makes the ads you see less
             targeted.
           </p>
           <p>
             Visitors in the European Economic Area, the United Kingdom and Switzerland are
-            shown a consent notice before non-essential cookies are set, and can change
-            their choice at any time.
+            asked for consent through Google’s consent message before personalized ads are
+            shown, and can change their choice at any time.
           </p>
 
           <h2>Analytics</h2>
-          <p>
-            We use Google Analytics 4 to measure traffic in aggregate, with IP anonymisation
-            enabled. We may also use Microsoft Clarity to understand how pages are used —
-            for example, which parts of a long guide people actually read. These services
-            set their own cookies and process data under their own privacy policies.
-          </p>
-          <p>
-            You can prevent Google Analytics from collecting data by installing{' '}
-            <a
-              href="https://tools.google.com/dlpage/gaoptout"
-              rel="noopener noreferrer nofollow"
-              target="_blank"
-            >
-              Google’s opt-out browser add-on
-            </a>
-            .
-          </p>
+          {HAS_ANALYTICS ? (
+            <p>
+              {GA4_ID
+                ? 'We use Google Analytics 4 to measure traffic in aggregate, with IP anonymization enabled. '
+                : ''}
+              {CLARITY_ID
+                ? 'We use Microsoft Clarity to understand how pages are used — for example, which parts of a long guide people actually read. '
+                : ''}
+              These services set their own cookies and process data under their own privacy
+              policies.
+            </p>
+          ) : (
+            <p>
+              We do not currently run an analytics tool on this site. If we add one, we will
+              name it here before it goes live.
+            </p>
+          )}
+          {GA4_ID ? (
+            <p>
+              You can prevent Google Analytics from collecting data by installing{' '}
+              <a
+                href="https://tools.google.com/dlpage/gaoptout"
+                rel="noopener noreferrer nofollow"
+                target="_blank"
+              >
+                Google’s opt-out browser add-on
+              </a>
+              .
+            </p>
+          ) : null}
 
           <h2>Who we share information with</h2>
           <p>
@@ -194,8 +217,8 @@ export default function PrivacyPolicyPage() {
           </p>
           <ul>
             <li>
-              <strong>Service providers</strong> who host the site, serve advertising,
-              measure traffic and deliver our email. They may only process data to provide
+              <strong>Service providers</strong> who host and protect the site, serve
+              advertising{HAS_ANALYTICS ? ', measure traffic' : ''} and deliver our email. They may only process data to provide
               those services.
             </li>
             <li>
@@ -207,8 +230,9 @@ export default function PrivacyPolicyPage() {
           <h2>How long we keep information</h2>
           <p>
             Contact-form messages are kept for as long as they are useful for handling your
-            enquiry and any follow-up, and are then deleted. Analytics data is retained
-            according to the provider’s standard retention settings. Advertising cookie
+            enquiry and any follow-up, and are then deleted.
+            {HAS_ANALYTICS ? ' Analytics data is retained according to the provider’s standard retention settings.' : ''}{' '}
+            Advertising cookie
             lifetimes are set by the vendor and are listed in our{' '}
             <Link href="/cookies">Cookie Policy</Link>.
           </p>
@@ -243,10 +267,10 @@ export default function PrivacyPolicyPage() {
 
           <h2>International visitors</h2>
           <p>
-            We are based in the United States and information collected through this site is
-            processed there. If you access the site from outside the United States, you
-            understand that your information may be transferred to and processed in a
-            country whose data protection laws differ from those in your own.
+            This site is written for readers in the United States. Our hosting, security and
+            advertising providers operate internationally, so information collected through
+            the site may be processed in the United States and in other countries whose data
+            protection laws differ from those where you live.
           </p>
 
           <h2>Security</h2>

@@ -15,8 +15,12 @@ import verifiedPrices from '../../../../data/verified-prices-2026-10-25.json';
 import PriceTag from '@/components/PriceTag';
 import { getAllMenuItems, getMenuCategories, lowestMenuPrice } from '@/lib/content';
 import { BRAND, CURRENCY_SYMBOL } from '@/lib/site-config';
-import { currentMonthYear } from '@/lib/utils/date';
+import { monthYearOf } from '@/lib/utils/date';
+import { PAGE_DATES } from '@/lib/page-dates';
 import { priceSourceSentence } from '@/lib/price-source';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/menus-prices'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -47,10 +51,10 @@ const MENU_FAQS = [
 ];
 
 export const metadata: Metadata = generatePageSEO({
-  title: `${BRAND.name} Menu Prices (${currentMonthYear()})`,
+  title: `${BRAND.name} Menu Prices (${monthYearOf(PAGE_UPDATED)})`,
   description:
     `${BRAND.name} menu prices checked at a real store: pizzas by size, sides, wings, pasta, ` +
-    `desserts and drinks, with calories and allergens. From ${CURRENCY_SYMBOL}${lowestMenuPrice().toFixed(2)}.`,
+    `desserts and drinks, with calories. From ${CURRENCY_SYMBOL}${lowestMenuPrice().toFixed(2)}.`,
   path: '/menus-prices',
   keywords: [
     'dominos menu prices',
@@ -78,17 +82,17 @@ const ALSO_ON_MENU = (verifiedPrices.items as { section: string; name: string; s
 /** A short buying guide per menu section — what is worth it and what fits a deal. */
 const SECTION_GUIDE: Record<string, string> = {
   'Specialty Pizza':
-    'Every large specialty pizza we checked cost the same $19.99, whether it carried four toppings or nine — so the most heavily topped ones are the best value if you like what is on them. They are also the pizzas that get the most out of a flat-price carryout deal, because the deal price does not rise with the toppings.',
+    'Every large specialty pizza we checked cost the same $19.99, whether it carried four toppings or nine — so the most heavily topped ones are the best value if you like what is on them. They are not covered by the $7.99 carryout deal, which is for a 1-topping pizza.',
   'Build Your Own':
     'A large hand-tossed cheese pizza was $13.99 in our check; each topping adds a charge we have not checked yet. One or two toppings: build your own. Four or more: the $19.99 specialty pizzas usually win. Hand tossed stops at large, and Handmade Pan is made as a 12-inch medium only.',
   Sides:
-    'Bread sides are made from the same dough as the pizza, so they are cheap to make and turn up in almost every bundle. Sixteen Bread Bites for $5.99 cover about four people alongside pizza; Stuffed Cheesy Bread is $8.49 and comes with a dip.',
+    'Bread sides are made from the same dough as the pizza, so they are cheap to make and turn up in bundles such as the Perfect Combo. Sixteen Bread Bites for $5.99 cover about four people alongside pizza; Stuffed Cheesy Bread is $8.49 and came with a marinara cup in our check.',
   Chicken:
     'The most expensive way to feed a group — eight wings were $10.99, and part of what you pay for is bone. Loaded Chicken gives eight boneless pieces for $8.99. Plan on about four pieces each as a side.',
   'Pasta & Sandwiches':
-    'One adult portion each: pastas $8.49 and sandwiches $8.99 in our check, whichever filling you choose. At menu price they are modest value; as a qualifying item in a two-for deal they are among the best picks on the menu.',
+    'One adult portion each: pastas $8.49 and sandwiches $8.99 in our check, whichever filling you choose. At menu price they are modest value; as Mix & Match items at $6.99 they save $1.50–2.00 each, more than a side does.',
   Desserts:
-    'Small add-ons that are better collected than delivered — a lava cake loses its molten centre as it cools. Sixteen Cinnamon Bread Bites ($5.99) stretch further across a group than the three-cake Lava Cake Flight ($9.99).',
+    'Small add-ons that are better collected than delivered — a lava cake loses its molten center as it cools. Sixteen Cinnamon Bread Bites ($5.99) stretch further across a group than the three-cake Lava Cake Flight ($9.99).',
   Drinks:
     'The easiest line to cut. A 2-liter was $4.49 and a 20-ounce bottle $3.49 in our check — well above supermarket prices — so buying drinks separately trims a family order without anyone eating less.',
 };
@@ -122,16 +126,16 @@ export default function MenuIndexPage() {
       <header className="border-b border-line bg-surface-alt">
         <div className="mx-auto max-w-6xl px-4 py-10">
           <h1 className="max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-ink sm:text-[2.75rem]">
-            {BRAND.name} menu prices — every item, with sizes and calories
+            {BRAND.name} menu prices — 20 core items, with sizes and calories
           </h1>
           <p className="mt-4 max-w-2xl text-[17px] leading-relaxed text-ink-muted">
             {items.length} items priced across {categories.length} sections. Each one has a
-            size ladder, an estimated price, calorie information, the full ingredient and
-            allergen list, and our note on whether it is worth ordering at menu price or
+            price by size (checked or estimated), calorie information, the main
+            ingredients, and our note on whether it is worth ordering at menu price or
             only inside a deal.
           </p>
           <div className="mt-5 flex flex-wrap items-center gap-4">
-            <LastUpdated />
+            <LastUpdated date={PAGE_UPDATED} />
             <Link
               href="/coupons"
               className="inline-flex items-center gap-1.5 text-sm font-bold text-navy hover:text-brand"
@@ -207,15 +211,23 @@ export default function MenuIndexPage() {
             ) : null}
             {inCategory.length > 1 ? (() => {
               const cheapest = [...inCategory].sort((a, b) => a.price - b.price)[0];
+              const tied = inCategory.filter((i) => i.price === cheapest.price).length > 1;
               const prices = inCategory.flatMap((i) => i.sizes.map((sz) => sz.price));
               return (
                 <p className="mt-2 text-[14px] text-ink-muted">
-                  Cheapest here:{' '}
-                  <Link href={`/menus-prices/${cheapest.slug}`} className="font-semibold text-navy hover:underline">
-                    {cheapest.title}
-                  </Link>{' '}
-                  from {CURRENCY_SYMBOL}
-                  {cheapest.price.toFixed(2)}. Prices in this section run {CURRENCY_SYMBOL}
+                  {tied ? (
+                    <>Several items here start at the same {CURRENCY_SYMBOL}{cheapest.price.toFixed(2)}. </>
+                  ) : (
+                    <>
+                      Cheapest here:{' '}
+                      <Link href={`/menus-prices/${cheapest.slug}`} className="font-semibold text-navy hover:underline">
+                        {cheapest.title}
+                      </Link>{' '}
+                      from {CURRENCY_SYMBOL}
+                      {cheapest.price.toFixed(2)}.{' '}
+                    </>
+                  )}
+                  Prices in this section run {CURRENCY_SYMBOL}
                   {Math.min(...prices).toFixed(2)}–{CURRENCY_SYMBOL}
                   {Math.max(...prices).toFixed(2)} across all sizes.
                 </p>

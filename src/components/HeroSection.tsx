@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { PAGE_DATES } from '@/lib/page-dates';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { coupons } from '@/data/coupons';
@@ -7,7 +8,7 @@ import { BRAND, CURRENCY_SYMBOL } from '@/lib/site-config';
 import { currentYear, formatLongDate } from '@/lib/utils/date';
 
 /** Date the homepage figures were last checked. Update it with the content. */
-const HOME_UPDATED = '2026-10-29';
+const HOME_UPDATED = PAGE_DATES['/'];
 
 const money = (n: number) => `${CURRENCY_SYMBOL}${n.toFixed(2)}`;
 
@@ -16,9 +17,9 @@ const money = (n: number) => `${CURRENCY_SYMBOL}${n.toFixed(2)}`;
  * paragraph, two calls to action and three headline stats on the left; a
  * framed food photo with a checked price pinned to it on the right.
  *
- * Colours stay inside the site's two-hue palette: navy background, brand red
- * accents, and the red tint (brand-soft) for the sub-headline. Contrast on
- * navy: white 6.50:1, brand-soft 5.9:1, white/80 4.77:1.
+ * Colors stay inside the site's two-hue palette: navy background, brand red
+ * accents, and the orange tint (brand-soft) for the sub-headline. Contrast on
+ * navy: white 7.75:1, brand-soft 7.01:1, white/80 5.62:1.
  */
 export default function HeroSection() {
   const year = currentYear();
@@ -44,7 +45,7 @@ export default function HeroSection() {
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
         <div>
           <ul className="flex flex-wrap gap-2" aria-label="Highlights">
-            {[`${year} prices`, 'Photos', 'Deals'].map((badge) => (
+            {[`${year} prices`, 'Calories', 'Deals'].map((badge) => (
               <li
                 key={badge}
                 className="bg-brand px-3 py-1.5 text-[12px] font-extrabold uppercase tracking-[0.12em] text-white"
@@ -63,10 +64,9 @@ export default function HeroSection() {
           </p>
 
           <p className="mt-6 max-w-xl text-[17px] leading-relaxed text-white/85">
-            Every {BRAND.name} menu item with prices checked at a real store — estimates
-            where we have not checked yet — the deal types
-            that actually lower your total, food photos and ordering tips
-            {largeCheese ? ` — a large cheese pizza was ${money(largeCheese)} at the Columbus, Ohio store we checked` : ''}.
+            Prices for 20 core {BRAND.name} menu items, checked at a real store or clearly
+            marked as estimates, plus the deal types that actually lower your total.
+            {largeCheese ? ` A large cheese pizza was ${money(largeCheese)} at the Columbus, Ohio store we checked.` : ''}
             Page updated {formatLongDate(HOME_UPDATED)}.
           </p>
 

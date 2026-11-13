@@ -39,7 +39,7 @@ export function refSize(item: MenuItem) {
   );
 }
 
-/** True when every option of an item shares one price (wing flavours, soda flavours). */
+/** True when every option of an item shares one price (wing flavors, soda flavors). */
 export function singlePrice(item: MenuItem): boolean {
   return item.sizes.every((s) => s.price === item.sizes[0].price && Boolean(s.verified) === Boolean(item.sizes[0].verified));
 }
@@ -76,13 +76,14 @@ export function isPlural(item: MenuItem): boolean {
   return /s$/i.test(item.title);
 }
 
-const lowerFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);
+/** Lower-cases the first word only when it is an ordinary word, so brand names (Dasani, Hot Buffalo) keep their capitals. */
+export const lowerFirst = (s: string) =>
+  /^(Per|For|Estimated|About|Each|Single|One|Two|Four|Eight|The|A|An)\b/.test(s) ? s.charAt(0).toLowerCase() + s.slice(1) : s;
 
 /** Short, readable deal names for running text. */
 const DEAL_LABEL: Record<string, string> = {
   'cpn-carryout-deal': 'carryout deal',
   'cpn-mix-match': 'Mix & Match deal',
-  'cpn-sides-addon': 'add-on side deal',
 };
 
 /** One-paragraph answer to "how much is a Domino's <item>?" — the snippet target. */
@@ -102,7 +103,7 @@ export function quickAnswer(item: MenuItem): string {
           .map((o) => `${money(o.price)} for a ${DIAMETER[o.name]}-inch ${o.name.toLowerCase()}`)
           .join(', ')}.`
       : '';
-    const deal = route ? ` A flat-rate carryout deal, where your store runs one, is about ${money(route.dealPrice)} by our estimate.` : '';
+    const deal = route ? ` On the ${route.dealLabel}, where your store runs it, the reported price is ${money(route.dealPrice)}.` : '';
     return lead + range + deal;
   }
   const plural = isPlural(item);
@@ -132,8 +133,8 @@ export type CheapestRoute = {
 /**
  * The deal type that most often beats menu price for this kind of item.
  * Pizzas: the flat-rate carryout large, which covers one topping, so it is not
- * offered as a route to the specialty pizzas. Pasta/sandwiches:
- * Mix & Match. Sides, chicken and desserts: the add-on side. Drinks: none.
+ * offered as a route to the specialty pizzas. Pasta, sandwiches and Stuffed
+ * Cheesy Bread: Mix & Match. Wings: the carryout deal. Everything else: none.
  */
 export function cheapestRoute(item: MenuItem): CheapestRoute | null {
   const pick = (couponId: string, sizeName: string, how: string, dealPrice?: number) => {
@@ -172,11 +173,21 @@ export function cheapestRoute(item: MenuItem): CheapestRoute | null {
       'Add a second qualifying item — a medium pizza, another pasta or a side — and both drop to the flat Mix & Match price.',
     );
   }
-  if (item.category === 'Sides' || item.category === 'Chicken' || item.category === 'Desserts') {
+  // Only routes a confirmed deal covers. Wings are one of the reported
+  // carryout-deal choices; Stuffed Cheesy Bread is on the Mix & Match list.
+  // Nothing is claimed for items no confirmed deal names.
+  if (item.slug === 'chicken-wings') {
     return pick(
-      'cpn-sides-addon',
+      'cpn-carryout-deal',
       item.sizes[0].name,
-      'Add a pizza to the basket first; the add-on price only unlocks once a qualifying main item is in it.',
+      'Choose carryout before you build the order; an 8-piece wings order is one of the reported choices on the $7.99 carryout deal.',
+    );
+  }
+  if (item.slug === 'stuffed-cheesy-bread') {
+    return pick(
+      'cpn-mix-match',
+      item.sizes[0].name,
+      'Add a second qualifying item — a medium pizza, a pasta or a sandwich — and both drop to the Mix & Match price.',
     );
   }
   return null;
@@ -224,7 +235,7 @@ export function generatedFaqs(item: MenuItem): Faq[] {
       question: `How much is a ${ref.name.toLowerCase()} ${name} at ${BRAND.name}?`,
       answer: `${ref.verified ? '' : 'About '}${money(ref.price)} at menu price for a ${DIAMETER[ref.name]}-inch ${ref.name.toLowerCase()}, ${priceBasis(ref.verified)}. ${
         route
-          ? `A flat-rate carryout deal, where your store runs one, is about ${money(route.dealPrice)} by our estimate.`
+          ? `On the ${route.dealLabel}, where your store runs it, the reported price is ${money(route.dealPrice)}.`
           : ''
       } Franchise stores set their own prices, so confirm the total at checkout.`.replace(/\s+/g, ' '),
     });
@@ -243,7 +254,9 @@ export function generatedFaqs(item: MenuItem): Faq[] {
       question: `How many calories are in a ${BRAND.name} ${name}?`,
       answer: `About ${item.calories} calories per slice${
         whole ? `, or roughly ${whole.toLocaleString('en-US')} for a whole large` : ''
-      }. ${item.caloriesNote} Crust choice changes the number more than anything else — thin crust is lighter, pan crust heavier. Treat these as estimates and check the official nutrition calculator.`,
+      }. ${item.caloriesNote}${
+        isBuildYourOwn(item) ? ' Each topping adds to that, and the crust matters most: thin is the lightest base, pan the heaviest.' : ''
+      }`,
     });
   } else {
     const plural = isPlural(item);
@@ -251,12 +264,12 @@ export function generatedFaqs(item: MenuItem): Faq[] {
     faqs.push({
       question: `How much ${plural ? 'are' : 'is'} ${subject}?`,
       answer: `${quickAnswer(item)} ${
-        route ? `On the ${route.dealLabel}, where a store offers it, ${plural ? 'they are' : 'it is'} about ${money(route.dealPrice)} by our estimate.` : ''
-      } Prices vary by store, so check the total at checkout.`.replace(/\s+/g, ' ').trim(),
+        route ? `On the ${route.dealLabel}, where a store offers it, the reported price is ${money(route.dealPrice)}.` : ''
+      }`.replace(/\s+/g, ' ').trim(),
     });
     faqs.push({
       question: `How many calories are in ${subject}?`,
-      answer: `About ${item.calories} calories — ${lowerFirst(item.caloriesNote).replace(/\.$/, '')}. Check the official nutrition calculator for your exact order.`,
+      answer: `${item.calories === 0 ? item.caloriesNote.replace(/\.$/, '') : `About ${item.calories} calories — ${lowerFirst(item.caloriesNote).replace(/\.$/, '')}`}. Check the official nutrition calculator for your exact order.`,
     });
   }
   return faqs;
@@ -324,9 +337,23 @@ export function impliedToppingPrices(): { size: string; price: number }[] {
   });
 }
 
+/**
+ * The crust pages (hand tossed, thin, pan) are the build-your-own pages. The
+ * classic cheese pizza is the plain baseline and gets its own, simpler page —
+ * giving it the topping and crust sections too made it a near-copy of the
+ * hand-tossed page.
+ */
 export function isBuildYourOwn(item: MenuItem): boolean {
-  return item.category === 'Build Your Own' && isPizza(item);
+  return (
+    item.category === 'Build Your Own' &&
+    isPizza(item) &&
+    item.slug !== 'classic-cheese-pizza' &&
+    item.slug !== 'pepperoni-pizza'
+  );
 }
+
+/** The one page that carries the full specialty-vs-build comparison. */
+const VERSUS_PAGE = 'hand-tossed-build-your-own';
 
 /** Price of this base with 0–5 toppings, per size, at the implied topping price. */
 export function toppingLadder(item: MenuItem) {
@@ -346,7 +373,7 @@ export function toppingLadder(item: MenuItem) {
  * hand-tossed cheese pizza the specialties are built on.
  */
 export function specialtyVersusBuild(item: MenuItem) {
-  if (!isBuildYourOwn(item)) return [];
+  if (!isBuildYourOwn(item) || item.slug !== VERSUS_PAGE) return [];
   const cheese = byId('classic-cheese-pizza');
   const base = sizeOf(item, 'Large');
   const toppingLarge = impliedToppingPrices().find((t) => t.size === 'Large')?.price;
@@ -400,7 +427,8 @@ export function buildYourOwnFaqs(item: MenuItem): Faq[] {
   const cheaperSpecialties = versus.filter((v) => v.difference > 0);
   const faqs: Faq[] = [];
 
-  if (tops.length) {
+  // Asked once, on the hand-tossed page; the answer is the same for every crust.
+  if (tops.length && item.slug === VERSUS_PAGE) {
     faqs.push({
       question: `How much does a topping cost at ${BRAND.name}?`,
       answer: flat
@@ -441,10 +469,10 @@ export function perPieceRows(item: MenuItem) {
       ? [{ size: s.name, pieces: p.count, unit: p.unit, price: s.price, verified: Boolean(s.verified), perPiece: s.price / p.count }]
       : [];
   });
-  // Flavours that share a count and price (four wing sauces at one price) are one row.
+  // Flavors that share a count and price (four wing sauces at one price) are one row.
   const unique = rows.filter((r, i) => rows.findIndex((x) => x.pieces === r.pieces && x.price === r.price) === i);
   return unique.map((r) =>
-    rows.filter((x) => x.pieces === r.pieces && x.price === r.price).length > 1 ? { ...r, size: 'Any flavour' } : r,
+    rows.filter((x) => x.pieces === r.pieces && x.price === r.price).length > 1 ? { ...r, size: 'Any flavor' } : r,
   );
 }
 
@@ -533,7 +561,7 @@ export function pieceFaqs(item: MenuItem): Faq[] {
   const faqs: Faq[] = [
     {
       question: `How many ${rows[0].unit} come in ${BRAND.name} ${name}?`,
-      answer: `${rows.map((r) => `${r.size === 'Any flavour' ? 'Any flavour' : r.size}: ${r.pieces} ${r.unit} for ${r.verified ? '' : 'about '}${money(r.price)}`).join('; ')}, ${priceBasis(rows.every((r) => r.verified))}, before tax.`,
+      answer: `${rows.map((r) => `${r.size === 'Any flavor' ? 'Any flavor' : r.size}: ${r.pieces} ${r.unit} for ${r.verified ? '' : 'about '}${money(r.price)}`).join('; ')}, ${priceBasis(rows.every((r) => r.verified))}, before tax.`,
     },
   ];
   if (rows.length > 1) {

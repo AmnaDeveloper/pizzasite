@@ -42,6 +42,7 @@ import {
   servingBasis,
   categoryPeers,
   pieceFaqs,
+  lowerFirst,
   money,
   pizzaRanking,
   quickAnswer,
@@ -53,16 +54,16 @@ import {
 } from '@/lib/menu-item-insights';
 import { authors } from '@/data/authors';
 import { BRAND, NOT_AFFILIATED_SHORT, SITE_URL } from '@/lib/site-config';
-import { currentMonthYear, formatLongDate, toIsoDate } from '@/lib/utils/date';
-import { priceSourceSentence } from '@/lib/price-source';
+import { monthYearOf, formatLongDate, toIsoDate } from '@/lib/utils/date';
+import { MENU_ITEMS_UPDATED } from '@/lib/page-dates';
 import PriceTag from '@/components/PriceTag';
 
 /**
- * Date the item pages' content last genuinely changed. Shown on the page and
+ * Date the item pages' content last changed. Shown on the page and
  * sent as dateModified — update it whenever prices or copy change, never just
  * to look fresh.
  */
-const ITEMS_UPDATED = '2026-10-02';
+const ITEMS_UPDATED = MENU_ITEMS_UPDATED;
 const ITEMS_PUBLISHED = '2026-09-17';
 
 /** Statically generate every menu item at build time. */
@@ -83,7 +84,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const name = proseName(item);
   return generatePageSEO({
-    title: seoTitle(item, currentMonthYear()),
+    title: seoTitle(item, monthYearOf(ITEMS_UPDATED)),
     description: seoDescription(item),
     path: `/menus-prices/${item.slug}`,
     image: item.image,
@@ -151,13 +152,43 @@ export default async function MenuItemPage({ params }: Props) {
   const large = isPizza(item) ? refSize(item) : undefined;
   const lowPrice = Math.min(...item.sizes.map((s) => s.price));
 
+  // This pizza's own per-square-inch numbers, smallest size against the biggest.
+  const sized = item.sizes
+    .filter((s) => DIAMETER[s.name])
+    .map((s) => ({ ...s, cents: (s.price / (Math.PI * (DIAMETER[s.name] / 2) ** 2)) * 100 }))
+    .sort((a, b) => DIAMETER[a.name] - DIAMETER[b.name]);
+  const smallest = sized[0];
+  const biggest = sized[sized.length - 1];
+  const sizeValueSentence =
+    sized.length > 1
+      ? `A ${smallest.name.toLowerCase()} ${name} works out at about ${smallest.cents.toFixed(1)}¢ per square inch; the ${biggest.name.toLowerCase()} is about ${biggest.cents.toFixed(1)}¢ — ${Math.round((1 - biggest.cents / smallest.cents) * 100)}% less for the same pizza.`
+      : `The ${name} comes in one size, so there is no size choice to make — the chart shows how its price per square inch compares.`;
+
   // Generated head-query FAQs first, then the item's own editorial FAQs.
+  // One question per topic: the generated and editorial sets both ask "how
+  // much is it" and "how many calories", and asking twice on one page reads
+  // as filler (and duplicates the FAQ markup).
+  const faqTopic = (q: string): string | null => {
+    if (/topping|build|specialty|sweet tea|save|lighter|compare/i.test(q)) return null;
+    if (/^how much (is|are)\b/i.test(q)) return 'price';
+    if (/how many calories/i.test(q)) return 'calories';
+    if (/how many (pieces|cakes|wings|come in)/i.test(q) && !/people|person/i.test(q)) return 'count';
+    return null;
+  };
+  const seenTopics = new Set<string>();
   const faqs = [
     ...generatedFaqs(item),
     ...buildYourOwnFaqs(item),
-    ...pieceFaqs(item),
+    // The count question is pointless when the name already says it ("8-piece").
+    ...(/\d+-piece/i.test(item.title) ? [] : pieceFaqs(item)),
     ...item.faqs.filter((f) => !/how many people/i.test(f.question) || !pizza),
-  ];
+  ].filter((f) => {
+    const topic = faqTopic(f.question);
+    if (!topic) return true;
+    if (seenTopics.has(topic)) return false;
+    seenTopics.add(topic);
+    return true;
+  });
 
   const crumbs = [
     { name: 'Home', path: '/' },
@@ -203,7 +234,7 @@ export default async function MenuItemPage({ params }: Props) {
     ...(plan.length || sideGroups.length ? [{ href: '#how-many', label: 'How many to order' }] : []),
     ...(pieces.length ? [{ href: '#per-piece', label: 'Price per piece' }] : []),
     ...(peers.length > 1 ? [{ href: '#compare', label: `Compare ${item.category.toLowerCase()}` }] : []),
-    { href: '#nutrition', label: 'Calories & allergens' },
+    { href: '#nutrition', label: 'Calories & ingredients' },
     { href: '#faq', label: 'FAQ' },
   ];
 
@@ -232,12 +263,6 @@ export default async function MenuItemPage({ params }: Props) {
             >
               {item.category}
             </Link>
-            {item.popular ? (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-[12px] font-bold uppercase tracking-wide text-brand-dark">
-                <Flame className="h-3 w-3" aria-hidden="true" />
-                Frequently ordered
-              </span>
-            ) : null}
           </div>
           <h1 className="mt-3 text-[2.1rem] font-extrabold leading-[1.1] tracking-tight text-ink sm:text-[2.6rem]">
             {h1}
@@ -277,6 +302,10 @@ export default async function MenuItemPage({ params }: Props) {
               sizes="(max-width: 1024px) 100vw, 520px"
               className="object-cover"
             />
+            {/* Stock photo, not Domino's own: say so, so nobody reads it as the real item. */}
+            <p className="absolute bottom-2 left-2 rounded bg-black/65 px-2 py-0.5 text-[11px] font-semibold text-white">
+              Illustrative photo, not a {BRAND.name} product photo
+            </p>
           </div>
 
           <section
@@ -317,7 +346,7 @@ export default async function MenuItemPage({ params }: Props) {
                 <dd className="mt-1 text-xl font-black tabular-nums">
                   {route ? money(route.dealPrice) : item.sizes.length}
                   {route ? (
-                    <span className="block text-[11px] font-bold uppercase tracking-wide text-white/80">estimate</span>
+                    <span className="block text-[11px] font-bold uppercase tracking-wide text-white/80">reported</span>
                   ) : null}
                 </dd>
               </div>
@@ -392,9 +421,9 @@ export default async function MenuItemPage({ params }: Props) {
           </div>
           <PriceNote className="mt-3" />
           <p className="mt-3 text-[14px] leading-relaxed text-ink-muted">
-            {priceSourceSentence()} See the{' '}
+            Compare it with everything else on the{' '}
             <Link href="/menus-prices" className="font-semibold text-navy underline underline-offset-2">
-              full {BRAND.name} menu with prices
+              {BRAND.name} menu with prices
             </Link>
             .
           </p>
@@ -407,15 +436,12 @@ export default async function MenuItemPage({ params }: Props) {
               Which size {name} is the best value?
             </h2>
             <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
-              Pizza is priced by diameter but eaten by area, so every step up the size
-              ladder buys more pizza per dollar. Here is the {name} priced per square inch.
+              {sizeValueSentence}
             </p>
             <div className="mt-5">
               <SizeValueChart item={item} />
             </div>
             <p className="mt-3 text-[14px] leading-relaxed text-ink-muted">
-              Need more food? Size up before adding a second pizza — it is almost always the
-              cheaper way to get more.{' '}
               <Link
                 href="/posts/large-vs-medium-pizza-value"
                 className="font-semibold text-navy underline underline-offset-2"
@@ -456,7 +482,7 @@ export default async function MenuItemPage({ params }: Props) {
                 </p>
                 <p className="mt-1.5 text-[15px] leading-relaxed text-ink-muted">{route.how}</p>
                 <p className="mt-2 text-[13px] text-ink-muted">
-                  Estimated deal price — participation is store by store.{' '}
+                  Reported deal price, not tested at checkout — participation is store by store.{' '}
                   <Link href={`/coupons#${route.couponId}`} className="font-semibold text-navy underline underline-offset-2">
                     How this deal works
                   </Link>
@@ -486,7 +512,9 @@ export default async function MenuItemPage({ params }: Props) {
                     className={`rounded-card border p-5 ${best ? 'border-brand/40 bg-brand-soft/60' : 'border-line bg-surface'}`}
                   >
                     <p className="text-[12px] font-bold uppercase tracking-wide text-ink-muted">
-                      {r.size} · {r.pieces} {r.unit}
+                      {r.size.toLowerCase() === `${r.pieces} ${r.unit}`.toLowerCase()
+                        ? `${r.pieces} ${r.unit}`
+                        : `${r.size} · ${r.pieces} ${r.unit}`}
                     </p>
                     <p className="mt-2 flex items-baseline gap-2">
                       <span className="text-[2rem] font-black leading-none tabular-nums text-brand">
@@ -495,7 +523,7 @@ export default async function MenuItemPage({ params }: Props) {
                       <span className="text-[14px] text-ink-muted">per {r.unit.replace(/s$/, '')}</span>
                     </p>
                     <p className="mt-2 text-[14px] text-ink-muted">
-                      {money(r.price)} for the {r.size.toLowerCase()}
+                      {money(r.price)} for {r.pieces} {r.unit}
                       {best
                         ? ` — ${Math.round((1 - r.perPiece / pieces[0].perPiece) * 100)}% less per ${r.unit.replace(/s$/, '')} than the ${pieces[0].size.toLowerCase()}`
                         : ''}
@@ -569,7 +597,7 @@ export default async function MenuItemPage({ params }: Props) {
             </h2>
             <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
               Every item in the {item.category.toLowerCase()} section, cheapest first, with
-              the starting price and calories from our sample.
+              the starting price and calories.
             </p>
             <ul className="mt-5 grid gap-3 sm:grid-cols-2">
               {peers.map((p) => (
@@ -594,7 +622,7 @@ export default async function MenuItemPage({ params }: Props) {
                       {p.perPiece ? ` · ${money(p.perPiece)} per ${p.unit!.replace(/s$/, '')}` : ''}
                     </span>
                     <span className="mt-1 text-[13px] text-ink-muted">
-                      {p.calories} cal — {p.caloriesNote.charAt(0).toLowerCase() + p.caloriesNote.slice(1)}
+                      {p.calories} cal — {lowerFirst(p.caloriesNote)}
                     </span>
                   </Link>
                 </li>
@@ -795,9 +823,9 @@ export default async function MenuItemPage({ params }: Props) {
               How many {name}s to order for a group
             </h2>
             <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
-              Plan on three slices per adult when pizza is the whole meal. A {large.name.toLowerCase()} is cut
-              into {large.slices} slices, so this is how many you need — and what
-              they cost at menu price versus on the carryout deal.
+              A {large.name.toLowerCase()} {name} is cut into {large.slices} slices, enough for{' '}
+              {Math.floor(large.slices! / 3)} adults at three slices each. The table scales that up
+              {route ? ', with the carryout deal price alongside the menu price' : ''}.
             </p>
             <div className="table-scroll mt-5 overflow-hidden rounded-card border border-line">
               <table className="w-full min-w-[30rem] text-[15px]">
@@ -838,8 +866,7 @@ export default async function MenuItemPage({ params }: Props) {
               </table>
             </div>
             <p className="mt-3 text-[14px] leading-relaxed text-ink-muted">
-              Adding sides? Drop to two slices per adult and you can usually order one pizza
-              fewer. For eight or more people a bundle is often cheaper still —{' '}
+              Ordering for eight or more, or adding sides? —{' '}
               <Link
                 href="/posts/group-ordering-pizza-for-a-party"
                 className="font-semibold text-navy underline underline-offset-2"
@@ -898,7 +925,7 @@ export default async function MenuItemPage({ params }: Props) {
         {/* ── Nutrition & allergens ────────────────────────────────────── */}
         <section aria-labelledby="nutrition" className="mt-14">
           <h2 id="nutrition" className={H2}>
-            {BRAND.name} {name} calories, ingredients & allergens
+            {BRAND.name} {name} calories, ingredients & allergy note
           </h2>
           <div className="mt-5 grid gap-5 md:grid-cols-3">
             <div className="rounded-card border border-line bg-surface p-5">
@@ -938,8 +965,7 @@ export default async function MenuItemPage({ params }: Props) {
                 ))}
               </ul>
               <p className="mt-3 text-[12px] leading-snug text-ink-muted">
-                Formulations differ by region and change without notice. Confirm current
-                ingredient information with {BRAND.officialAppNote} before ordering.
+                Main components from the menu description, not the full recipe.
               </p>
             </div>
 
@@ -948,25 +974,9 @@ export default async function MenuItemPage({ params }: Props) {
                 <AlertTriangle className="h-5 w-5" aria-hidden="true" />
                 Allergens
               </h3>
-              {item.allergens.length ? (
-                <ul className="mt-3 flex flex-wrap gap-2">
-                  {item.allergens.map((a) => (
-                    <li
-                      key={a}
-                      className="rounded-full bg-surface px-3 py-1 text-sm font-semibold text-brand-dark"
-                    >
-                      {a}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-3 text-sm text-brand-dark">
-                  No major allergens are listed for this item.
-                </p>
-              )}
-              <p className="mt-3 text-[13px] leading-snug text-brand-dark">
-                A shared pizza kitchen cannot rule out cross-contact. With a severe allergy
-                or coeliac disease, speak to the store directly — see our{' '}
+              <p className="mt-3 text-sm leading-snug text-brand-dark">
+                We do not list allergens. Check {BRAND.name}’s own allergen details for
+                your exact order, and with a severe allergy speak to the store — see our{' '}
                 <Link href="/posts/gluten-free-pizza-options-guide" className="underline">
                   gluten-free guide
                 </Link>
@@ -994,7 +1004,7 @@ export default async function MenuItemPage({ params }: Props) {
               href="/menus-prices"
               className="inline-flex items-center gap-1.5 text-sm font-bold text-navy hover:text-brand"
             >
-              Full menu with prices
+              Menu & prices
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
@@ -1023,8 +1033,7 @@ export default async function MenuItemPage({ params }: Props) {
         </section>
 
         <p className="mt-10 rounded-card border border-line bg-surface-alt p-4 text-[13px] leading-relaxed text-ink-muted">
-          {NOT_AFFILIATED_SHORT} This page describes an item on a publicly available menu
-          for the purpose of consumer information.
+          {NOT_AFFILIATED_SHORT}
         </p>
       </article>
     </>

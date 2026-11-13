@@ -1,21 +1,22 @@
 import { CalendarCheck } from 'lucide-react';
-import { currentMonthYear, formatLongDate, toIsoDate } from '@/lib/utils/date';
+import { formatLongDate, toIsoDate } from '@/lib/utils/date';
 
 /**
- * Visible freshness signal. With no `date` prop it falls back to the current
- * month and year, which is what index and evergreen pages use.
+ * Visible "last updated" line. The date is required and must be the day the
+ * page's content really changed — a date that moves on its own every month is
+ * fake freshness, which search engines and ad reviewers treat as a spam signal.
  */
 export default function LastUpdated({
   date,
   label = 'Last updated',
   className = '',
 }: {
-  date?: string;
+  date: string;
   label?: string;
   className?: string;
 }) {
-  const iso = date ? toIsoDate(date) : undefined;
-  const display = date ? formatLongDate(date) : currentMonthYear();
+  const iso = toIsoDate(date);
+  const display = formatLongDate(date);
 
   return (
     <p
@@ -24,7 +25,7 @@ export default function LastUpdated({
       <CalendarCheck className="h-4 w-4 text-navy" aria-hidden="true" />
       <span>
         {label}:{' '}
-        {iso ? <time dateTime={iso}>{display}</time> : <span>{display}</span>}
+        <time dateTime={iso}>{display}</time>
       </span>
     </p>
   );

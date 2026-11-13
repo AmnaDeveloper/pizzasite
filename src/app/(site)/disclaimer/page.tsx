@@ -13,6 +13,10 @@ import {
   SITE_NAME,
 } from '@/lib/site-config';
 import { priceSourceSentence } from '@/lib/price-source';
+import { PAGE_DATES } from '@/lib/page-dates';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/disclaimer'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -40,7 +44,7 @@ export default function DisclaimerPage() {
         <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-ink">
           Disclaimer
         </h1>
-        <LastUpdated className="mt-4" />
+        <LastUpdated date={PAGE_UPDATED} className="mt-4" />
 
         <div className="mt-6 flex gap-3 rounded-card border border-brand/40 bg-brand-soft p-5">
           <ShieldAlert
@@ -80,7 +84,7 @@ export default function DisclaimerPage() {
             illustration, text and layout on this site is our own original work.
           </p>
 
-          <h2>Prices are estimates, not quotations</h2>
+          <h2>Prices are a reference, not a quotation</h2>
           <p>
             This is the most important thing on this page.
           </p>
@@ -100,23 +104,24 @@ export default function DisclaimerPage() {
 
           <h2>We do not list coupon codes</h2>
           <p>
-            Our <Link href="/coupons">coupons page</Link> explains the types of offer that
-            run again and again, with typical prices, but it deliberately lists no codes.
-            Live offers appear on the official site, personalised to your store, because
+            Our <Link href="/coupons">coupons page</Link> explains the Domino’s deals we could
+            confirm, with the prices reported for them, but it deliberately lists no codes.
+            Live offers appear on the official site, personalized to your store, because
             franchisees opt into promotions individually.
           </p>
 
-          <h2>Nutrition and allergen information</h2>
+          <h2>Nutrition and allergy information</h2>
           <p>
-            Nutritional values, ingredient lists and allergen information on this site are
-            general guidance and estimates for consumer reference. They are approximate,
-            formulations change without notice, and portioning at a store is done by hand
-            against a target rather than measured precisely.
+            Calorie figures on this site are either copied from the official cart, as noted
+            beside each one, or labeled as estimates. Ingredient lists show the main
+            components from the menu description, not the full recipe. We do not list
+            allergens. All of it is general guidance: formulations change without notice,
+            and portioning at a store is done by hand rather than measured precisely.
           </p>
           <p>
             <strong>
               None of it is medical, dietary or nutritional advice, and it must not be
-              relied on by anyone with a food allergy, coeliac disease or another medical
+              relied on by anyone with a food allergy, celiac disease or another medical
               condition.
             </strong>{' '}
             A shared pizza kitchen cannot rule out cross-contact between allergens. If you
@@ -134,7 +139,7 @@ export default function DisclaimerPage() {
 
           <h2>Advertising</h2>
           <p>
-            This site is funded by third-party display advertising. Adverts are selected and
+            This site is funded by third-party display advertising. Ads are selected and
             served by third parties, are not endorsements by us, and we are not responsible
             for the products or services advertised. We do not run affiliate links and we do
             not receive commission on orders. See our{' '}

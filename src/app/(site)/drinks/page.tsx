@@ -12,7 +12,11 @@ import { generatePageSEO } from '@/lib/seo-config';
 import { breadcrumbSchema, faqSchema } from '@/lib/seo/schema';
 import { getMenuByCategory } from '@/lib/content';
 import PriceTag from '@/components/PriceTag';
+import { PAGE_DATES } from '@/lib/page-dates';
 import { BRAND, CURRENCY_SYMBOL } from '@/lib/site-config';
+
+/** Day this page's content last really changed — update it with the content. */
+const PAGE_UPDATED = PAGE_DATES['/drinks'];
 
 const CRUMBS = [
   { name: 'Home', path: '/' },
@@ -36,22 +40,22 @@ const DRINK_FAQS = [
   {
     question: 'Which side gives the most food for the money?',
     answer:
-      'Loaded Chicken, if you want protein — eight boneless pieces for $8.99 against $10.99 for eight wings, and almost all of it is edible. For sheer volume, bread sides win: they are made from the same dough as the pizza, which is why they cost the store very little and appear in nearly every bundle.',
+      'Loaded Chicken, if you want protein — eight boneless pieces for $8.99 against $10.99 for eight wings, and almost all of it is edible. For sheer volume, bread sides win: they are made from the same dough as the pizza, which keeps them cheap; the Perfect Combo includes two of them.',
   },
   {
     question: 'Is the soda delivered cold?',
     answer:
-      'Not always. Many stores keep bottled stock at room temperature rather than chilled. If you need it cold, ask when ordering — some stores keep chilled stock and some genuinely do not.',
+      'Do not assume it will be. If you need it cold, ask the store when you order.',
   },
   {
     question: 'Do drinks count toward a deal?',
     answer:
-      'They usually count toward the minimum order value for delivery, but almost never as a qualifying item in a mix-and-match bundle. Some family bundles include a drink at no extra cost, and where that is the case it is worth taking.',
+      'We did not see drinks listed as Mix & Match items in the reports we used. If a deal on your store page does include a drink, take it — drinks are priced well above shop prices.',
   },
   {
     question: 'Which sides survive a long delivery?',
     answer:
-      'Loaded Chicken and Cinnamon Bread Bites travel best. Stuffed Cheesy Bread and lava cakes are the worst — melted cheese firms up as it cools and a lava cake loses its molten centre entirely, which is the whole point of it. If your delivery is long, order those two only on a carryout trip.',
+      'Loaded Chicken and Cinnamon Bread Bites travel best. Stuffed Cheesy Bread and lava cakes are the worst — melted cheese firms up as it cools and a lava cake loses its molten center entirely, which is the whole point of it. If your delivery is long, order those two only on a carryout order.',
   },
   {
     question: 'How many sides do I need for a group?',
@@ -61,7 +65,7 @@ const DRINK_FAQS = [
   {
     question: `What is the cheapest way to get drinks with a ${BRAND.name} order?`,
     answer:
-      'Buy them from a shop and order only the food. On a family order that alone cuts ten to fifteen percent off the total without removing any food, which makes it the least painful saving available.',
+      'Buy them from a shop and order only the food. A 2-liter was $4.49 in our check, about 8% of a $55 family order (two large specialty pizzas, wings and one bottle), and nearer 15% if the order has two bottles. It is the least painful saving available, because no food is removed.',
   },
 ];
 
@@ -87,7 +91,7 @@ export const metadata: Metadata = generatePageSEO({
  * the direction and rough scale, which is what the decision turns on.
  */
 const MARKUP = [
-  { item: '2-Liter Coke', store: 4.49, shop: 2.29 },
+  { item: '2-Liter Coke', store: 4.49, shop: 2.75 },
   { item: 'Gold Peak Sweet Tea, single bottle', store: 3.49, shop: 2.0 },
   { item: 'Dasani water, 20 fl oz', store: 3.49, shop: 1.79 },
 ];
@@ -115,14 +119,14 @@ const VERDICTS = [
     item: 'Lava Cake Flight (3)',
     price: 9.99,
     feeds: '3',
-    verdict: 'Excellent collected, ordinary after a long delivery',
+    verdict: '$3.33 a cake; the molten center sets on a long delivery',
     good: true,
   },
   {
     item: 'Stuffed Cheesy Bread',
     price: 8.49,
     feeds: '3–4 as a side',
-    verdict: '$2.50 more than Bread Bites, with a dip included — worth it more often than not',
+    verdict: '$2.50 more than Bread Bites, with a marinara cup included in our check',
     good: true,
   },
   {
@@ -143,7 +147,7 @@ const VERDICTS = [
     item: '2-Liter soda',
     price: 4.49,
     feeds: '6–8 glasses',
-    verdict: 'Fine inside a bundle, poor value bought separately',
+    verdict: 'Worth taking if a deal includes one; poor value bought separately',
     good: false,
   },
   {
@@ -167,28 +171,28 @@ export default function DrinksPage() {
       title: 'Bread sides',
       items: sides,
       intro:
-        'Made from the same dough as the pizza, which is why they are cheap for the store and reliably good value inside a two-item bundle.',
+        'Made from the same dough as the pizza, which keeps them cheap. Bread Bites ($5.99) cost less on the menu than a $6.99 Mix & Match slot, so buy them outside the deal; Stuffed Cheesy Bread is the one worth putting in it.',
     },
     {
       id: 'chicken',
       title: 'Chicken',
       items: chicken,
       intro:
-        'Boneless bites beat wings on meat per dollar because there is no bone weight. Wings are often excluded from the cheapest bundles or surcharged inside them.',
+        'Boneless pieces beat wings on meat per dollar because there is no bone weight. An 8-piece wings order is one of the reported choices on the $7.99 carryout deal, which takes $3.00 off its $10.99 menu price.',
     },
     {
       id: 'desserts',
       title: 'Desserts',
       items: desserts,
       intro:
-        'Usually discounted as an add-on once a main item is already in the basket, so adding one last is cheaper than ordering it separately.',
+        'Sixteen Cinnamon Bread Bites cost the same $5.99 as the savory ones, and the three-cake Lava Cake Flight is $9.99. Both are best eaten fresh, so they suit carryout better than a long delivery.',
     },
     {
       id: 'drinks',
       title: 'Drinks',
       items: drinks,
       intro:
-        'The highest-markup section of any pizza menu and the easiest thing to remove from an order. Worth taking when a bundle includes one; rarely worth paying for separately.',
+        'Priced well above shop prices, and the easiest thing to remove from an order. Worth taking when a bundle includes one; rarely worth paying for separately.',
     },
   ];
 
@@ -211,7 +215,7 @@ export default function DrinksPage() {
             a bundle, which ones survive the journey, and the one line we would suggest
             simply deleting.
           </p>
-          <LastUpdated className="mt-5" />
+          <LastUpdated date={PAGE_UPDATED} className="mt-5" />
           <PriceNote className="mt-5 max-w-2xl" />
         </div>
       </header>
@@ -225,7 +229,7 @@ export default function DrinksPage() {
           id="verdicts"
           className="mt-2.5 text-[1.75rem] font-extrabold leading-tight tracking-tight text-navy-dark sm:text-[2rem]"
         >
-          Every side, ranked by whether it is worth the money
+          Each side and drink we checked, ranked by whether it is worth the money
         </h2>
         <p className="mt-3 max-w-3xl text-[16px] leading-relaxed text-ink-muted">
           We earn nothing from what you order, so this is our honest read on each item —
@@ -235,7 +239,7 @@ export default function DrinksPage() {
         <div className="table-scroll mt-6 overflow-hidden rounded-card border border-line">
           <table className="w-full min-w-[46rem] text-[15px]">
             <caption className="sr-only">
-              Each side and drink with its estimated price, how many people it feeds, and our
+              Each side and drink with its checked price, how many people it feeds, and our
               verdict
             </caption>
             <thead>
@@ -244,7 +248,7 @@ export default function DrinksPage() {
                   Item
                 </th>
                 <th scope="col" className="px-4 py-3 text-right font-bold">
-                  Example
+                  Price
                 </th>
                 <th scope="col" className="px-4 py-3 font-bold">
                   Feeds
@@ -318,10 +322,9 @@ export default function DrinksPage() {
                   nobody at the table eats less as a result.
                 </p>
                 <p>
-                  The exception is a bundle that includes a drink at no extra cost. Several
-                  family packs do, and where the drink is genuinely free rather than
-                  nominally discounted, take it — you are getting the highest-markup item on
-                  the menu for nothing. Our{' '}
+                  The exception is a deal on your store page that includes a drink. If one
+                  does, take it — you get an item priced well above shop prices for
+                  nothing. Our{' '}
                   <Link href="/coupons">guide to deal structures</Link> covers which
                   bundles do that.
                 </p>
@@ -375,7 +378,7 @@ export default function DrinksPage() {
                 </table>
               </div>
               <p className="mt-3 text-[13px] leading-relaxed text-ink-muted">
-                Store figures are our estimated prices. The shop column is an approximate
+                Store figures were checked at one Columbus, Ohio store. The shop column is an approximate
                 typical retail price for the same product, included to show the direction
                 and rough scale rather than as a surveyed figure.
               </p>
@@ -398,42 +401,33 @@ export default function DrinksPage() {
               </h2>
               <div className="prose-guide mt-5 text-[15px]">
                 <p>
-                  Sides are far more sensitive to delivery time than pizza is. A pizza that
-                  arrives thirty minutes after it left the oven is a slightly cooler pizza.
-                  A lava cake that arrives thirty minutes late is a different product — the
-                  molten centre has set, and that centre was the entire reason to order it.
+                  We have not timed how each side holds up in a delivery bag, so this is general
+                  guidance rather than a test. The rule of thumb: anything that depends on being
+                  molten or freshly melted changes most as it cools, and anything dry and baked
+                  changes least.
                 </p>
-                <p>Ranked by how well they hold up:</p>
                 <ul>
                   <li>
-                    <strong>Loaded Chicken</strong> — travels best, and reheats better in
-                    an air fryer or hot oven than anything else on the menu.
+                    <strong>Loaded Chicken and Cinnamon Bread Bites</strong> — nothing molten
+                    to lose, so they are the safer choices for a long delivery.
                   </li>
                   <li>
-                    <strong>Cinnamon Bread Bites</strong> — no molten centre to lose. Good for
-                    about half an hour, chewy after an hour.
+                    <strong>Wings</strong> — sauce can soften the skin in transit, so if your
+                    store offers sauce on the side, consider it.
                   </li>
                   <li>
-                    <strong>Wings</strong> — fine, provided you asked for the sauce on the
-                    side so the skin does not soften in transit.
+                    <strong>Bread Bites and Stuffed Cheesy Bread</strong> — warm bread sides,
+                    so order them with the pizza rather than ahead of it.
                   </li>
                   <li>
-                    <strong>Bread Bites</strong> — harden as they cool, faster than pizza
-                    does. Reheat in an oven, never a microwave.
-                  </li>
-                  <li>
-                    <strong>Stuffed Cheesy Bread</strong> — melted cheese sets within about twenty
-                    minutes and the texture changes noticeably.
-                  </li>
-                  <li>
-                    <strong>Lava cakes</strong> — the worst traveller on the menu, and the
-                    best thing on it if you collect the order yourself.
+                    <strong>Lava cakes</strong> — the point is the warm, runny center, which
+                    sets as the cake cools.
                   </li>
                 </ul>
                 <p>
                   If your store is close enough that{' '}
-                  <Link href="/delivery-near-me">carryout makes sense</Link>, the two items
-                  that gain the most from it are Stuffed Cheesy Bread and lava cakes.
+                  <Link href="/delivery-near-me">carryout makes sense</Link>, the items that
+                  benefit most from a short trip are the cheesy breads and lava cakes.
                 </p>
               </div>
             </div>
@@ -463,8 +457,8 @@ export default function DrinksPage() {
                   one.
                 </p>
                 <p>
-                  And drinks: buy them from a shop. On a party order that is ten or fifteen
-                  dollars of pure convenience charge, and it is the only saving on this page
+                  And drinks: buy them from a shop. On a party order with three or four bottles that is
+                  about $5–8 of pure convenience charge, and it is the only saving on this page
                   that costs you nothing at all in food.{' '}
                   <Link href="/posts/group-ordering-pizza-for-a-party">
                     Our group-ordering guide
@@ -524,7 +518,7 @@ export default function DrinksPage() {
           <p className="mt-8 max-w-3xl text-[15px] leading-relaxed text-ink-muted">
             Working out the rest of the order?{' '}
             <Link href="/menus-prices" className="font-semibold text-navy hover:text-brand">
-              See the full menu with prices
+              See the menu with prices
             </Link>
             , compare{' '}
             <Link href="/coupons" className="font-semibold text-navy hover:text-brand">

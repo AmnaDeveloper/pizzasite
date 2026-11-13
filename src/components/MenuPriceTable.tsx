@@ -11,7 +11,7 @@ function sizeOf(item: MenuItem, sizeName: string) {
 /**
  * The full price list, grouped by menu section.
  *
- * Two variants because the menu genuinely has two shapes: pizzas share one size
+ * Two variants because the menu has two shapes: pizzas share one size
  * ladder and belong in columns, while everything else has its own size names
  * and reads better as a list inside a single cell. Forcing both into one grid
  * produces a table half full of dashes.
@@ -116,7 +116,7 @@ export default function MenuPriceTable({
                     })
                   ) : (
                     <td className="px-4 py-3 text-[14px] text-ink-muted">
-                      {/* Same price for every option (e.g. five soda flavours): one line. */}
+                      {/* Same price for every option (e.g. five soda flavors): one line. */}
                       {item.sizes.length > 1 &&
                       item.sizes.every((s) => s.price === item.sizes[0].price && s.verified === item.sizes[0].verified) ? (
                         <span>

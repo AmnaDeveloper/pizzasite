@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/site-config';
 import { menuItems, posts } from '@/lib/content';
+import { MENU_ITEMS_UPDATED, PAGE_DATES } from '@/lib/page-dates';
 
 /**
  * Sitemap generated entirely from the data files. Adding a post, menu item or
@@ -8,10 +9,8 @@ import { menuItems, posts } from '@/lib/content';
  * in sync by hand.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   const staticPages: {
-    path: string;
+    path: keyof typeof PAGE_DATES;
     priority: number;
     changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
   }[] = [
@@ -37,14 +36,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...staticPages.map((page) => ({
       url: `${SITE_URL}${page.path === '/' ? '' : page.path}`,
-      lastModified: now,
+      lastModified: new Date(PAGE_DATES[page.path]),
       changeFrequency: page.changeFrequency,
       priority: page.priority,
     })),
 
     ...menuItems.map((item) => ({
       url: `${SITE_URL}/menus-prices/${item.slug}`,
-      lastModified: now,
+      lastModified: new Date(MENU_ITEMS_UPDATED),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     })),
